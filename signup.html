@@ -30,8 +30,42 @@
     </style>
 </head>
 
-<body>
+<body class="bg-amber-50 flex flex-col items-center justify-center w-full h-screen text-gray-700">
+    <div class="bg-white w-3/4 flex p-12 rounded-lg border-amber-300 border-x-2 shadow-md">
+        <!-- left side -->
+        <div class="w-2/3 flex flex-col mr-4">
+            <p class="text-xs text-right">Already have an account? <span class="text-amber-500 hover:underline"><a
+                        href="singin.html">Sign
+                        in</a></span></p>
+            <p class="text-center pt-3 capitalize font-medium text-lg mb-4">create student account</p>
+            <form action="#" method="POST" class="flex justify-between w-3/4">
+                <!-- first name -->
+                <div class="">
+                    <label for="fName" class="block capitalize">first name</label>
+                    <input type="text" id="fName" placeholder="e.g. Salma"
+                        class="mt-1 bg-amber-200 px-6 py-2 rounded-lg border-2 border-amber-300 focus:bg-amber-100 placeholder-gray-400">
+                </div>
+                <!-- last name -->
+                <div class="">
+                    <label for="lName" class="block capitalize">last name</label>
+                    <input type="text" id="lName" placeholder="e.g. Bader"
+                        class="mt-1 bg-amber-200 px-6 py-2 rounded-lg border-2 border-amber-300 focus:bg-amber-100 placeholder-gray-400">
+                </div>
+            </form>
+        </div>
 
+        <!-- right side -->
+        <div class=" w-1/3">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit explicabo possimus veniam, dolore
+            ea nisi
+            perferendis. Velit aspernatur dignissimos consequuntur rerum, qui reiciendis natus non explicabo
+            iste optio
+            nostrum aliquid?
+        </div>
+    </div>
+    <footer class="pb-10 mt-4">
+        <p class="text-sm text-gray-600 text-center">Copyright © 2022 iMaster</p>
+    </footer>
 </body>
 
 </html>
