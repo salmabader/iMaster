@@ -9,6 +9,10 @@
 	<link rel="icon" href="images/icon.svg" type="image/x-icon">
 	<title>iMaster</title>
 	<style>
+		html {
+			scroll-behavior: smooth;
+		}
+
 		.scrollbar::-webkit-scrollbar {
 			width: 10px;
 		}
@@ -30,7 +34,7 @@
 	</style>
 </head>
 
-<body class="flex flex-col items-center scrollbar">
+<body class="flex flex-col items-center scrollbar overflow-x-hidden">
 	<!-- header content -->
 	<header class="w-full py-4 px-4 flex justify-center bg-amber-50 pb-24 border-b-2 border-amber-300 border-dashed">
 		<div class="mx-4 max-w-6xl w-full">
@@ -309,14 +313,14 @@
 						href="index.html">home</a>
 					<!-- about us -->
 					<a class="capitalize text-sm text-gray-800 duration-200 ease-in-out hover:text-blue-800 px-4 py-2 hover:border-b-2 hover:border-b-blue-800"
-						href="index.html">about
+						href="#aboutUs">about
 						us</a>
 					<!-- features -->
 					<a class="capitalize text-sm text-gray-800 duration-200 ease-in-out hover:text-blue-800 px-4 py-2 hover:border-b-2 hover:border-b-blue-800"
-						href="index.html">features</a>
+						href="#features">features</a>
 					<!-- contact us -->
 					<a class="capitalize text-sm text-gray-800 duration-200 ease-in-out hover:text-blue-800 px-4 py-2 hover:border-b-2 hover:border-b-blue-800"
-						href="index.html">contact
+						href="#contactUs">contact
 						us</a>
 				</div>
 				<!-- sign in -->
@@ -360,7 +364,8 @@
 				</div>
 				<div class="max-h-5">
 					<button
-						class="capitalize sm:mx-6 bg-blue-800 border-b-4 md:hover:border-b-8 md:hover:-translate-y-1 md:hover:shadow-lg border-amber-200 px-6 py-2 rounded-xl text-gray-100 shadow-md mt-6  duration-100 ease-in">join
+						class="capitalize sm:mx-6 bg-blue-800 border-b-4 md:hover:border-b-8 md:hover:-translate-y-1 md:hover:shadow-lg border-amber-200 px-6 py-2 rounded-xl text-gray-100 shadow-md mt-6  duration-100 ease-in"
+						onclick="window.location.href ='signup.html'">join
 						us
 						now!</button>
 				</div>
@@ -370,7 +375,7 @@
 	<!-- main content -->
 	<main class="bg-[#FCFCFC] pt-10 flex flex-col items-center w-full">
 		<!-- about us -->
-		<h2
+		<h2 id="aboutUs"
 			class="text-center font-bold text-2xl capitalize text-gray-800 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full">
 			about
 			us</h2>
@@ -381,7 +386,7 @@
 			</p>
 		</div>
 		<!-- features -->
-		<h2
+		<h2 id="features"
 			class="text-center font-bold text-2xl capitalize text-gray-800 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full">
 			features</h2>
 		<!-- container of four cards -->
@@ -467,7 +472,7 @@
 		</div>
 		<div class="bg-blue-900 w-full flex justify-center pt-10">
 			<div class="max-w-6xl flex md:flex-row flex-col justify-between items-center text-white w-full mx-4">
-				<div class="w-1/4">
+				<div class="md:w-1/4">
 					<p><span class="text-3xl font-medium">iMaster</span><br><span class="tracking-widest">Master your
 							skills.</span>
 					</p>
@@ -488,8 +493,8 @@
 						(+966) 59000000
 					</p>
 				</div>
-				<div class="w-3/4">
-					<h2
+				<div class="md:w-3/4 w-full">
+					<h2 id="contactUs"
 						class="text-center font-bold text-2xl capitalize text-gray-100 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full mb-6">
 						contact
 						us</h2>
