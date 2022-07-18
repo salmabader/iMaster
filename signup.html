@@ -31,31 +31,91 @@
 </head>
 
 <body class="bg-amber-50 flex flex-col items-center justify-center w-full h-screen text-gray-700">
-    <div class="bg-white w-3/4 flex p-12 rounded-lg border-amber-300 border-x-2 shadow-md">
+    <div class="bg-white w-3/4 flex md:p-12 p-6 rounded-lg border-amber-300 border-x-2 shadow-md">
         <!-- left side -->
-        <div class="w-2/3 flex flex-col mr-4">
+        <div class="md:w-2/3 w-full flex flex-col md:mr-4 mr-0">
             <p class="text-xs text-right">Already have an account? <span class="text-amber-500 hover:underline"><a
                         href="singin.html">Sign
                         in</a></span></p>
             <p class="text-center pt-3 capitalize font-medium text-lg mb-4">create student account</p>
-            <form action="#" method="POST" class="flex justify-between w-3/4">
+            <form action="#" method="POST" class="flex flex-wrap">
                 <!-- first name -->
-                <div class="">
-                    <label for="fName" class="block capitalize">first name</label>
-                    <input type="text" id="fName" placeholder="e.g. Salma"
-                        class="mt-1 bg-amber-200 px-6 py-2 rounded-lg border-2 border-amber-300 focus:bg-amber-100 placeholder-gray-400">
+                <div class="flex w-1/2">
+                    <div class="w-full ">
+                        <label for="fName" class="block capitalize font-semibold">first name</label>
+                        <input type="text" id="fName" placeholder="Salma"
+                            class="w-full mt-1 bg-amber-200 px-6 py-2 rounded-lg border-2 border-amber-300 focus:bg-amber-100 placeholder-gray-400 text-blue-800">
+                    </div>
                 </div>
                 <!-- last name -->
-                <div class="">
-                    <label for="lName" class="block capitalize">last name</label>
-                    <input type="text" id="lName" placeholder="e.g. Bader"
-                        class="mt-1 bg-amber-200 px-6 py-2 rounded-lg border-2 border-amber-300 focus:bg-amber-100 placeholder-gray-400">
+                <div class="flex w-1/2">
+                    <div class="w-full ml-2">
+                        <label for="lName" class="block capitalize font-semibold">last name</label>
+                        <input type="text" id="lName" placeholder="Bader"
+                            class="w-full mt-1 bg-amber-200 px-6 py-2 rounded-lg border-2 border-amber-300 focus:bg-amber-100 placeholder-gray-400 text-blue-800">
+                    </div>
+                </div>
+                <!-- username -->
+                <div class="w-1/2 mt-3">
+                    <label for="usename" class="block capitalize font-semibold">username</label>
+                    <input type="text" id="usename" placeholder="_salma"
+                        class="w-full mt-1 bg-amber-200 px-6 py-2 rounded-lg border-2 border-amber-300 focus:bg-amber-100 placeholder-gray-400 text-blue-800">
+                </div>
+                <!-- password -->
+                <div class="flex w-1/2">
+                    <div class="w-full ml-2 mt-3">
+                        <label for="password" class="block capitalize font-semibold">password</label>
+                        <input type="password" id="password" placeholder="********"
+                            class="w-full mt-1 bg-amber-200 px-6 py-2 rounded-lg border-2 border-amber-300 focus:bg-amber-100 placeholder-gray-400 text-blue-800">
+                    </div>
+                </div>
+                <!-- email -->
+                <div class="w-full mt-3">
+                    <label for="email" class="block capitalize font-semibold">email</label>
+                    <input type="email" id="email" placeholder="example@email.com"
+                        class="w-full mt-1 bg-amber-200 px-6 py-2 rounded-lg border-2 border-amber-300 focus:bg-amber-100 placeholder-gray-400 text-blue-800">
+                </div>
+                <!-- intrests -->
+                <div class="w-full mt-3">
+                    <label class="block capitalize font-semibold">intrests</label>
+                    <div class="flex flex-wrap mt-1">
+                        <div class="w-1/3">
+                            <input type="checkbox" name="" id="programming" value="programming"
+                                class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label
+                                for="programming" class="capitalize"> programming</label>
+                        </div>
+                        <div class="w-1/3">
+                            <input type="checkbox" name="" id="mathematics" value="mathematics"
+                                class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label
+                                for="mathematics" class="capitalize"> mathematics</label>
+                        </div>
+                        <div class="w-1/3">
+                            <input type="checkbox" name="" id="design" value="design"
+                                class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label
+                                for="design" class="capitalize"> design</label>
+                        </div>
+                        <div class="w-1/3">
+                            <input type="checkbox" name="" id="marketing" value="marketing"
+                                class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label
+                                for="marketing" class="capitalize"> marketing</label>
+                        </div>
+                        <div class="w-1/3">
+                            <input type="checkbox" name="" id="software" value="software"
+                                class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label
+                                for="software" class="capitalize"> IT & Software</label>
+                        </div>
+                        <div class="w-1/3">
+                            <input type="checkbox" name="" id="business" value="business"
+                                class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label
+                                for="business" class="capitalize"> business</label>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
 
         <!-- right side -->
-        <div class=" w-1/3">
+        <div class="w-1/3 md:block hidden">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit explicabo possimus veniam, dolore
             ea nisi
             perferendis. Velit aspernatur dignissimos consequuntur rerum, qui reiciendis natus non explicabo
