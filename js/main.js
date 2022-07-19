@@ -9,6 +9,7 @@ let isCorrectLen = false
 let isCapital = false
 let isSmall = false
 let isSpecial = false
+let isValidPass = false
 inputPassword.addEventListener("keyup", function () {
   // check password length
   if (inputPassword.value.length < 8) {
@@ -78,9 +79,11 @@ inputPassword.addEventListener("keyup", function () {
     passError.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
   </svg>  Password does not satisfy the conditions`
+    isValidPass = false
   }
   else {
     passError.innerHTML = ""
+    isValidPass = true
   }
 })
 function isUpper(str) {
@@ -198,7 +201,7 @@ const createAccountBtn = document.getElementById("signupBtn")
 const inputFeilds = document.querySelectorAll("input");
 const checkEnableButton = () => {
   createAccountBtn.disabled = !(
-    inputFeilds[0].value && inputFeilds[1].value && isValidUN && (isCapital && isSmall && isSpecial && isCorrectLen) && isValidEmail && checkedOne
+    inputFeilds[0].value && inputFeilds[1].value && isValidUN && isValidPass && isValidEmail && checkedOne
   )
 }
 inputFeilds.forEach(function (inp) {
@@ -207,26 +210,27 @@ inputFeilds.forEach(function (inp) {
   })
 });
 window.addEventListener('load', function () {
+  if (inputFeilds[0].value.length == 0 && inputFeilds[1].value.length == 0 && !isValidUN && !isValidPass && !isValidEmail && !checkedOne) {
+    localStorage.clear()
+  }
   isValidUN = true
-  isCapital = true
-  isSmall = true
-  isSpecial = true
-  isCorrectLen = true
+  isValidPass = true
   isValidEmail = true
   const checkedInterests = JSON.parse(localStorage.getItem("interests"))
   if (checkedInterests) {
-    hint.innerHTML = ""
-    checkedInterests.forEach(el => {
-      allChecked.push(el)
-    });
-    checkboxes.forEach(box => {
-      if (allChecked.includes(box.value)) {
-        box.checked = true
-      }
-    });
-    localStorage.setItem("interests", JSON.stringify(allChecked))
-    checkedOne = true
-    checkEnableButton()
+    if (checkedInterests.length > 0) {
+      hint.innerHTML = ""
+      checkedInterests.forEach(el => {
+        allChecked.push(el)
+      });
+      checkboxes.forEach(box => {
+        if (allChecked.includes(box.value)) {
+          box.checked = true
+        }
+      });
+      localStorage.setItem("interests", JSON.stringify(allChecked))
+      checkedOne = true
+      checkEnableButton()
+    }
   }
-  localStorage.clear()
 })
