@@ -42,16 +42,12 @@
 			<div id="navbar" class="flex justify-between items-center">
 				<!-- logo -->
 				<div>
-					<a href="index.html">
-						<svg class="h-14" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-							xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1075.7 353.7"
-							enable-background="new 0 0 1075.7 353.7" xml:space="preserve">
-							<line display="none" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10"
-								x1="758.5" y1="378.5" x2="788.5" y2="351.5" />
+					<a href="index.php">
+						<svg class="h-14" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1075.7 353.7" enable-background="new 0 0 1075.7 353.7" xml:space="preserve">
+							<line display="none" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" x1="758.5" y1="378.5" x2="788.5" y2="351.5" />
 							<path display="none" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" d="M758.5,378.5l30-23.3
 	c0-101.8,0-203.5,0-305.3" />
-							<polyline display="none" fill="none" stroke="#000000" stroke-width="3"
-								stroke-miterlimit="10" points="574,440 760,379 789,353 
+							<polyline display="none" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" points="574,440 760,379 789,353 
 	" />
 							<g display="none">
 								<path display="inline" d="M-336.7-279.4c-1.7-0.5-1.8-2.8-0.1-3.4c10.5-3.8,20.3-7,29.8-11.2c32.9-13.9,67.7-26.1,101.3-39.6
@@ -64,12 +60,9 @@
 		C-152.7-145.8-141-156.6-132-169.7C-132-169.7-132-169.7-132-169.7z" />
 								<path display="inline" d="M-102,111h-3v-309.4c-3,4.1-6.2,8.3-9.3,12.3c-7.3,9.3-15.1,18.4-23.1,27.1l-2.6-1
 		c8-8.6,16.1-18.7,23.3-27.9c4.1-5.2,8.1-10.6,12-15.9l2.7-3.8V111z" />
-								<line display="inline" fill="none" stroke="#000000" stroke-miterlimit="10" x1="-126"
-									y1="-175.8" x2="-126" y2="128.5" />
-								<line display="inline" fill="none" stroke="#000000" stroke-miterlimit="10" x1="-117.8"
-									y1="-184.9" x2="-117.8" y2="122.4" />
-								<line display="inline" fill="none" stroke="#000000" stroke-miterlimit="10" x1="-109.5"
-									y1="-194" x2="-109.5" y2="116.4" />
+								<line display="inline" fill="none" stroke="#000000" stroke-miterlimit="10" x1="-126" y1="-175.8" x2="-126" y2="128.5" />
+								<line display="inline" fill="none" stroke="#000000" stroke-miterlimit="10" x1="-117.8" y1="-184.9" x2="-117.8" y2="122.4" />
+								<line display="inline" fill="none" stroke="#000000" stroke-miterlimit="10" x1="-109.5" y1="-194" x2="-109.5" y2="116.4" />
 								<g display="inline">
 									<path d="M-52.1-47.6c-0.5-0.5-0.7-1-0.7-1.7v-5.6c0-0.7,0.2-1.3,0.7-1.8c0.5-0.5,1-0.7,1.7-0.7h6.5c0.7,0,1.3,0.2,1.8,0.7
 			s0.7,1.1,0.7,1.8v5.6c0,0.7-0.2,1.3-0.7,1.7s-1.1,0.7-1.8,0.7h-6.5C-51.1-47-51.7-47.2-52.1-47.6z M-51.3,15.9
@@ -95,8 +88,7 @@
 			c-1.5-0.5-3.4-0.8-5.6-0.8c-3.3,0-5.8,0.7-7.6,2.1c-1.8,1.4-2.7,3.3-2.7,5.5c0,1.4,0.4,2.7,1.1,3.7s2.2,1.9,4.4,2.7
 			c2.2,0.8,5.3,1.7,9.4,2.6c6.5,1.4,11.1,3.4,13.9,5.9c2.7,2.6,4.1,5.8,4.1,9.8c0,2.9-0.9,5.6-2.6,8s-4.2,4.3-7.6,5.7
 			c-3.3,1.4-7.3,2.1-11.9,2.1C125.3,17.6,121.3,16.9,118.1,15.3z" />
-									<path
-										d="M168.8-1.5v-27.2h-8c-0.7,0-1.3-0.2-1.7-0.7s-0.7-1-0.7-1.7v-3.5c0-0.7,0.2-1.3,0.7-1.7s1-0.7,1.7-0.7h8v-17.2
+									<path d="M168.8-1.5v-27.2h-8c-0.7,0-1.3-0.2-1.7-0.7s-0.7-1-0.7-1.7v-3.5c0-0.7,0.2-1.3,0.7-1.7s1-0.7,1.7-0.7h8v-17.2
 			c0-0.7,0.2-1.3,0.7-1.7s1-0.7,1.7-0.7h4.8c0.7,0,1.3,0.2,1.7,0.7c0.4,0.5,0.7,1,0.7,1.7V-37h12.8c0.7,0,1.3,0.2,1.7,0.7
 			c0.4,0.5,0.7,1,0.7,1.7v3.5c0,0.7-0.2,1.3-0.7,1.7s-1,0.7-1.7,0.7h-12.8v26.5c0,3.4,0.6,6,1.8,7.8s3.1,2.6,5.8,2.6h6.3
 			c0.7,0,1.3,0.2,1.7,0.7s0.7,1,0.7,1.7v3.7c0,0.7-0.2,1.3-0.7,1.7s-1,0.7-1.7,0.7H185C174.2,16.6,168.8,10.6,168.8-1.5z" />
@@ -166,35 +158,29 @@
 	c0.3,1,5,16.7,7.1,25.5c0.2,0.7,0.5,2,0,3.5c-1.3,4.3-7.6,5.8-9.9,6.4c-1,0.2-15.7,3.6-20.5-4.3c-1.4-2.3-1.5-4.9-1.4-6.4
 	c1.4-8,3.9-15.7,5.3-23.7V305c-0.9-2-3.5-7-3.5-10.6c0-8.5,4.6-12,6-13.8c0.5-11.6,0.4-23.7,0.4-35" />
 							<g>
-								<path fill="#1E3A8A"
-									d="M559.2,97.2c-2.5,2.5-5.7,3.8-9.7,3.8s-7.2-1.3-9.7-3.8s-3.8-5.7-3.8-9.5c0-3.8,1.3-7.1,3.8-9.6
+								<path fill="#1E3A8A" d="M559.2,97.2c-2.5,2.5-5.7,3.8-9.7,3.8s-7.2-1.3-9.7-3.8s-3.8-5.7-3.8-9.5c0-3.8,1.3-7.1,3.8-9.6
 		c2.5-2.6,5.7-3.8,9.7-3.8s7.2,1.3,9.7,3.8c2.5,2.6,3.8,5.8,3.8,9.6S561.7,94.7,559.2,97.2z M538.4,193.5v-81.9h22.2v81.9H538.4z" />
-								<path fill="#1E3A8A"
-									d="M603.4,82.5l32.5,43l32.5-43h21v111h-21.9v-75.7L636.3,158h-0.6l-31.3-40.2v75.7h-21.9v-111H603.4z" />
-								<path fill="#1E3A8A"
-									d="M735.9,195.4c-9.2,0-16.3-2.3-21.3-6.9c-5-4.6-7.5-10.7-7.5-18.3c0-7.2,2.6-12.9,7.8-17.1
+								<path fill="#1E3A8A" d="M603.4,82.5l32.5,43l32.5-43h21v111h-21.9v-75.7L636.3,158h-0.6l-31.3-40.2v75.7h-21.9v-111H603.4z" />
+								<path fill="#1E3A8A" d="M735.9,195.4c-9.2,0-16.3-2.3-21.3-6.9c-5-4.6-7.5-10.7-7.5-18.3c0-7.2,2.6-12.9,7.8-17.1
 		c5.2-4.3,13.2-7.2,24-8.9l21.9-3.4v-0.8c0-8-4.9-12-14.7-12c-9.2,0-14.2,3.3-15.2,10H709c0.7-8,4.1-14.8,10-20.2s14.9-8.1,26.9-8.1
 		c11.9,0,20.8,2.7,26.9,8c6,5.3,9.1,12.8,9.1,22.5v38.6c0,6.1,0.8,11.1,2.3,14.7h-21.4c-0.1,0-0.2-0.4-0.3-1.1
 		c-0.1-0.7-0.2-1.9-0.4-3.4c-0.2-1.5-0.2-3.1-0.2-4.6C756.7,191.8,748,195.4,735.9,195.4z M760.7,156.8l-19.7,3.3
 		c-8.4,1.4-12.5,4.6-12.5,9.6c0,5.7,4.1,8.5,12.3,8.5c6.4,0,11.3-1.6,14.7-5c3.4-3.3,5.2-7.7,5.2-13.2L760.7,156.8L760.7,156.8z" />
-								<path fill="#1E3A8A"
-									d="M830.8,195.4c-22.3,0-34.1-9.5-35.5-28.5h22.5c0.2,3,1.4,5.6,3.7,7.6s5.5,3.1,9.9,3.1c4.2,0,7.3-0.7,9.5-2
+								<path fill="#1E3A8A" d="M830.8,195.4c-22.3,0-34.1-9.5-35.5-28.5h22.5c0.2,3,1.4,5.6,3.7,7.6s5.5,3.1,9.9,3.1c4.2,0,7.3-0.7,9.5-2
 		s3.3-3.2,3.3-5.5c0-2.5-1.6-4.4-4.7-5.6s-6.9-2.2-11.3-2.9c-4.4-0.7-8.9-1.7-13.4-3s-8.3-3.7-11.4-7.4c-3.1-3.6-4.7-8.5-4.7-14.5
 		c0-7.6,3-14,9.1-19.2c6-5.2,14-7.8,23.8-7.8c11.2,0,19.4,2.8,24.9,8.4c5.4,5.6,8.3,12,8.8,19.2h-21.4c-0.2-2.8-1.4-5.2-3.5-7
 		c-2.1-1.9-5.1-2.8-8.8-2.8c-3.5,0-6.3,0.8-8.3,2.3c-2,1.5-3,3.4-3,5.7c0,2.5,1.6,4.3,4.7,5.5c3.1,1.1,6.9,2.1,11.3,2.7
 		c4.4,0.7,8.9,1.6,13.3,2.9s8.2,3.8,11.3,7.5s4.7,8.8,4.7,15c0,7.6-3.1,13.9-9.3,18.8C850,192.9,841.5,195.4,830.8,195.4z" />
 								<path fill="#1E3A8A" d="M918.5,173.8v19.2c-2.5,0.6-6,0.9-10.5,0.9c-16.8,0-25.2-8.3-25.2-25v-39.9h-11.1v-17.5h11.1V91.3H905v20.3
 		h13.6v17.5H905v37.5c0,5.3,2.8,8,8.3,8L918.5,173.8z" />
-								<path fill="#1E3A8A"
-									d="M1008.5,159h-59.4c0.7,5.6,2.8,9.9,6.3,12.9c3.4,3,8,4.5,13.6,4.5c3.5,0,6.8-0.8,9.6-2.3
+								<path fill="#1E3A8A" d="M1008.5,159h-59.4c0.7,5.6,2.8,9.9,6.3,12.9c3.4,3,8,4.5,13.6,4.5c3.5,0,6.8-0.8,9.6-2.3
 		c2.9-1.5,4.9-3.7,6.2-6.6h22.4c-2.4,8.3-7.1,15.1-14.2,20.3c-7,5.2-15.2,7.7-24.6,7.7c-12.1,0-22-4-29.7-12
 		c-7.7-8-11.6-18.3-11.6-31c0-12.2,3.9-22.4,11.6-30.5s17.6-12.2,29.5-12.2c12,0,21.8,4,29.3,12.1s11.3,18.3,11.3,30.6L1008.5,159z
 		 M968,127.6c-5,0-9.1,1.4-12.3,4.1s-5.3,6.5-6.3,11.3h37.2c-0.8-4.7-2.9-8.4-6.1-11.3C977.3,129,973.1,127.6,968,127.6z" />
 								<path fill="#1E3A8A" d="M1070.1,111v20.8c-1.6-0.3-3-0.5-4.4-0.5c-6.6,0-11.5,1.7-14.8,5.2c-3.3,3.4-4.9,8.9-4.9,16.3v40.8h-22.2
 		v-81.9h20.5v10.6c4.7-7.6,12.4-11.4,23.1-11.4L1070.1,111z" />
 							</g>
-							<path display="none" fill="#CDDDEA"
-								d="M145.8-3.5c-0.3-5.8,2.4-10.5,6-14.5c18.5-20.8,40.2-33.8,69.5-34c21-0.1,39.2,6.5,57.3,15.3
+							<path display="none" fill="#CDDDEA" d="M145.8-3.5c-0.3-5.8,2.4-10.5,6-14.5c18.5-20.8,40.2-33.8,69.5-34c21-0.1,39.2,6.5,57.3,15.3
 	c19.2,9.3,39.4,13.9,60.5,16.4c14.9,1.8,29.8,0.7,44.6,1.4c3.9,0.2,7.7,0,11.3-1.6c5.1-2.2,7.8-0.3,8.5,5c2.5,18,5.1,35.9,7.7,53.9
 	c3.8,25.5,7.6,51.1,11.4,76.6c3.9,26,7.8,52.1,11.8,78.1c1.6,10.6,3.1,21.3,4.9,31.9c1.9,11.4-0.4,14.4-12.1,15.6
 	c-22.7,2.4-44.8-1.3-67-5.4c-28.3-5.2-53.9-18.2-81-26.7c-32.2-10.1-63.6-9.6-94.1,6c-13.6,7-23.4,18.3-33.8,28.9
@@ -285,8 +271,7 @@
 		c1.2,0.2,2.3,0.5,3.5,0.8c1.2,0.3,2.2,0.7,3.2,1.2c1,0.5,1.8,1.3,2.4,2.3c0.6,1,0.9,2.3,0.9,3.8c0,2.4-1,4.3-2.9,5.8
 		c-1.9,1.5-4.4,2.2-7.5,2.2c-3.4,0-5.9-0.8-7.6-2.5s-2.6-3.8-2.7-6.4h2.8c0.2,2.1,0.9,3.6,2.3,4.7
 		C940.5,209.4,942.3,209.9,944.5,209.9z" />
-								<path display="inline" fill="#1F4690"
-									d="M962.8,220l3.4-8.1l-8.3-19.9h3l6.7,16.5l6.9-16.5h2.9l-11.8,28L962.8,220z" />
+								<path display="inline" fill="#1F4690" d="M962.8,220l3.4-8.1l-8.3-19.9h3l6.7,16.5l6.9-16.5h2.9l-11.8,28L962.8,220z" />
 								<path display="inline" fill="#1F4690" d="M987.9,212.4c-2.7,0-4.7-0.6-6-1.9c-1.3-1.3-2-2.9-2.2-4.8h2.8c0.1,1.3,0.6,2.4,1.5,3.1
 		c0.9,0.8,2.2,1.1,3.8,1.1c1.6,0,2.9-0.3,3.8-0.9c0.9-0.6,1.4-1.4,1.4-2.5c0-1.1-0.4-1.8-1.3-2.3c-0.8-0.5-1.9-0.9-3.1-1
 		s-2.4-0.4-3.6-0.6c-1.2-0.3-2.3-0.8-3.1-1.6c-0.8-0.8-1.3-2-1.3-3.5c0-1.6,0.7-3,2-4.1c1.3-1.1,3.1-1.7,5.4-1.7
@@ -309,38 +294,30 @@
 				</div>
 				<div class="md:block flex justify-between hidden">
 					<!-- home -->
-					<a class="capitalize text-sm text-gray-800 hover:text-blue-800 px-4 py-2 hover:border-b-2 hover:border-b-blue-800 duration-200 ease-in-out h-full"
-						href="index.html">home</a>
+					<a class="capitalize text-sm text-gray-800 hover:text-blue-800 px-4 py-2 hover:border-b-2 hover:border-b-blue-800 duration-200 ease-in-out h-full" href="index.php">home</a>
 					<!-- about us -->
-					<a class="capitalize text-sm text-gray-800 duration-200 ease-in-out hover:text-blue-800 px-4 py-2 hover:border-b-2 hover:border-b-blue-800"
-						href="#aboutUs">about
+					<a class="capitalize text-sm text-gray-800 duration-200 ease-in-out hover:text-blue-800 px-4 py-2 hover:border-b-2 hover:border-b-blue-800" href="#aboutUs">about
 						us</a>
 					<!-- features -->
-					<a class="capitalize text-sm text-gray-800 duration-200 ease-in-out hover:text-blue-800 px-4 py-2 hover:border-b-2 hover:border-b-blue-800"
-						href="#features">features</a>
+					<a class="capitalize text-sm text-gray-800 duration-200 ease-in-out hover:text-blue-800 px-4 py-2 hover:border-b-2 hover:border-b-blue-800" href="#features">features</a>
 					<!-- contact us -->
-					<a class="capitalize text-sm text-gray-800 duration-200 ease-in-out hover:text-blue-800 px-4 py-2 hover:border-b-2 hover:border-b-blue-800"
-						href="#contactUs">contact
+					<a class="capitalize text-sm text-gray-800 duration-200 ease-in-out hover:text-blue-800 px-4 py-2 hover:border-b-2 hover:border-b-blue-800" href="#contactUs">contact
 						us</a>
 				</div>
 				<!-- sign in -->
 				<div class="hidden md:block">
-					<button
-						class="font-medium bg-amber-400 text-white px-6 py-1 rounded-xl shadow-md border-amber-500 border-2 hover:bg-amber-500 duration-300 ease-in-out"
-						onclick="window.location.href='signin.html'">Sign
+					<button class="font-medium bg-amber-400 text-white px-6 py-1 rounded-xl shadow-md border-amber-500 border-2 hover:bg-amber-500 duration-300 ease-in-out" onclick="window.location.href='signin.php'">Sign
 						In</button>
 				</div>
 				<div class="md:hidden">
-					<svg class="text-gray-700 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-						stroke="currentColor" stroke-width="2">
+					<svg class="text-gray-700 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
 					</svg>
 				</div>
 			</div>
 			<!-- text -->
 			<div class="mt-20 sm:-mx-6">
-				<h1
-					class="text-2xl font-bold text-gray-700 rounded-lg border-l-8 border-amber-400 px-2 bg-amber-100 w-max sm:mx-6">
+				<h1 class="text-2xl font-bold text-gray-700 rounded-lg border-l-8 border-amber-400 px-2 bg-amber-100 w-max sm:mx-6">
 					Expand your
 					knowledge
 				</h1>
@@ -364,9 +341,7 @@
 					</div>
 				</div>
 				<div class="max-h-5">
-					<button
-						class="capitalize sm:mx-6 bg-blue-800 border-b-4 md:hover:border-b-8 md:hover:-translate-y-1 md:hover:shadow-lg border-amber-200 px-6 py-2 rounded-xl text-gray-100 shadow-md mt-6  duration-100 ease-in"
-						onclick="window.location.href ='signup.html'">join
+					<button class="capitalize sm:mx-6 bg-blue-800 border-b-4 md:hover:border-b-8 md:hover:-translate-y-1 md:hover:shadow-lg border-amber-200 px-6 py-2 rounded-xl text-gray-100 shadow-md mt-6  duration-100 ease-in" onclick="window.location.href ='signup.php'">join
 						us
 						now!</button>
 				</div>
@@ -376,8 +351,7 @@
 	<!-- main content -->
 	<main class="bg-[#FCFCFC] pt-10 flex flex-col items-center w-full">
 		<!-- about us -->
-		<h2 id="aboutUs"
-			class="text-center font-bold text-2xl capitalize text-gray-800 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full">
+		<h2 id="aboutUs" class="text-center font-bold text-2xl capitalize text-gray-800 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full">
 			about
 			us</h2>
 		<div class="max-w-6xl pb-10 ">
@@ -387,21 +361,17 @@
 			</p>
 		</div>
 		<!-- features -->
-		<h2 id="features"
-			class="text-center font-bold text-2xl capitalize text-gray-800 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full">
+		<h2 id="features" class="text-center font-bold text-2xl capitalize text-gray-800 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full">
 			features</h2>
 		<!-- container of four cards -->
 		<div class="max-w-6xl pb-10 pt-3">
 			<div class="flex flex-col sm:flex-row sm:-mx-4">
 				<!-- CARD 1 -->
-				<div
-					class="mx-3 bg-amber-50 sm:w-1/2 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
+				<div class="mx-3 bg-amber-50 sm:w-1/2 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
 					<div class="flex justify-center items-center mb-3">
 						<div class="bg-amber-200 p-2 rounded-full w-16">
 							<svg class="h-12 fill-amber-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-								<path
-									d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z"
-									fill-rule="evenodd" clip-rule="evenodd" />
+								<path d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z" fill-rule="evenodd" clip-rule="evenodd" />
 							</svg>
 						</div>
 						<div class="text-lg font-bold text-center ml-3 text-gray-800">Title</div>
@@ -413,14 +383,11 @@
 					</div>
 				</div>
 				<!-- CARD 2 -->
-				<div
-					class="mx-3 bg-amber-50 sm:w-1/2 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
+				<div class="mx-3 bg-amber-50 sm:w-1/2 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
 					<div class="flex justify-center items-center mb-3">
 						<div class="bg-amber-200 p-2 rounded-full w-16">
 							<svg class="h-12 fill-amber-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-								<path
-									d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z"
-									fill-rule="evenodd" clip-rule="evenodd" />
+								<path d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z" fill-rule="evenodd" clip-rule="evenodd" />
 							</svg>
 						</div>
 						<div class="text-lg font-bold text-center ml-3 text-gray-800">Title</div>
@@ -432,14 +399,11 @@
 					</div>
 				</div>
 				<!-- CARD 3 -->
-				<div
-					class="mx-3 bg-amber-50 sm:w-1/2 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
+				<div class="mx-3 bg-amber-50 sm:w-1/2 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
 					<div class="flex justify-center items-center mb-3">
 						<div class="bg-amber-200 p-2 rounded-full w-16">
 							<svg class="h-12 fill-amber-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-								<path
-									d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z"
-									fill-rule="evenodd" clip-rule="evenodd" />
+								<path d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z" fill-rule="evenodd" clip-rule="evenodd" />
 							</svg>
 						</div>
 						<div class="text-lg font-bold text-center ml-3 text-gray-800">Title</div>
@@ -451,14 +415,11 @@
 					</div>
 				</div>
 				<!-- CARD 4 -->
-				<div
-					class="mx-3 bg-amber-50 sm:w-1/2 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
+				<div class="mx-3 bg-amber-50 sm:w-1/2 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
 					<div class="flex justify-center items-center mb-3">
 						<div class="bg-amber-200 p-2 rounded-full w-16">
 							<svg class="h-12 fill-amber-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-								<path
-									d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z"
-									fill-rule="evenodd" clip-rule="evenodd" />
+								<path d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z" fill-rule="evenodd" clip-rule="evenodd" />
 							</svg>
 						</div>
 						<div class="text-lg font-bold text-center ml-3 text-gray-800">Title</div>
@@ -478,50 +439,36 @@
 							skills.</span>
 					</p>
 					<p class="rounded-md text-blue-100 mt-3 flex items-center">
-						<svg class="h-5 inline mr-1" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-							viewBox="0 0 20 20" fill="currentColor">
+						<svg class="h-5 inline mr-1" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
 							<path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
 							<path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
 						</svg>
 						iMaster@info.com
 					</p>
 					<p class="rounded-md text-blue-100 mt-1">
-						<svg class="h-5 inline mr-1" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-							viewBox="0 0 20 20" fill="currentColor">
-							<path
-								d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+						<svg class="h-5 inline mr-1" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+							<path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
 						</svg>
 						(+966) 59000000
 					</p>
 				</div>
 				<div class="md:w-3/4 w-full">
-					<h2 id="contactUs"
-						class="text-center font-bold text-2xl capitalize text-gray-100 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full mb-6">
+					<h2 id="contactUs" class="text-center font-bold text-2xl capitalize text-gray-100 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full mb-6">
 						contact
 						us</h2>
 					<form action="#" method="POST" class="flex flex-col items-center">
-						<input type="text" id="fullName" placeholder="Your name"
-							class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50">
-						<input type="email" id="email" placeholder="Your email"
-							class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50">
-						<input type="text" id="subject" placeholder="Email subject"
-							class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50">
-						<textarea placeholder="Message" id="msg"
-							class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50"></textarea>
-						<button type="submit"
-							class="bg-blue-300 px-6 py-3 w-3/4 rounded-2xl md:hover:bg-blue-400 duration-200 ease-in-out font-medium text-blue-900 hover:text-blue-50">Send
+						<input type="text" id="fullName" placeholder="Your name" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50">
+						<input type="email" id="email" placeholder="Your email" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50">
+						<input type="text" id="subject" placeholder="Email subject" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50">
+						<textarea placeholder="Message" id="msg" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50"></textarea>
+						<button type="submit" class="bg-blue-300 px-6 py-3 w-3/4 rounded-2xl md:hover:bg-blue-400 duration-200 ease-in-out font-medium text-blue-900 hover:text-blue-50">Send
 							message</button>
 					</form>
 				</div>
 			</div>
 		</div>
-		<button id="goUp" class="opacity-0 fixed bottom-5 right-8 duration-200 ease-in"><svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-10 text-amber-600 bg-white rounded-full hover:text-amber-400" viewBox="0 0 20 20"
-				fill="currentColor">
-				<path fill-rule="evenodd"
-					d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z"
-					clip-rule="evenodd" />
+		<button id="goUp" class="opacity-0 fixed bottom-5 right-8 duration-200 ease-in"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 text-amber-600 bg-white rounded-full hover:text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+				<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd" />
 			</svg></button>
 	</main>
 	<footer class="bg-blue-900 pt-20 pb-10 text-gray-100 w-full flex flex-col ">
@@ -531,12 +478,15 @@
 		//Get the button:
 		let myButton = document.getElementById("goUp");
 		// When the user clicks on the button, scroll to the top of the document
-		myButton.addEventListener("click", function () {
+		myButton.addEventListener("click", function() {
 			document.body.scrollTop = 0; // For Safari
 			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 		})
 		// When the user scrolls down 20px from the top of the document, show the button
-		window.onscroll = function () { scrollFunction() };
+		window.onscroll = function() {
+			scrollFunction()
+		};
+
 		function scrollFunction() {
 			if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
 				myButton.style.opacity = "100";
