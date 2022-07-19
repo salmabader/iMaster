@@ -75,9 +75,9 @@ inputPassword.addEventListener("keyup", function () {
   }
 
   if ((!isCorrectLen || !isCapital || !isSmall || !isSpecial) && inputPassword.value.length > 0) {
-    passError.innerHTML = `<p class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    passError.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>  Password does not satisfy the conditions</p>`
+  </svg>  Password does not satisfy the conditions`
   }
   else {
     passError.innerHTML = ""
@@ -105,18 +105,34 @@ const signupBtn = document.getElementById("signupBtn")
 const hint = document.getElementById("hint")
 const checkboxes = document.querySelectorAll('input[type="checkbox"]')
 let checkedOne = false
+let allChecked = []
+let interestValue = ""
 // Use Array.forEach to add an event listener to each checkbox.
 checkboxes.forEach(function (checkbox) {
   checkbox.addEventListener('change', function () {
-    hint.innerHTML = ""
+    interestValue = checkbox.value
     checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked)
     if (!checkedOne) {
       hint.textContent = "please choose at least one"
+    } else {
+      hint.innerHTML = ""
     }
+    // in case already check but the page is reload due to php
+    if (checkbox.checked) {
+      allChecked.push(interestValue)
+    } else {
+      let i = allChecked.indexOf(interestValue)
+      if (i == 0) {
+        allChecked.shift()
+      } else {
+        allChecked.splice(i, i)
+      }
+    }
+    localStorage.setItem("interests", JSON.stringify(allChecked))
   })
 });
 
-// ----------- to check if there is one checkbox selected -----------
+// ----------- to show and hide the password -----------
 const eye = document.getElementById("eyeIcon")
 eye.addEventListener("click", function () {
   if (eye.children[0].id === "opened") {
@@ -141,9 +157,9 @@ const emailError = document.getElementById("emailError")
 let isValidEmail = false
 inputEmail.addEventListener("keyup", function () {
   if (inputEmail.value.length > 0 && !validateEmail(inputEmail.value)) {
-    emailError.innerHTML = `<p class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    emailError.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>  Email is invalid</p>`
+  </svg>  Email is invalid`
     isValidEmail = false
   }
   else {
@@ -163,9 +179,9 @@ const usernameError = document.getElementById("usernameError")
 let isValidUN = false
 inputUsername.addEventListener("keyup", function () {
   if (inputUsername.value.length > 0 && !isValidUsername(inputUsername.value)) {
-    usernameError.innerHTML = `<p class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    usernameError.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>  Invalid username</p>`
+  </svg>  Invalid username`
     isValidUN = false
   }
   else {
@@ -180,10 +196,6 @@ function isValidUsername(str) {
 // ----------- activate submit button -----------
 const createAccountBtn = document.getElementById("signupBtn")
 const inputFeilds = document.querySelectorAll("input");
-
-// run this function whenever the values of any of the above 4 inputs change.
-// this is to check if the input for all 4 is valid.  if so, enable submitBtn.
-// otherwise, disable it.
 const checkEnableButton = () => {
   createAccountBtn.disabled = !(
     inputFeilds[0].value && inputFeilds[1].value && isValidUN && (isCapital && isSmall && isSpecial && isCorrectLen) && isValidEmail && checkedOne
@@ -194,3 +206,27 @@ inputFeilds.forEach(function (inp) {
     checkEnableButton()
   })
 });
+window.addEventListener('load', function () {
+  isValidUN = true
+  isCapital = true
+  isSmall = true
+  isSpecial = true
+  isCorrectLen = true
+  isValidEmail = true
+  const checkedInterests = JSON.parse(localStorage.getItem("interests"))
+  if (checkedInterests) {
+    hint.innerHTML = ""
+    checkedInterests.forEach(el => {
+      allChecked.push(el)
+    });
+    checkboxes.forEach(box => {
+      if (allChecked.includes(box.value)) {
+        box.checked = true
+      }
+    });
+    localStorage.setItem("interests", JSON.stringify(allChecked))
+    checkedOne = true
+    checkEnableButton()
+  }
+  localStorage.clear()
+})
