@@ -1,10 +1,10 @@
 // ----------- check password -----------
-let inputPassword = document.getElementById("signup_password")
-let passlength = document.getElementById("passLength")
-let capitalL = document.getElementById("passCL")
-let smallL = document.getElementById("passSL")
-let specialChar = document.getElementById("passSC")
-let passError = document.getElementById("passwordError")
+const inputPassword = document.getElementById("signup_password")
+const passlength = document.getElementById("passLength")
+const capitalL = document.getElementById("passCL")
+const smallL = document.getElementById("passSL")
+const specialChar = document.getElementById("passSC")
+const passError = document.getElementById("passwordError")
 let isCorrectLen = false
 let isCapital = false
 let isSmall = false
@@ -101,14 +101,15 @@ function isSpecialChar(str) {
 // }
 
 // ----------- to check if there is one checkbox selected -----------
-let signupBtn = document.getElementById("signupBtn")
-let hint = document.getElementById("hint")
-let checkboxes = document.querySelectorAll('input[type="checkbox"]')
+const signupBtn = document.getElementById("signupBtn")
+const hint = document.getElementById("hint")
+const checkboxes = document.querySelectorAll('input[type="checkbox"]')
+let checkedOne = false
 // Use Array.forEach to add an event listener to each checkbox.
 checkboxes.forEach(function (checkbox) {
   checkbox.addEventListener('change', function () {
     hint.innerHTML = ""
-    let checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked)
+    checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked)
     if (!checkedOne) {
       hint.textContent = "please choose at least one"
     }
@@ -116,7 +117,7 @@ checkboxes.forEach(function (checkbox) {
 });
 
 // ----------- to check if there is one checkbox selected -----------
-let eye = document.getElementById("eyeIcon")
+const eye = document.getElementById("eyeIcon")
 eye.addEventListener("click", function () {
   if (eye.children[0].id === "opened") {
     eye.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-amber-500 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
@@ -135,16 +136,19 @@ eye.addEventListener("click", function () {
 })
 
 // ----------- to check if the email is valid -----------
-let inputEmail = document.getElementById("email")
-let emailError = document.getElementById("emailError")
+const inputEmail = document.getElementById("email")
+const emailError = document.getElementById("emailError")
+let isValidEmail = false
 inputEmail.addEventListener("keyup", function () {
   if (inputEmail.value.length > 0 && !validateEmail(inputEmail.value)) {
     emailError.innerHTML = `<p class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
   </svg>  Email is invalid</p>`
+    isValidEmail = false
   }
   else {
     emailError.innerHTML = ""
+    isValidEmail = true
   }
 })
 const validateEmail = (email) => {
@@ -154,18 +158,39 @@ const validateEmail = (email) => {
 };
 
 // ----------- to check if the username is valid -----------
-let inputUsername = document.getElementById("signup_usename")
-let usernameError = document.getElementById("usernameError")
+const inputUsername = document.getElementById("signup_usename")
+const usernameError = document.getElementById("usernameError")
+let isValidUN = false
 inputUsername.addEventListener("keyup", function () {
   if (inputUsername.value.length > 0 && !isValidUsername(inputUsername.value)) {
     usernameError.innerHTML = `<p class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
   </svg>  Invalid username</p>`
+    isValidUN = false
   }
   else {
     usernameError.innerHTML = ""
+    isValidUN = true
   }
 })
 function isValidUsername(str) {
   return /[a-zA-Z0-9_]{5,15}$/.test(str) && isNaN(str)
 }
+
+// ----------- activate submit button -----------
+const createAccountBtn = document.getElementById("signupBtn")
+const inputFeilds = document.querySelectorAll("input");
+
+// run this function whenever the values of any of the above 4 inputs change.
+// this is to check if the input for all 4 is valid.  if so, enable submitBtn.
+// otherwise, disable it.
+const checkEnableButton = () => {
+  createAccountBtn.disabled = !(
+    inputFeilds[0].value && inputFeilds[1].value && isValidUN && (isCapital && isSmall && isSpecial && isCorrectLen) && isValidEmail && checkedOne
+  )
+}
+inputFeilds.forEach(function (inp) {
+  inp.addEventListener('change', function () {
+    checkEnableButton()
+  })
+});

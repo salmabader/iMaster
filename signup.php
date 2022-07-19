@@ -35,7 +35,7 @@
     </style>
 </head>
 
-<body class="bg-amber-50 flex flex-col items-center justify-center w-full h-screen text-gray-700 scrollbar">
+<body class="bg-amber-50 flex flex-col items-center justify-center w-full h-screen overflow-x-hidden text-gray-700 scrollbar">
     <div class="bg-white w-3/4 flex rounded-lg border-amber-300 border-x-2 shadow-md">
         <!-- left side -->
         <div class="lg:w-2/3 w-full flex flex-col lg:mr-4 mr-0">
@@ -101,7 +101,7 @@
                 <!-- intrests -->
                 <div class="w-full mt-3">
                     <label class="block capitalize font-semibold">intrests</label>
-                    <p id="hint" class="block text-xs text-blue-600 bg-gray-200 w-fit rounded-r-full px-2">please choose at least one</p>
+                    <p id="hint" class="block text-xs text-gray-500 bg-gray-200 w-fit rounded-r-full px-2">please choose at least one</p>
                     <div class="flex flex-wrap flex-col lg:flex-row mt-1">
                         <div class="lg:w-1/3">
                             <input type="checkbox" name="" id="programming" value="programming" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="programming" class="capitalize"> programming</label>
@@ -125,7 +125,7 @@
                     <div class="text-red-500 text-sm" id="checkboxError"></div>
                 </div>
                 <!-- button -->
-                <button type="submit" id="signupBtn" class="mt-10 bg-amber-400 text-amber-900 px-14 py-3 rounded-full shadow-md font-semibold hover:text-white hover:bg-amber-500 duration-100 ease-in-out">Create
+                <button type="submit" id="signupBtn" class="mt-10 bg-amber-400 text-amber-900 px-14 py-3 rounded-full shadow-md font-semibold hover:text-white hover:bg-amber-500 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" disabled>Create
                     account</button>
             </form>
         </div>
