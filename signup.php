@@ -101,7 +101,7 @@
                 <!-- intrests -->
                 <div class="w-full mt-3">
                     <label class="block capitalize font-semibold">intrests</label>
-                    <p id="hint" class="block text-xs text-red-600 bg-gray-200 w-fit rounded-r-full px-2">please choose at least one</p>
+                    <p id="hint" class="block text-xs text-blue-600 bg-gray-200 w-fit rounded-r-full px-2">please choose at least one</p>
                     <div class="flex flex-wrap flex-col lg:flex-row mt-1">
                         <div class="lg:w-1/3">
                             <input type="checkbox" name="" id="programming" value="programming" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="programming" class="capitalize"> programming</label>
