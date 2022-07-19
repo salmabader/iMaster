@@ -38,7 +38,7 @@
             <p class="text-xs text-right pt-6 pr-6">Already have an account? <span class="text-blue-600 hover:underline"><a href="signin.html">Sign
                         in</a></span></p>
             <p class="text-center pt-3 capitalize font-medium text-lg mb-4">create student account</p>
-            <form action="#" method="POST" class="flex flex-wrap justify-center p-12">
+            <div class="flex flex-wrap justify-center p-12">
                 <!-- first name -->
                 <div class="flex w-1/2">
                     <div class="w-full ">
@@ -62,7 +62,17 @@
                 <div class="flex w-1/2">
                     <div class="w-full ml-2 mt-3">
                         <label for="password" class="block capitalize font-semibold">password</label>
-                        <input type="password" id="signup_password" placeholder="********" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right">
+
+                        <div class="relative">
+                            <div id="eyeIcon" class="eyeIcon flex absolute inset-y-0 right-0 items-center pr-3 cursor-pointer">
+                                <svg id="opened" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400 hover:text-amber-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                    <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <input type="password" id="signup_password" placeholder="••••••••" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right">
+                        </div>
+                        <div class="text-red-500 text-sm mt-2" id="passwordError"></div>
                     </div>
                 </div>
 
@@ -81,35 +91,38 @@
                 <div class="w-full mt-3">
                     <label for="email" class="block capitalize font-semibold">email</label>
                     <input type="email" id="email" placeholder="example@email.com" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800">
+                    <div class="text-red-500 text-sm mt-2" id="emailError"></div>
                 </div>
                 <!-- intrests -->
                 <div class="w-full mt-3">
                     <label class="block capitalize font-semibold">intrests</label>
+                    <p class="block text-xs text-gray-600 bg-gray-200 w-fit rounded-r-full px-2">please choose at least one</p>
                     <div class="flex flex-wrap flex-col lg:flex-row mt-1">
                         <div class="lg:w-1/3">
-                            <input type="checkbox" name="" id="programming" value="programming" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="programming" class="capitalize"> programming</label>
+                            <input type="checkbox" name="" id="programming" value="programming" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="programming" class="capitalize"> programming</label>
                         </div>
                         <div class="lg:w-1/3">
-                            <input type="checkbox" name="" id="mathematics" value="mathematics" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="mathematics" class="capitalize"> mathematics</label>
+                            <input type="checkbox" name="" id="mathematics" value="mathematics" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="mathematics" class="capitalize"> mathematics</label>
                         </div>
                         <div class="lg:w-1/3">
-                            <input type="checkbox" name="" id="design" value="design" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="design" class="capitalize"> design</label>
+                            <input type="checkbox" name="" id="design" value="design" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300 focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="design" class="capitalize"> design</label>
                         </div>
                         <div class="lg:w-1/3">
-                            <input type="checkbox" name="" id="marketing" value="marketing" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="marketing" class="capitalize"> marketing</label>
+                            <input type="checkbox" name="" id="marketing" value="marketing" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300 focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="marketing" class="capitalize"> marketing</label>
                         </div>
                         <div class="lg:w-1/3">
-                            <input type="checkbox" name="" id="software" value="software" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="software" class="capitalize"> IT & Software</label>
+                            <input type="checkbox" name="" id="software" value="software" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300 focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="software" class="capitalize"> IT & Software</label>
                         </div>
                         <div class="lg:w-1/3">
-                            <input type="checkbox" name="" id="business" value="business" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="business" class="capitalize"> business</label>
+                            <input type="checkbox" name="" id="business" value="business" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="business" class="capitalize"> business</label>
                         </div>
                     </div>
+                    <div class="text-red-500 text-sm" id="checkboxError"></div>
                 </div>
                 <!-- button -->
-                <button type="submit" class="mt-10 bg-amber-400 text-amber-900 px-14 py-3 rounded-full shadow-md font-semibold hover:text-white hover:bg-amber-500 duration-100 ease-in-out">Create
+                <button type="submit" id="signupBtn" class="mt-10 bg-amber-400 text-amber-900 px-14 py-3 rounded-full shadow-md font-semibold hover:text-white hover:bg-amber-500 duration-100 ease-in-out">Create
                     account</button>
-            </form>
+            </div>
         </div>
 
         <!-- right side -->
