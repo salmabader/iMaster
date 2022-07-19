@@ -102,23 +102,18 @@ function isSpecialChar(str) {
 
 // ----------- to check if there is one checkbox selected -----------
 let signupBtn = document.getElementById("signupBtn")
-let error = document.getElementById("checkboxError")
+let hint = document.getElementById("hint")
 let checkboxes = document.querySelectorAll('input[type="checkbox"]')
-signupBtn.addEventListener("click", function () {
-  let checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked)
-  if (!checkedOne) {
-    error.innerHTML = `<p class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>  Please choose one of the interests</p>`
-  }
-})
 // Use Array.forEach to add an event listener to each checkbox.
 checkboxes.forEach(function (checkbox) {
   checkbox.addEventListener('change', function () {
-    error.innerHTML = ""
+    hint.innerHTML = ""
+    let checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked)
+    if (!checkedOne) {
+      hint.textContent = "please choose at least one"
+    }
   })
 });
-
 
 // ----------- to check if there is one checkbox selected -----------
 let eye = document.getElementById("eyeIcon")
@@ -157,3 +152,20 @@ const validateEmail = (email) => {
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   );
 };
+
+// ----------- to check if the username is valid -----------
+let inputUsername = document.getElementById("signup_usename")
+let usernameError = document.getElementById("usernameError")
+inputUsername.addEventListener("keyup", function () {
+  if (inputUsername.value.length > 0 && !isValidUsername(inputUsername.value)) {
+    usernameError.innerHTML = `<p class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>  Invalid username</p>`
+  }
+  else {
+    usernameError.innerHTML = ""
+  }
+})
+function isValidUsername(str) {
+  return /[a-zA-Z0-9_]{5,15}$/.test(str) && isNaN(str)
+}
