@@ -467,7 +467,8 @@ if (isset($_POST['createAccountBtn'])) {
         <p class="text-sm text-gray-600 text-center">Copyright © 2022 iMaster</p>
     </footer>
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
-    <script src="js/student_createAccount.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/student_create.js"></script>
 </body>
 
 </html>
