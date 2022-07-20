@@ -65,7 +65,7 @@ if (isset($_POST['createAccountBtn'])) {
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
     <link rel="icon" href="images/icon.svg" type="image/x-icon">
-    <title>Create a student account</title>
+    <title>Apply as instructor</title>
     <style>
         .scrollbar::-webkit-scrollbar {
             width: 10px;
@@ -99,12 +99,12 @@ if (isset($_POST['createAccountBtn'])) {
 </head>
 
 <body class="bg-amber-50 flex flex-col items-center justify-center w-full h-screen overflow-x-hidden text-gray-700 scrollbar">
-    <div class="bg-white w-3/4 h-4/5 md:h-fit flex rounded-lg border-amber-300 border-x-2 shadow-md">
+    <div class="bg-white w-3/4 flex rounded-lg border-amber-300 border-x-2 shadow-md h-4/5">
         <!-- left side -->
         <div class="lg:w-2/3 w-full flex flex-col lg:mr-4 mr-0">
             <p class="text-xs text-right pt-6 pr-6">Already have an account? <span class="text-blue-600 hover:underline"><a href="signin.php">Sign
                         in</a></span></p>
-            <p class="text-center pt-3 capitalize font-medium text-xl mb-4">create student account</p>
+            <p class="text-center pt-3 capitalize font-medium text-xl mb-4 ">apply as instructor</p>
             <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" class="flex flex-wrap justify-center px-12 pb-12 overflow-y-auto scrollbar">
                 <!-- first name -->
                 <div class="flex w-1/2">
@@ -170,36 +170,34 @@ if (isset($_POST['createAccountBtn'])) {
   </svg>' . $emailError ?></p>
                     </div>
                 </div>
-                <!-- intrests -->
-                <div class="w-full mt-3">
-                    <label class="block capitalize font-semibold">intrests</label>
-                    <p id="hint" class="block text-xs text-gray-500 bg-gray-200 w-fit rounded-r-full px-2">please choose at least one</p>
+                <!-- form part2 -->
+                <div class="w-full border-t-2 border-gray-100 mt-3">
+                    <label for="degree" class="block capitalize font-semibold my-2">Your degree</label>
+                    <select id="degree" class="bg-amber-100 border border-amber-200 text-gray-900 text-sm rounded-lg focus:ring-amber-400 focus:border-amber-400 block w-full p-2.5">
+                        <option selected="">Choose your degree</option>
+                        <option value="US" class="hover:bg-amber-50">United States</option>
+                        <option value="CA" class="hover:bg-amber-50">Canada</option>
+                        <option value="FR" class="hover:bg-amber-50">France</option>
+                        <option value="DE" class="hover:bg-amber-50">Germany</option>
+                    </select>
+                    <label for="degree" class="block font-semibold my-2">Have you introduced previous courses?</label>
                     <div class="flex flex-wrap flex-col lg:flex-row mt-1">
                         <div class="lg:w-1/3">
-                            <input type="checkbox" name="interests[]" id="programming" value="programming" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="programming" class="capitalize"> programming</label>
+                            <input type="radio" name="radioBtns[]" value="yes" id="yes" class="h-4 w-4 border border-gray-400 bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="yes" class="capitalize"> yes</label>
                         </div>
                         <div class="lg:w-1/3">
-                            <input type="checkbox" name="interests[]" id="mathematics" value="mathematics" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="mathematics" class="capitalize"> mathematics</label>
-                        </div>
-                        <div class="lg:w-1/3">
-                            <input type="checkbox" name="interests[]" id="design" value="design" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300 focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="design" class="capitalize"> design</label>
-                        </div>
-                        <div class="lg:w-1/3">
-                            <input type="checkbox" name="interests[]" id="marketing" value="marketing" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300 focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="marketing" class="capitalize"> marketing</label>
-                        </div>
-                        <div class="lg:w-1/3">
-                            <input type="checkbox" name="interests[]" id="software" value="IT & Software" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300 focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="software" class="capitalize"> IT & Software</label>
-                        </div>
-                        <div class="lg:w-1/3">
-                            <input type="checkbox" name="interests[]" id="business" value="business" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="business" class="capitalize"> business</label>
+                            <input type="radio" name="radioBtns[]" value="no" id="no" class="h-4 w-4 border border-gray-400 bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="no" class="capitalize"> no</label>
                         </div>
                     </div>
+                    <label for="bio" class="block capitalize font-semibold my-2">about you</label>
+                    <textarea name="bio" id="bio" placeholder="Please write a brief about you" class=" bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800 w-full"></textarea>
                 </div>
+
                 <!-- button -->
                 <div class="flex flex-col items-center">
                     <button type="submit" name="createAccountBtn" id="signupBtn" class="mt-10 bg-amber-400 text-amber-900 px-14 py-3 rounded-full shadow-md font-semibold hover:text-white hover:bg-amber-500 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" disabled>Create
                         account</button>
-                    <p class="text-xs mt-4">OR <span class=" text-blue-600 hover:underline"><a href="applyAsInstructor.php">apply as instructor</a></span></p>
+                    <p class="text-xs mt-4">OR <span class=" text-blue-600 hover:underline"><a href="createStudentAccount.php">create account as student</a></span></p>
                 </div>
             </form>
         </div>
@@ -467,7 +465,7 @@ if (isset($_POST['createAccountBtn'])) {
         <p class="text-sm text-gray-600 text-center">Copyright © 2022 iMaster</p>
     </footer>
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
-    <script src="js/student_createAccount.js"></script>
+    <script src="js/instructor_createAccount.js"></script>
 </body>
 
 </html>
