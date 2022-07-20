@@ -10,21 +10,30 @@ if (isset($_POST['createAccountBtn'])) {
     $username = filter_input(INPUT_POST, 'username');
     $password = filter_input(INPUT_POST, 'password');
     $email = filter_input(INPUT_POST, 'email');
-    $interests = $_POST['interests'];
-    $usernameQuery = "SELECT * FROM student WHERE username = ? OR email = ?";
-    $statement = mysqli_stmt_init($con);
-    if (!mysqli_stmt_prepare($statement, $usernameQuery)) {
+    $courseLink = filter_input(INPUT_POST, 'courseLink');
+    $bio = filter_input(INPUT_POST, 'bio');
+    $degree = filter_input(INPUT_POST, 'degree');
+    $existanceQuery1 = "SELECT * FROM student WHERE username = ? OR email = ?";
+    $existanceQuery2 = "SELECT * FROM instructors WHERE username = ? OR email = ?";
+    $statement1 = mysqli_stmt_init($con);
+    $statement2 = mysqli_stmt_init($con);
+    if (!mysqli_stmt_prepare($statement1, $existanceQuery1) || !mysqli_stmt_prepare($statement2, $existanceQuery2)) {
         header('Location: index.php?error=SQLError');
         exit();
     } else {
-        mysqli_stmt_bind_param($statement, "ss", $username, $email);
-        mysqli_stmt_execute($statement);
-        $result = mysqli_stmt_get_result($statement);
+        mysqli_stmt_bind_param($statement1, "ss", $username, $email);
+        mysqli_stmt_bind_param($statement2, "ss", $username, $email);
+        mysqli_stmt_execute($statement1);
+        mysqli_stmt_execute($statement2);
+        $result1 = mysqli_stmt_get_result($statement1);
+        $result2 = mysqli_stmt_get_result($statement2);
         $fetchedUsers = array();
         //to store all the fetched rows
-        while ($user = mysqli_fetch_assoc($result)) {
-            $fetchedUsers[] = $user['username'];
-            $fetchedUsers[] = $user['email'];
+        while ($stu = mysqli_fetch_assoc($result1) && $inst = mysqli_fetch_assoc($result2)) {
+            $fetchedUsers[] = $stu['username'];
+            $fetchedUsers[] = $stu['email'];
+            $fetchedUsers[] = $inst['username'];
+            $fetchedUsers[] = $inst['email'];
         }
         if (count($fetchedUsers) > 0) {
             if (in_array($username, $fetchedUsers)) {
@@ -37,14 +46,14 @@ if (isset($_POST['createAccountBtn'])) {
             }
         }
         if ($isValidUsername && $isValidEmail) {
-            $insertQuery = "INSERT INTO student (username,FName,LName,email,password) VALUES (?,?,?,?,?)";
+            $insertQuery = "INSERT INTO instructors (username,FName,LName,email,password,field,previous_course,degree,experience,bio) VALUES (?,?,?,?,?,?,?,?,?,?)";
             $statement = mysqli_stmt_init($con);
             if (!mysqli_stmt_prepare($statement, $insertQuery)) {
                 header('Location: index.php?error=InsertionError');
                 exit();
             } else {
                 $hashedPass = password_hash($password, PASSWORD_DEFAULT);
-                mysqli_stmt_bind_param($statement, "sssss", $username, $fName, $lName, $email, $hashedPass);
+                mysqli_stmt_bind_param($statement, "ssssssssss", $username, $fName, $lName, $email, $hashedPass);
                 mysqli_stmt_execute($statement);
                 foreach ($interests as $item) {
                     $insertInterests = "INSERT INTO student_interests (interests,student_username) VALUES('$item','$username')";
@@ -89,6 +98,11 @@ if (isset($_POST['createAccountBtn'])) {
         .rightBg {
             background-image: linear-gradient(90deg, rgb(254, 242, 195) 0%, transparent 40%), repeating-linear-gradient(45deg, rgba(208, 208, 208, 0.1) 0px, rgba(208, 208, 208, 0.1) 1px, transparent 1px, transparent 13px), repeating-linear-gradient(135deg, rgba(208, 208, 208, 0.1) 0px, rgba(208, 208, 208, 0.1) 1px, transparent 1px, transparent 13px), linear-gradient(0deg, rgb(254, 242, 195), rgb(254, 242, 195));
         }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
     </style>
     <!-- prevent resubmission when refresh the page -->
     <script>
@@ -110,20 +124,20 @@ if (isset($_POST['createAccountBtn'])) {
                 <div class="flex w-1/2">
                     <div class="w-full ">
                         <label for="fName" class="block capitalize font-semibold">first name</label>
-                        <input type="text" name="firstName" id="fName" placeholder="Salma" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" value="<?php if (isset($fName)) echo htmlspecialchars($fName) ?>">
+                        <input type="text" name="firstName" id="fName" placeholder="Salma" class="w-full mt-1 bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800" value="<?php if (isset($fName)) echo htmlspecialchars($fName) ?>">
                     </div>
                 </div>
                 <!-- last name -->
                 <div class="flex w-1/2">
                     <div class="w-full ml-2">
                         <label for="lName" class="block capitalize font-semibold">last name</label>
-                        <input type="text" name="lastName" id="lName" placeholder="Bader" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" value="<?php if (isset($lName)) echo htmlspecialchars($lName) ?>">
+                        <input type="text" name="lastName" id="lName" placeholder="Bader" class="w-full mt-1  bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800" value="<?php if (isset($lName)) echo htmlspecialchars($lName) ?>">
                     </div>
                 </div>
                 <!-- username -->
                 <div class="w-1/2 mt-3">
                     <label for="usename" class="block capitalize font-semibold">username</label>
-                    <input type="text" name="username" maxlength="15" id="signup_usename" placeholder="_salma" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" value="<?php if (isset($username)) echo htmlspecialchars($username) ?>">
+                    <input type="text" name="username" maxlength="10" id="signup_usename" placeholder="_salma" class="w-full mt-1  bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800" value="<?php if (isset($username)) echo htmlspecialchars($username) ?>">
                     <div class="text-red-500 text-sm mt-2">
                         <p class="flex items-center" id="usernameError"><?php if (isset($usernameError)) echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -136,12 +150,12 @@ if (isset($_POST['createAccountBtn'])) {
                         <label for="password" class="block capitalize font-semibold">password</label>
                         <div class="relative">
                             <div id="eyeIcon" class="eyeIcon flex absolute inset-y-0 right-0 items-center pr-3 cursor-pointer">
-                                <svg id="opened" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400 hover:text-amber-500" viewBox="0 0 20 20" fill="currentColor">
+                                <svg id="opened" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 hover:text-blue-500" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                                     <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
                                 </svg>
                             </div>
-                            <input type="password" name="password" id="signup_password" placeholder="••••••••" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($password)) echo htmlspecialchars($password) ?>">
+                            <input type="password" name="password" id="signup_password" placeholder="••••••••" class="w-full mt-1  bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($password)) echo htmlspecialchars($password) ?>">
                         </div>
                         <div class="text-red-500 text-sm mt-2">
                             <p id="passwordError" class="flex items-center"></p>
@@ -163,7 +177,7 @@ if (isset($_POST['createAccountBtn'])) {
                 <!-- email -->
                 <div class="w-full mt-2">
                     <label for="email" class="block capitalize font-semibold">email</label>
-                    <input type="email" name="email" id="email" placeholder="example@email.com" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" value="<?php if (isset($email)) echo htmlspecialchars($email) ?>">
+                    <input type="email" name="email" id="email" placeholder="example@email.com" class="w-full mt-1 bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800" value="<?php if (isset($email)) echo htmlspecialchars($email) ?>">
                     <div class="text-red-500 text-sm mt-2">
                         <p class="flex items-center" id="emailError"><?php if (isset($emailError)) echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -172,33 +186,57 @@ if (isset($_POST['createAccountBtn'])) {
                 </div>
                 <!-- form part2 -->
                 <div class="w-full border-t-2 border-gray-100 mt-3">
+                    <!-- degree -->
                     <label for="degree" class="block capitalize font-semibold my-2">Your degree</label>
-                    <select id="degree" class="bg-amber-100 border border-amber-200 text-blue-800 text-sm rounded-lg focus:ring-amber-400 focus:border-amber-400 block w-full p-2.5">
+                    <select id="degree" name="degree" class="bg-blue-50 px-6 py-2 border-2 border-blue-200 focus:bg-white text-sm rounded-lg block w-full p-2.5">
                         <option selected value="0">Choose your degree</option>
-                        <option value="1" class="hover:bg-amber-50">Ungraduate</option>
-                        <option value="2" class="hover:bg-amber-50">Bachelor</option>
-                        <option value="3" class="hover:bg-amber-50">Master</option>
-                        <option value="4" class="hover:bg-amber-50">PhD</option>
+                        <option value="ungraduate">Ungraduate</option>
+                        <option value="bachelor">Bachelor</option>
+                        <option value="master">Master</option>
+                        <option value="PhD">PhD</option>
                     </select>
-                    <label for="degree" class="block font-semibold my-2">Have you introduced previous courses?</label>
+                    <!-- field -->
+                    <div class="flex">
+                        <div class="flex w-1/2">
+                            <div class="w-full mr-2">
+                                <label for="field" class="block capitalize font-semibold my-2">Your field</label>
+                                <select id="field" name="degree" class="bg-blue-50 px-6 py-2 border-2 border-blue-200 focus:bg-white text-sm rounded-lg block w-full p-2.5">
+                                    <option selected value="0">Choose your field</option>
+                                    <option value="programming">programming</option>
+                                    <option value="mathematics">mathematics</option>
+                                    <option value="marketing">marketing</option>
+                                    <option value="IT & Software">IT & Software</option>
+                                    <option value="business">business</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- experience -->
+                        <div class="flex w-1/2">
+                            <div class="w-full">
+                                <label for="year" class="block capitalize font-semibold my-2">your experience</label>
+                                <input type="number" id="year" name="year" placeholder="##" class="appearance-none w-full bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800" value="<?php if (isset($username)) echo htmlspecialchars($username) ?>">
+                            </div>
+                        </div>
+                    </div>
+                    <label class="block font-semibold my-2">Have you introduced previous courses?</label>
                     <div class="flex flex-wrap flex-col lg:flex-row mt-1">
                         <div class="lg:w-1/3">
-                            <input type="radio" name="radioBtns[]" value="yes" id="yes" class="h-4 w-4 border border-gray-400 bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="yes" class="capitalize"> yes</label>
+                            <input type="radio" name="radioBtns[]" value="yes" id="yes" class="h-4 w-4 border border-gray-400 bg-white checked:bg-blue-400 checked:border-blue-300  focus:outline-none focus:ring-blue-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="yes" class="capitalize"> yes</label>
                         </div>
                         <div class="lg:w-1/3">
-                            <input type="radio" name="radioBtns[]" value="no" id="no" class="h-4 w-4 border border-gray-400 bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="no" class="capitalize"> no</label>
+                            <input type="radio" name="radioBtns[]" value="no" id="no" class="h-4 w-4 border border-gray-400 bg-white checked:bg-blue-400 checked:border-blue-300  focus:outline-none focus:ring-blue-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="no" class="capitalize"> no</label>
                         </div>
                         <div class="block w-full">
                             <input type="url" name="courseLink" id="courseLink" class="hidden mt-2 w-full rounded-lg focus:bg-blue-50 placeholder-gray-400 text-blue-800" placeholder="please paste the course link">
                         </div>
                     </div>
                     <label for="bio" class="block capitalize font-semibold my-2">about you</label>
-                    <textarea name="bio" id="bio" placeholder="Please write a brief about you" class=" bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800 w-full"></textarea>
+                    <textarea name="bio" id="bio" placeholder="Please write a brief about you" class=" bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 w-full"></textarea>
                 </div>
 
                 <!-- button -->
                 <div class="flex flex-col items-center">
-                    <button type="submit" name="createAccountBtn" id="signupBtn" class="mt-10 bg-amber-400 text-amber-900 px-14 py-3 rounded-full shadow-md font-semibold hover:text-white hover:bg-amber-500 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" disabled>Create
+                    <button type="submit" name="createAccountBtn" id="signupBtn" class="mt-10 bg-blue-500 text-white px-14 py-3 rounded-full shadow-md font-semibold  hover:bg-blue-600 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" disabled>Create
                         account</button>
                     <p class="text-xs mt-4">OR <span class=" text-blue-600 hover:underline"><a href="createStudentAccount.php">create account as student</a></span></p>
                 </div>

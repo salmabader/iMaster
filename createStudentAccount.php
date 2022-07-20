@@ -123,7 +123,7 @@ if (isset($_POST['createAccountBtn'])) {
                 <!-- username -->
                 <div class="w-1/2 mt-3">
                     <label for="usename" class="block capitalize font-semibold">username</label>
-                    <input type="text" name="username" maxlength="15" id="signup_usename" placeholder="_salma" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" value="<?php if (isset($username)) echo htmlspecialchars($username) ?>">
+                    <input type="text" name="username" maxlength="10" id="signup_usename" placeholder="_salma" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" value="<?php if (isset($username)) echo htmlspecialchars($username) ?>">
                     <div class="text-red-500 text-sm mt-2">
                         <p class="flex items-center" id="usernameError"><?php if (isset($usernameError)) echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
