@@ -13,6 +13,8 @@ if (isset($_POST['createAccountBtn'])) {
     $courseLink = filter_input(INPUT_POST, 'courseLink');
     $bio = filter_input(INPUT_POST, 'bio');
     $degree = filter_input(INPUT_POST, 'degree');
+    $field = filter_input(INPUT_POST, 'field');
+    $year = filter_input(INPUT_POST, 'year');
     $existanceQuery1 = "SELECT * FROM student WHERE username = ? OR email = ?";
     $existanceQuery2 = "SELECT * FROM instructors WHERE username = ? OR email = ?";
     $statement1 = mysqli_stmt_init($con);
@@ -22,16 +24,18 @@ if (isset($_POST['createAccountBtn'])) {
         exit();
     } else {
         mysqli_stmt_bind_param($statement1, "ss", $username, $email);
-        mysqli_stmt_bind_param($statement2, "ss", $username, $email);
         mysqli_stmt_execute($statement1);
-        mysqli_stmt_execute($statement2);
         $result1 = mysqli_stmt_get_result($statement1);
+        mysqli_stmt_bind_param($statement2, "ss", $username, $email);
+        mysqli_stmt_execute($statement2);
         $result2 = mysqli_stmt_get_result($statement2);
         $fetchedUsers = array();
         //to store all the fetched rows
-        while ($stu = mysqli_fetch_assoc($result1) && $inst = mysqli_fetch_assoc($result2)) {
+        while ($stu = mysqli_fetch_assoc($result1)) {
             $fetchedUsers[] = $stu['username'];
             $fetchedUsers[] = $stu['email'];
+        }
+        while ($inst = mysqli_fetch_assoc($result2)) {
             $fetchedUsers[] = $inst['username'];
             $fetchedUsers[] = $inst['email'];
         }
@@ -52,13 +56,10 @@ if (isset($_POST['createAccountBtn'])) {
                 header('Location: index.php?error=InsertionError');
                 exit();
             } else {
+                $field = "mm";
                 $hashedPass = password_hash($password, PASSWORD_DEFAULT);
-                mysqli_stmt_bind_param($statement, "ssssssssss", $username, $fName, $lName, $email, $hashedPass);
+                mysqli_stmt_bind_param($statement, "ssssssssss", $username, $fName, $lName, $email, $hashedPass, $field, $courseLink, $degree, $year, $bio);
                 mysqli_stmt_execute($statement);
-                foreach ($interests as $item) {
-                    $insertInterests = "INSERT INTO student_interests (interests,student_username) VALUES('$item','$username')";
-                    mysqli_query($con, $insertInterests);
-                }
             }
         }
     }
@@ -188,7 +189,7 @@ if (isset($_POST['createAccountBtn'])) {
                 <div class="w-full border-t-2 border-gray-100 mt-3">
                     <!-- degree -->
                     <label for="degree" class="block capitalize font-semibold my-2">Your degree</label>
-                    <select id="degree" name="degree" class="bg-blue-50 px-6 py-2 border-2 border-blue-200 focus:bg-white text-sm rounded-lg block w-full p-2.5">
+                    <select id="degree" name="degree" class="bg-blue-50 px-6 py-2.5 border-2 border-blue-200 focus:bg-white text-sm rounded-lg block w-full">
                         <option selected value="0">Choose your degree</option>
                         <option value="ungraduate">Ungraduate</option>
                         <option value="bachelor">Bachelor</option>
@@ -200,7 +201,7 @@ if (isset($_POST['createAccountBtn'])) {
                         <div class="flex w-1/2">
                             <div class="w-full mr-2">
                                 <label for="field" class="block capitalize font-semibold my-2">Your field</label>
-                                <select id="field" name="degree" class="bg-blue-50 px-6 py-2 border-2 border-blue-200 focus:bg-white text-sm rounded-lg block w-full p-2.5">
+                                <select id="field" name="field" class="bg-blue-50 px-6 py-2.5 border-2 border-blue-200 focus:bg-white text-sm rounded-lg block w-full">
                                     <option selected value="0">Choose your field</option>
                                     <option value="programming">programming</option>
                                     <option value="mathematics">mathematics</option>
