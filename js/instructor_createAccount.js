@@ -1,31 +1,29 @@
-// ----------- check if one radio is selected -----------
+// ----------- activate submit button -----------
 const radioBtns = document.querySelectorAll('input[type="radio"]')
 let checkedOne = false
-
-// ----------- activate submit button -----------
+let isLinkFilled = false
 const createAccountBtn = document.getElementById("signupBtn")
 const inputFeilds = document.querySelectorAll("input");
+const bio = document.getElementById("bio");
 const inputLink = document.getElementById("courseLink");
 radioBtns.forEach(function (btn) {
     btn.addEventListener('change', function () {
+        checkedOne = Array.prototype.slice.call(radioBtns).some(x => x.checked)
         if (btn.checked && btn.value == 'yes') {
             inputLink.style.display = "block"
+            isLinkFilled = false
         }
-        else {
+        if (btn.checked && btn.value == 'no') {
+            console.log('Im here')
             inputLink.style.display = "none"
+            isLinkFilled = true
         }
-        checkedOne = Array.prototype.slice.call(radioBtns).some(x => x.checked)
     })
 })
+// فيه مشكلة انو لازم اضيف لسنر على التكت ايريا
 const checkEnableButton = () => {
-    console.log(inputFeilds[0].value)
-    console.log(inputFeilds[1].value)
-    console.log(isValidPass)
-    console.log(isValidUN)
-    console.log(isValidEmail)
-    console.log(checkedOne)
     createAccountBtn.disabled = !(
-        inputFeilds[0].value && inputFeilds[1].value && isValidUN && isValidPass && isValidEmail && checkedOne
+        inputFeilds[0].value && inputFeilds[1].value && isValidUN && isValidPass && isValidEmail && checkedOne && bio.value.length != 0 && isLinkFilled
     )
 }
 inputFeilds.forEach(function (inp) {
