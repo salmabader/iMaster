@@ -173,12 +173,12 @@ if (isset($_POST['createAccountBtn'])) {
                 <!-- form part2 -->
                 <div class="w-full border-t-2 border-gray-100 mt-3">
                     <label for="degree" class="block capitalize font-semibold my-2">Your degree</label>
-                    <select id="degree" class="bg-amber-100 border border-amber-200 text-gray-900 text-sm rounded-lg focus:ring-amber-400 focus:border-amber-400 block w-full p-2.5">
-                        <option selected="">Choose your degree</option>
-                        <option value="US" class="hover:bg-amber-50">United States</option>
-                        <option value="CA" class="hover:bg-amber-50">Canada</option>
-                        <option value="FR" class="hover:bg-amber-50">France</option>
-                        <option value="DE" class="hover:bg-amber-50">Germany</option>
+                    <select id="degree" class="bg-amber-100 border border-amber-200 text-blue-800 text-sm rounded-lg focus:ring-amber-400 focus:border-amber-400 block w-full p-2.5">
+                        <option selected value="0">Choose your degree</option>
+                        <option value="1" class="hover:bg-amber-50">Ungraduate</option>
+                        <option value="2" class="hover:bg-amber-50">Bachelor</option>
+                        <option value="3" class="hover:bg-amber-50">Master</option>
+                        <option value="4" class="hover:bg-amber-50">PhD</option>
                     </select>
                     <label for="degree" class="block font-semibold my-2">Have you introduced previous courses?</label>
                     <div class="flex flex-wrap flex-col lg:flex-row mt-1">
@@ -187,6 +187,9 @@ if (isset($_POST['createAccountBtn'])) {
                         </div>
                         <div class="lg:w-1/3">
                             <input type="radio" name="radioBtns[]" value="no" id="no" class="h-4 w-4 border border-gray-400 bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="no" class="capitalize"> no</label>
+                        </div>
+                        <div class="block w-full">
+                            <input type="url" name="courseLink" id="courseLink" class="hidden mt-2 w-full rounded-lg focus:bg-blue-50 placeholder-gray-400 text-blue-800" placeholder="please paste the course link">
                         </div>
                     </div>
                     <label for="bio" class="block capitalize font-semibold my-2">about you</label>
@@ -466,7 +469,7 @@ if (isset($_POST['createAccountBtn'])) {
     </footer>
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/instructor_create.js"></script>
+    <script src="js/instructor_createAccount.js"></script>
 </body>
 
 </html>

@@ -1,7 +1,29 @@
+// ----------- check if one radio is selected -----------
+const radioBtns = document.querySelectorAll('input[type="radio"]')
+let checkedOne = false
+
 // ----------- activate submit button -----------
 const createAccountBtn = document.getElementById("signupBtn")
 const inputFeilds = document.querySelectorAll("input");
+const inputLink = document.getElementById("courseLink");
+radioBtns.forEach(function (btn) {
+    btn.addEventListener('change', function () {
+        if (btn.checked && btn.value == 'yes') {
+            inputLink.style.display = "block"
+        }
+        else {
+            inputLink.style.display = "none"
+        }
+        checkedOne = Array.prototype.slice.call(radioBtns).some(x => x.checked)
+    })
+})
 const checkEnableButton = () => {
+    console.log(inputFeilds[0].value)
+    console.log(inputFeilds[1].value)
+    console.log(isValidPass)
+    console.log(isValidUN)
+    console.log(isValidEmail)
+    console.log(checkedOne)
     createAccountBtn.disabled = !(
         inputFeilds[0].value && inputFeilds[1].value && isValidUN && isValidPass && isValidEmail && checkedOne
     )
