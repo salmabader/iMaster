@@ -120,7 +120,8 @@ if (isset($_POST['createAccountBtn'])) {
         <div class="lg:w-2/3 w-full flex flex-col lg:mr-4 mr-0">
             <p class="text-xs text-right pt-6 pr-6">Already have an account? <span class="text-blue-600 hover:underline"><a href="signin.php">Sign
                         in</a></span></p>
-            <p class="text-center pt-3 font-medium text-xl mb-4 ">Apply as Instructor</p>
+            <p class="text-center pt-3 font-medium text-xl">Apply as Instructor</p>
+            <p class="text-center p-1 text-xs mb-4 text-amber-600">please fill in all information to be able to submit the form</p>
             <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" class="flex flex-wrap justify-center px-12 pb-12 overflow-y-auto scrollbar">
                 <!-- first name -->
                 <div class="flex w-1/2">
@@ -261,9 +262,9 @@ if (isset($_POST['createAccountBtn'])) {
     <footer class="mt-4">
         <p class="text-sm text-gray-600 text-center">Copyright © 2022 iMaster</p>
     </footer>
-    <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
     <script src="js/main.js"></script>
     <script src="js/instructor_createAccount.js"></script>
+    <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>
 
 </html>

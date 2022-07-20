@@ -8,6 +8,7 @@ const inputFeilds = document.querySelectorAll("input");
 const bio = document.getElementById("bio");
 const inputLink = document.getElementById("courseLink");
 const inputDegree = document.getElementById("degree");
+const myField = document.getElementById("field");
 radioBtns.forEach(function (btn) {
     btn.addEventListener('change', function () {
         checkedOne = Array.prototype.slice.call(radioBtns).some(x => x.checked)
@@ -42,8 +43,13 @@ const checkEnableButton = () => {
     } else {
         selectOne = false
     }
+    if (myField.selectedIndex != 0) {
+        selectOne = true
+    } else {
+        selectOne = false
+    }
     createAccountBtn.disabled = !(
-        inputFeilds[0].value && inputFeilds[1].value && isValidUN && isValidPass && isValidEmail && checkedOne && selectOne && isLinkFilled && bio.value.length != 0
+        inputFeilds[0].value && inputFeilds[1].value && isValidUN && isValidPass && isValidEmail && checkedOne && selectOne && inputFeilds[5].value && isLinkFilled && bio.value.length != 0
     )
 }
 inputFeilds.forEach(function (inp) {
@@ -55,6 +61,9 @@ bio.addEventListener('change', function () {
     checkEnableButton()
 })
 inputDegree.addEventListener('change', function () {
+    checkEnableButton()
+})
+myField.addEventListener('change', function () {
     checkEnableButton()
 })
 window.addEventListener('load', function () {
