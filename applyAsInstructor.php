@@ -460,7 +460,7 @@ if (isset($_POST['createAccountBtn'])) {
                         </svg>
                     </a>
                 </div>
-                <img src="images/signup.png" class="rounded-br-lg">
+                <img src="images/instructor_signup.png" class="rounded-br-lg">
             </div>
         </div>
     </div>
