@@ -468,7 +468,7 @@ if (isset($_POST['createAccountBtn'])) {
     </footer>
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/student_create.js"></script>
+    <script src="js/student_createAccount.js"></script>
 </body>
 
 </html>
