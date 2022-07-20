@@ -341,7 +341,7 @@
 					</div>
 				</div>
 				<div class="max-h-5">
-					<button class="capitalize sm:mx-6 bg-blue-800 border-b-4 md:hover:border-b-8 md:hover:-translate-y-1 md:hover:shadow-lg border-amber-200 px-6 py-2 rounded-xl text-gray-100 shadow-md mt-6  duration-100 ease-in" onclick="window.location.href ='signup.php'">join
+					<button class="capitalize sm:mx-6 bg-blue-800 border-b-4 md:hover:border-b-8 md:hover:-translate-y-1 md:hover:shadow-lg border-amber-200 px-6 py-2 rounded-xl text-gray-100 shadow-md mt-6  duration-100 ease-in" onclick="window.location.href ='createStudentAccount.php'">join
 						us
 						now!</button>
 				</div>

@@ -1,3 +1,60 @@
+<?php
+session_start();
+require('database/db_connection.php');
+$con = OpenCon();
+if (isset($_POST['createAccountBtn'])) {
+    $isValidEmail = true;
+    $isValidUsername = true;
+    $fName = filter_input(INPUT_POST, 'firstName');
+    $lName = filter_input(INPUT_POST, 'lastName');
+    $username = filter_input(INPUT_POST, 'username');
+    $password = filter_input(INPUT_POST, 'password');
+    $email = filter_input(INPUT_POST, 'email');
+    $interests = $_POST['interests'];
+    $usernameQuery = "SELECT * FROM student WHERE username = ? OR email = ?";
+    $statement = mysqli_stmt_init($con);
+    if (!mysqli_stmt_prepare($statement, $usernameQuery)) {
+        header('Location: index.php?error=SQLError');
+        exit();
+    } else {
+        mysqli_stmt_bind_param($statement, "ss", $username, $email);
+        mysqli_stmt_execute($statement);
+        $result = mysqli_stmt_get_result($statement);
+        $fetchedUsers = array();
+        //to store all the fetched rows
+        while ($user = mysqli_fetch_assoc($result)) {
+            $fetchedUsers[] = $user['username'];
+            $fetchedUsers[] = $user['email'];
+        }
+        if (count($fetchedUsers) > 0) {
+            if (in_array($username, $fetchedUsers)) {
+                $usernameError = "Usename is taken";
+                $isValidUsername = false;
+            }
+            if (in_array($email, $fetchedUsers)) {
+                $emailError = "Email is already registered";
+                $isValidEmail = false;
+            }
+        }
+        if ($isValidUsername && $isValidEmail) {
+            $insertQuery = "INSERT INTO student (username,FName,LName,email,password) VALUES (?,?,?,?,?)";
+            $statement = mysqli_stmt_init($con);
+            if (!mysqli_stmt_prepare($statement, $insertQuery)) {
+                header('Location: index.php?error=InsertionError');
+                exit();
+            } else {
+                $hashedPass = password_hash($password, PASSWORD_DEFAULT);
+                mysqli_stmt_bind_param($statement, "sssss", $username, $fName, $lName, $email, $hashedPass);
+                mysqli_stmt_execute($statement);
+                foreach ($interests as $item) {
+                    $insertInterests = "INSERT INTO student_interests (interests,student_username) VALUES('$item','$username')";
+                    mysqli_query($con, $insertInterests);
+                }
+            }
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +65,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
     <link rel="icon" href="images/icon.svg" type="image/x-icon">
-    <title>Create an account</title>
+    <title>Apply as instructor</title>
     <style>
         .scrollbar::-webkit-scrollbar {
             width: 10px;
@@ -20,54 +77,63 @@
         }
 
         .scrollbar::-webkit-scrollbar-thumb {
-            background: #d97706;
+            background: #eeeeee;
             border-radius: 100vh;
-            border: 3px solid #f6f7ed;
+            border: 3px solid white;
         }
 
         .scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #b45309;
+            background: #DFDFDF;
         }
 
         .rightBg {
             background-image: linear-gradient(45deg, rgba(253, 230, 138, 0.51) 0%, transparent 36%), repeating-linear-gradient(135deg, rgba(197, 197, 197, 0.1) 0px, rgba(197, 197, 197, 0.1) 1px, transparent 1px, transparent 11px), repeating-linear-gradient(45deg, rgba(197, 197, 197, 0.1) 0px, rgba(197, 197, 197, 0.1) 1px, transparent 1px, transparent 11px), linear-gradient(0deg, rgba(253, 230, 138, 0.51), rgba(253, 230, 138, 0.51));
         }
     </style>
+    <!-- prevent resubmission when refresh the page -->
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
 </head>
 
-<body class="bg-amber-50 flex flex-col items-center justify-center w-full h-screen text-gray-700 scrollbar">
-    <div class="bg-white w-3/4 flex rounded-lg border-amber-300 border-x-2 shadow-md">
+<body class="bg-amber-50 flex flex-col items-center justify-center w-full h-screen overflow-x-hidden text-gray-700 scrollbar">
+    <div class="bg-white w-3/4 flex rounded-lg border-amber-300 border-x-2 shadow-md h-4/5">
         <!-- left side -->
         <div class="lg:w-2/3 w-full flex flex-col lg:mr-4 mr-0">
             <p class="text-xs text-right pt-6 pr-6">Already have an account? <span class="text-blue-600 hover:underline"><a href="signin.php">Sign
                         in</a></span></p>
-            <p class="text-center pt-3 capitalize font-medium text-lg mb-4">create student account</p>
-            <form action="#" method="POST" class="flex flex-wrap justify-center px-12 pb-12">
+            <p class="text-center pt-3 capitalize font-medium text-xl mb-4 ">apply as instructor</p>
+            <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" class="flex flex-wrap justify-center px-12 pb-12 overflow-y-auto scrollbar">
                 <!-- first name -->
                 <div class="flex w-1/2">
                     <div class="w-full ">
                         <label for="fName" class="block capitalize font-semibold">first name</label>
-                        <input type="text" id="fName" placeholder="Salma" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800">
+                        <input type="text" name="firstName" id="fName" placeholder="Salma" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" value="<?php if (isset($fName)) echo htmlspecialchars($fName) ?>">
                     </div>
                 </div>
                 <!-- last name -->
                 <div class="flex w-1/2">
                     <div class="w-full ml-2">
                         <label for="lName" class="block capitalize font-semibold">last name</label>
-                        <input type="text" id="lName" placeholder="Bader" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800">
+                        <input type="text" name="lastName" id="lName" placeholder="Bader" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" value="<?php if (isset($lName)) echo htmlspecialchars($lName) ?>">
                     </div>
                 </div>
                 <!-- username -->
                 <div class="w-1/2 mt-3">
                     <label for="usename" class="block capitalize font-semibold">username</label>
-                    <input type="text" maxlength="15" id="signup_usename" placeholder="_salma" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800">
-                    <div class="text-red-500 text-sm mt-2" id="usernameError"></div>
+                    <input type="text" name="username" maxlength="15" id="signup_usename" placeholder="_salma" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" value="<?php if (isset($username)) echo htmlspecialchars($username) ?>">
+                    <div class="text-red-500 text-sm mt-2">
+                        <p class="flex items-center" id="usernameError"><?php if (isset($usernameError)) echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>' . $usernameError ?></p>
+                    </div>
                 </div>
                 <!-- password -->
                 <div class="flex w-1/2">
                     <div class="w-full ml-2 mt-3">
                         <label for="password" class="block capitalize font-semibold">password</label>
-
                         <div class="relative">
                             <div id="eyeIcon" class="eyeIcon flex absolute inset-y-0 right-0 items-center pr-3 cursor-pointer">
                                 <svg id="opened" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400 hover:text-amber-500" viewBox="0 0 20 20" fill="currentColor">
@@ -75,9 +141,11 @@
                                     <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
                                 </svg>
                             </div>
-                            <input type="password" id="signup_password" placeholder="••••••••" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right">
+                            <input type="password" name="password" id="signup_password" placeholder="••••••••" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($password)) echo htmlspecialchars($password) ?>">
                         </div>
-                        <div class="text-red-500 text-sm mt-2" id="passwordError"></div>
+                        <div class="text-red-500 text-sm mt-2">
+                            <p id="passwordError" class="flex items-center"></p>
+                        </div>
                     </div>
                 </div>
 
@@ -95,38 +163,45 @@
                 <!-- email -->
                 <div class="w-full mt-2">
                     <label for="email" class="block capitalize font-semibold">email</label>
-                    <input type="email" id="email" placeholder="example@email.com" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800">
-                    <div class="text-red-500 text-sm mt-2" id="emailError"></div>
+                    <input type="email" name="email" id="email" placeholder="example@email.com" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800" value="<?php if (isset($email)) echo htmlspecialchars($email) ?>">
+                    <div class="text-red-500 text-sm mt-2">
+                        <p class="flex items-center" id="emailError"><?php if (isset($emailError)) echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>' . $emailError ?></p>
+                    </div>
                 </div>
-                <!-- intrests -->
-                <div class="w-full mt-3">
-                    <label class="block capitalize font-semibold">intrests</label>
-                    <p id="hint" class="block text-xs text-blue-600 bg-gray-200 w-fit rounded-r-full px-2">please choose at least one</p>
+                <!-- form part2 -->
+                <div class="w-full border-t-2 border-gray-100 mt-3">
+                    <label for="degree" class="block capitalize font-semibold my-2">Your degree</label>
+                    <select id="degree" class="bg-amber-100 border border-amber-200 text-blue-800 text-sm rounded-lg focus:ring-amber-400 focus:border-amber-400 block w-full p-2.5">
+                        <option selected value="0">Choose your degree</option>
+                        <option value="1" class="hover:bg-amber-50">Ungraduate</option>
+                        <option value="2" class="hover:bg-amber-50">Bachelor</option>
+                        <option value="3" class="hover:bg-amber-50">Master</option>
+                        <option value="4" class="hover:bg-amber-50">PhD</option>
+                    </select>
+                    <label for="degree" class="block font-semibold my-2">Have you introduced previous courses?</label>
                     <div class="flex flex-wrap flex-col lg:flex-row mt-1">
                         <div class="lg:w-1/3">
-                            <input type="checkbox" name="" id="programming" value="programming" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="programming" class="capitalize"> programming</label>
+                            <input type="radio" name="radioBtns[]" value="yes" id="yes" class="h-4 w-4 border border-gray-400 bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="yes" class="capitalize"> yes</label>
                         </div>
                         <div class="lg:w-1/3">
-                            <input type="checkbox" name="" id="mathematics" value="mathematics" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="mathematics" class="capitalize"> mathematics</label>
+                            <input type="radio" name="radioBtns[]" value="no" id="no" class="h-4 w-4 border border-gray-400 bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="no" class="capitalize"> no</label>
                         </div>
-                        <div class="lg:w-1/3">
-                            <input type="checkbox" name="" id="design" value="design" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300 focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="design" class="capitalize"> design</label>
-                        </div>
-                        <div class="lg:w-1/3">
-                            <input type="checkbox" name="" id="marketing" value="marketing" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300 focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="marketing" class="capitalize"> marketing</label>
-                        </div>
-                        <div class="lg:w-1/3">
-                            <input type="checkbox" name="" id="software" value="software" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300 focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="software" class="capitalize"> IT & Software</label>
-                        </div>
-                        <div class="lg:w-1/3">
-                            <input type="checkbox" name="" id="business" value="business" class="form-check-input appearance-none h-4 w-4 border border-gray-400 rounded-sm bg-white checked:bg-amber-300 checked:border-amber-300  focus:outline-none focus:ring-amber-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="business" class="capitalize"> business</label>
+                        <div class="block w-full">
+                            <input type="url" name="courseLink" id="courseLink" class="hidden mt-2 w-full rounded-lg focus:bg-blue-50 placeholder-gray-400 text-blue-800" placeholder="please paste the course link">
                         </div>
                     </div>
-                    <div class="text-red-500 text-sm" id="checkboxError"></div>
+                    <label for="bio" class="block capitalize font-semibold my-2">about you</label>
+                    <textarea name="bio" id="bio" placeholder="Please write a brief about you" class=" bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-blue-50 placeholder-gray-400 text-blue-800 w-full"></textarea>
                 </div>
+
                 <!-- button -->
-                <button type="submit" id="signupBtn" class="mt-10 bg-amber-400 text-amber-900 px-14 py-3 rounded-full shadow-md font-semibold hover:text-white hover:bg-amber-500 duration-100 ease-in-out">Create
-                    account</button>
+                <div class="flex flex-col items-center">
+                    <button type="submit" name="createAccountBtn" id="signupBtn" class="mt-10 bg-amber-400 text-amber-900 px-14 py-3 rounded-full shadow-md font-semibold hover:text-white hover:bg-amber-500 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" disabled>Create
+                        account</button>
+                    <p class="text-xs mt-4">OR <span class=" text-blue-600 hover:underline"><a href="createStudentAccount.php">create account as student</a></span></p>
+                </div>
             </form>
         </div>
 
@@ -394,6 +469,7 @@
     </footer>
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/instructor_createAccount.js"></script>
 </body>
 
 </html>
