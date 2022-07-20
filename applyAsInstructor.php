@@ -87,7 +87,7 @@ if (isset($_POST['createAccountBtn'])) {
         }
 
         .rightBg {
-            background-image: linear-gradient(45deg, rgba(253, 230, 138, 0.51) 0%, transparent 36%), repeating-linear-gradient(135deg, rgba(197, 197, 197, 0.1) 0px, rgba(197, 197, 197, 0.1) 1px, transparent 1px, transparent 11px), repeating-linear-gradient(45deg, rgba(197, 197, 197, 0.1) 0px, rgba(197, 197, 197, 0.1) 1px, transparent 1px, transparent 11px), linear-gradient(0deg, rgba(253, 230, 138, 0.51), rgba(253, 230, 138, 0.51));
+            background-image: linear-gradient(90deg, rgb(254, 242, 195) 0%, transparent 40%), repeating-linear-gradient(45deg, rgba(208, 208, 208, 0.1) 0px, rgba(208, 208, 208, 0.1) 1px, transparent 1px, transparent 13px), repeating-linear-gradient(135deg, rgba(208, 208, 208, 0.1) 0px, rgba(208, 208, 208, 0.1) 1px, transparent 1px, transparent 13px), linear-gradient(0deg, rgb(254, 242, 195), rgb(254, 242, 195));
         }
     </style>
     <!-- prevent resubmission when refresh the page -->

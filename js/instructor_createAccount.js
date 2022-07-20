@@ -1,11 +1,13 @@
 // ----------- activate submit button -----------
 const radioBtns = document.querySelectorAll('input[type="radio"]')
 let checkedOne = false
+let selectOne = false
 let isLinkFilled = false
 const createAccountBtn = document.getElementById("signupBtn")
 const inputFeilds = document.querySelectorAll("input");
 const bio = document.getElementById("bio");
 const inputLink = document.getElementById("courseLink");
+const inputDegree = document.getElementById("degree");
 radioBtns.forEach(function (btn) {
     btn.addEventListener('change', function () {
         checkedOne = Array.prototype.slice.call(radioBtns).some(x => x.checked)
@@ -14,16 +16,34 @@ radioBtns.forEach(function (btn) {
             isLinkFilled = false
         }
         if (btn.checked && btn.value == 'no') {
-            console.log('Im here')
             inputLink.style.display = "none"
             isLinkFilled = true
         }
     })
 })
-// فيه مشكلة انو لازم اضيف لسنر على التكت ايريا
+
 const checkEnableButton = () => {
+    // handle the link input
+    if ((radioBtns[0].checked && inputLink.value.length > 0) || radioBtns[1].checked) {
+        isLinkFilled = true
+    } else {
+        isLinkFilled = false
+    }
+    if (!isLinkFilled) {
+        inputLink.classList.add("border-2")
+        inputLink.classList.add("border-red-500")
+    } else {
+        inputLink.classList.remove("border-2")
+        inputLink.classList.remove("border-red-500")
+    }
+    // handle the select tag
+    if (inputDegree.selectedIndex != 0) {
+        selectOne = true
+    } else {
+        selectOne = false
+    }
     createAccountBtn.disabled = !(
-        inputFeilds[0].value && inputFeilds[1].value && isValidUN && isValidPass && isValidEmail && checkedOne && bio.value.length != 0 && isLinkFilled
+        inputFeilds[0].value && inputFeilds[1].value && isValidUN && isValidPass && isValidEmail && checkedOne && selectOne && isLinkFilled && bio.value.length != 0
     )
 }
 inputFeilds.forEach(function (inp) {
@@ -31,6 +51,12 @@ inputFeilds.forEach(function (inp) {
         checkEnableButton()
     })
 });
+bio.addEventListener('change', function () {
+    checkEnableButton()
+})
+inputDegree.addEventListener('change', function () {
+    checkEnableButton()
+})
 window.addEventListener('load', function () {
     if (inputFeilds[0].value.length == 0 && inputFeilds[1].value.length == 0 && !isValidUN && !isValidPass && !isValidEmail && !checkedOne) {
         localStorage.clear()
