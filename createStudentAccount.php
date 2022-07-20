@@ -196,8 +196,11 @@ if (isset($_POST['createAccountBtn'])) {
                     </div>
                 </div>
                 <!-- button -->
-                <button type="submit" name="createAccountBtn" id="signupBtn" class="mt-10 bg-amber-400 text-amber-900 px-14 py-3 rounded-full shadow-md font-semibold hover:text-white hover:bg-amber-500 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" disabled>Create
-                    account</button>
+                <div class="flex flex-col items-center">
+                    <button type="submit" name="createAccountBtn" id="signupBtn" class="mt-10 bg-amber-400 text-amber-900 px-14 py-3 rounded-full shadow-md font-semibold hover:text-white hover:bg-amber-500 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" disabled>Create
+                        account</button>
+                    <p class="text-xs mt-4">OR <span class=" text-blue-600 hover:underline"><a href="createInstructorAccount.php">create account as instructor</a></span></p>
+                </div>
             </form>
         </div>
 
