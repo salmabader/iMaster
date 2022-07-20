@@ -1,6 +1,5 @@
 // ----------- activate submit button -----------
 const radioBtns = document.querySelectorAll('input[type="radio"]')
-let checkedOne = false
 let selectOne = false
 let isLinkFilled = false
 const createAccountBtn = document.getElementById("signupBtn")
@@ -11,14 +10,16 @@ const inputDegree = document.getElementById("degree");
 const myField = document.getElementById("field");
 radioBtns.forEach(function (btn) {
     btn.addEventListener('change', function () {
-        checkedOne = Array.prototype.slice.call(radioBtns).some(x => x.checked)
-        if (btn.checked && btn.value == 'yes') {
-            inputLink.style.display = "block"
-            isLinkFilled = false
-        }
-        if (btn.checked && btn.value == 'no') {
-            inputLink.style.display = "none"
-            isLinkFilled = true
+        if (btn.checked) {
+            if (btn.value == 'yes') {
+                inputLink.style.display = "block"
+                isLinkFilled = false
+            }
+            if (btn.value == 'no') {
+                inputLink.style.display = "none"
+                isLinkFilled = true
+            }
+            localStorage.setItem("isThereLink", btn.value)
         }
     })
 })
@@ -49,7 +50,7 @@ const checkEnableButton = () => {
         selectOne = false
     }
     createAccountBtn.disabled = !(
-        inputFeilds[0].value && inputFeilds[1].value && isValidUN && isValidPass && isValidEmail && checkedOne && selectOne && inputFeilds[5].value && isLinkFilled && bio.value.length != 0
+        inputFeilds[0].value && inputFeilds[1].value && isValidUN && isValidPass && isValidEmail && selectOne && inputFeilds[5].value && isLinkFilled && bio.value.length != 0
     )
 }
 inputFeilds.forEach(function (inp) {
@@ -61,35 +62,48 @@ bio.addEventListener('change', function () {
     checkEnableButton()
 })
 inputDegree.addEventListener('change', function () {
+    localStorage.setItem("degree", inputDegree.selectedIndex)
     checkEnableButton()
 })
 myField.addEventListener('change', function () {
+    localStorage.setItem("field", myField.selectedIndex)
     checkEnableButton()
 })
 window.addEventListener('load', function () {
-    if (inputFeilds[0].value.length == 0 && inputFeilds[1].value.length == 0 && !isValidUN && !isValidPass && !isValidEmail && !checkedOne) {
+    if (!inputFeilds[0].value && !inputFeilds[1].value && !isValidUN && !isValidPass && !isValidEmail && !selectOne && !inputFeilds[5].value && !isLinkFilled && bio.value.length == 0) {
         localStorage.clear()
     }
     isValidUN = true
     isValidPass = true
     isValidEmail = true
-    const checkedInterests = JSON.parse(localStorage.getItem("interests"))
-    if (checkedInterests) {
-        if (checkedInterests.length > 0) {
-            hint.innerHTML = ""
-            checkedInterests.forEach(el => {
-                allChecked.push(el)
-            });
-            checkboxes.forEach(box => {
-                if (allChecked.includes(box.value)) {
-                    box.checked = true
-                }
-            });
-            localStorage.setItem("interests", JSON.stringify(allChecked))
-            checkedOne = true
-            checkEnableButton()
+    const selectedDegree = localStorage.getItem("degree")
+    const selectedField = localStorage.getItem("field")
+    const isThereCourse = localStorage.getItem("isThereLink")
+    const optionsDegree = inputDegree.options
+    const optionsField = myField.options
+    for (let i = 0; i < optionsDegree.length; i++) {
+        if (i == selectedDegree) {
+            optionsDegree[i].selected = true
+            break
         }
     }
+    for (let i = 0; i < optionsField.length; i++) {
+        if (i == selectedField) {
+            optionsField[i].selected = true
+            break
+        }
+    }
+    radioBtns.forEach(function (rb) {
+        if (rb.value == isThereCourse) {
+            rb.checked = true
+            if (rb.value == 'yes') {
+                inputLink.style.display = "block"
+            } else {
+                inputLink.style.display = "none"
+            }
+        }
+    })
+    checkEnableButton()
 })
 
 // ----------- to show and hide the password -----------

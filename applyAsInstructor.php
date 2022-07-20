@@ -205,11 +205,11 @@ if (isset($_POST['createAccountBtn'])) {
                                 <label for="field" class="block capitalize font-semibold my-2">Your field</label>
                                 <select id="field" name="field" class="bg-blue-50 px-6 py-2.5 border-2 border-blue-200 focus:bg-white text-sm rounded-lg block w-full">
                                     <option selected value="0">Choose your field</option>
-                                    <option value="programming">programming</option>
-                                    <option value="mathematics">mathematics</option>
-                                    <option value="marketing">marketing</option>
+                                    <option value="programming">Programming</option>
+                                    <option value="mathematics">Mathematics</option>
+                                    <option value="marketing">Marketing</option>
                                     <option value="IT & Software">IT & Software</option>
-                                    <option value="business">business</option>
+                                    <option value="business">Business</option>
                                 </select>
                             </div>
                         </div>
@@ -217,7 +217,7 @@ if (isset($_POST['createAccountBtn'])) {
                         <div class="flex w-1/2">
                             <div class="w-full">
                                 <label for="year" class="block capitalize font-semibold my-2">your experience</label>
-                                <input type="number" id="year" name="year" placeholder="##" class="appearance-none w-full bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800" value="<?php if (isset($username)) echo htmlspecialchars($username) ?>">
+                                <input type="number" id="year" name="year" placeholder="##" class="appearance-none w-full bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800" value="<?php if (isset($year)) echo htmlspecialchars($year) ?>">
                             </div>
                         </div>
                     </div>
@@ -230,16 +230,16 @@ if (isset($_POST['createAccountBtn'])) {
                             <input type="radio" name="radioBtns[]" value="no" id="no" class="h-4 w-4 border border-gray-400 bg-white checked:bg-blue-400 checked:border-blue-300  focus:outline-none focus:ring-blue-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"><label for="no" class="capitalize"> no</label>
                         </div>
                         <div class="block w-full">
-                            <input type="url" name="courseLink" id="courseLink" class="hidden mt-2 w-full rounded-lg focus:bg-blue-50 placeholder-gray-400 text-blue-800" placeholder="please paste the course link">
+                            <input type="url" name="courseLink" id="courseLink" class="hidden mt-2 w-full rounded-lg focus:bg-blue-50 placeholder-gray-400 text-blue-800" value="<?php if (isset($courseLink)) echo htmlspecialchars($courseLink) ?>" placeholder="please paste the course link">
                         </div>
                     </div>
                     <label for="bio" class="block capitalize font-semibold my-2">about you</label>
-                    <textarea name="bio" id="bio" placeholder="Please write a brief about you" class=" bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 w-full"></textarea>
+                    <textarea name="bio" id="bio" placeholder="Please write a brief about you" class=" bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 w-full"><?php if (isset($bio)) echo htmlspecialchars($bio) ?></textarea>
                 </div>
 
                 <!-- button -->
                 <div class="flex flex-col items-center">
-                    <button type="submit" name="createAccountBtn" id="signupBtn" class="mt-10 bg-blue-500 text-white px-14 py-3 rounded-full shadow-md font-semibold  hover:bg-blue-600 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" disabled>Create
+                    <button type="submit" name="createAccountBtn" id="signupBtn" class="mt-10 bg-blue-500 text-white px-14 py-3 rounded-full shadow-md font-semibold hover:bg-blue-600 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" disabled>Create
                         account</button>
                     <p class="text-xs mt-4">OR <span class=" text-blue-600 hover:underline"><a href="createStudentAccount.php">create account as student</a></span></p>
                 </div>
