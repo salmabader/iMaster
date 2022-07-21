@@ -108,7 +108,7 @@ if (isset($_POST['signinBtn'])) {
 						<img src="images/logo.svg" class="h-10">
 					</a>
 				</div>
-				<!-- <img src="images/instructor_signup.png" class="rounded-br-lg"> -->
+				<img src="images/signin_users.png" class="rounded-br-lg">
 			</div>
 		</div>
 	</div>
