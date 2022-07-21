@@ -2,11 +2,11 @@
 session_start();
 require('database/db_connection.php');
 $con = OpenCon();
-if (isset($_POST['signinBtn'])) {
+if (isset($_POST['sendCode'])) {
     $isValidEmail = true;
     $isValidUsername = true;
     $username = filter_input(INPUT_POST, 'username');
-    $email = filter_input(INPUT_POST, 'email_restore');
+    $email = filter_input(INPUT_POST, 'email');
     $studentQuery = "SELECT * FROM student WHERE username = ? AND email = ?";
     $instructorQuery = "SELECT * FROM instructors WHERE username = ? AND email = ?";
     $statement1 = mysqli_stmt_init($con);
@@ -32,7 +32,7 @@ if (isset($_POST['signinBtn'])) {
             $fetchedUsers[] = $inst['email'];
         }
         if (count($fetchedUsers) == 0) {
-            $restoreError = "Sorry you have enter a wrong information, check it again!";
+            $restoreError = "You have entered the wrong information, please recheck it!";
         } else {
             // send email
         }
@@ -88,6 +88,21 @@ if (isset($_POST['signinBtn'])) {
 </head>
 
 <body class="bg-amber-50 flex flex-col items-center justify-center w-full h-screen overflow-x-hidden text-gray-700 scrollbar">
+    <div id="toast-danger" class="opacity-0 flex fixed bottom-5 right-8 duration-100 ease-in items-center p-4 mb-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+        <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Error icon</span>
+        </div>
+        <div class="ml-3 text-sm font-normal" id="errorMsg"><?php if (isset($restoreError)) echo htmlspecialchars($restoreError) ?></div>
+        <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-danger" aria-label="Close">
+            <span class="sr-only">Close</span>
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+        </button>
+    </div>
     <a href="index.php">
         <img src="images/logo.svg" class="h-14 my-2">
     </a>
@@ -105,16 +120,21 @@ if (isset($_POST['signinBtn'])) {
                 <div class="flex w-full">
                     <div class="w-full mt-3">
                         <label for="password" class="block capitalize font-semibold">email</label>
-                        <input type="email" name="email" id="email_restore" placeholder="example@email.com" class="w-full mt-1  bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-blue-400 focus:ring-blue-400" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($password)) echo htmlspecialchars($password) ?>">
+                        <input type="text" name="email" id="email" placeholder="example@email.com" class="w-full mt-1  bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-blue-400 focus:ring-blue-400" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($email)) echo htmlspecialchars($email) ?>">
                         <div class="text-red-500 text-sm mt-2">
-                            <p id="restoreError" class="flex items-center"><?php if (isset($restoreError)) echo htmlspecialchars($restoreError) ?></p>
+                            <p class="flex items-center" id="emailError"></p>
                         </div>
+                        <!-- <div class="text-red-500 text-sm mt-2">
+                            <p id="restoreError" class="flex items-center"><?php if (isset($restoreError)) echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>' . htmlspecialchars($restoreError) ?></p>
+                        </div> -->
                     </div>
                 </div>
 
                 <!-- button -->
                 <div class="flex flex-col items-center">
-                    <button type="submit" name="signinBtn" id="signinBtn" class="mt-10 bg-blue-500 text-white px-14 py-3 rounded-full shadow-md font-semibold hover:bg-blue-600 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" disabled>Send a code</button>
+                    <button type="submit" name="sendCode" id="sendCode" class="mt-10 bg-blue-500 text-white px-14 py-3 rounded-full shadow-md font-semibold hover:bg-blue-600 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" disabled>Send a code</button>
                     <p class="text-xs mt-4">New user? <span class=" text-blue-600 hover:underline"><a href="createStudentAccount.php">create account</a></span></p>
                 </div>
             </form>
@@ -125,7 +145,7 @@ if (isset($_POST['signinBtn'])) {
     <footer class="mt-4">
         <p class="text-sm text-gray-600 text-center">Copyright © 2022 iMaster</p>
     </footer>
-    <script src="js/signin.js"></script>
+    <script src="js/restorePassword.js"></script>
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>
 
