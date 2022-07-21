@@ -56,7 +56,6 @@ if (isset($_POST['createAccountBtn'])) {
                 header('Location: index.php?error=InsertionError');
                 exit();
             } else {
-                $field = "mm";
                 $hashedPass = password_hash($password, PASSWORD_DEFAULT);
                 mysqli_stmt_bind_param($statement, "ssssssssss", $username, $fName, $lName, $email, $hashedPass, $field, $courseLink, $degree, $year, $bio);
                 mysqli_stmt_execute($statement);
