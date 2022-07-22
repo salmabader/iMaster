@@ -20,3 +20,7 @@ $mail->Username   = 'SalmaBader.CS@gmail.com';                     //SMTP userna
 $mail->Password   = 'jyuwfgwfcvzkiaet';                               //SMTP password
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
 $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+//Content
+$mail->isHTML(true);     //Set email format to HTML
+$mail->CharSet = "UTF-8";     //enable writing in Arabic    

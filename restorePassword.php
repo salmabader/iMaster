@@ -51,7 +51,6 @@ if (isset($_POST['sendCode'])) {
 
             //Content
             $content = $_SESSION['code'];
-            $mail->isHTML(true); //Set email format to HTML
             $mail->Subject = 'Restore password code';
             $mail->Body    = 'Your restore code: <b>' . $content . '</b>';
 
