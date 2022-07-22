@@ -6,8 +6,8 @@ $con = OpenCon();
 if (isset($_POST['sendCode'])) {
     $isValidEmail = true;
     $isValidUsername = true;
-    $username = filter_input(INPUT_POST, 'username');
     $email = filter_input(INPUT_POST, 'email');
+    $newPass = filter_input(INPUT_POST, 'password');
     $studentQuery = "SELECT * FROM student WHERE username = ? AND email = ?";
     $instructorQuery = "SELECT * FROM instructors WHERE username = ? AND email = ?";
     $statement1 = mysqli_stmt_init($con);
@@ -48,7 +48,7 @@ if (isset($_POST['sendCode'])) {
             $mail->Body    = 'Your restore code: <b>' . $content . '</b>';
 
             if ($mail->send()) {
-                echo 'CODE SENT';
+                // echo 'CODE SENT';
             }
         }
     }
@@ -123,19 +123,19 @@ if (isset($_POST['sendCode'])) {
     </a>
     <div class="bg-white lg:w-[40%] md:mx-0 mx-3 max-w-3xl flex rounded-lg border-blue-400 border-x-2 shadow-md">
         <!-- left side -->
-        <div class="w-full flex flex-col lg:mr-4 mr-0">
+        <div class="w-full flex flex-col lg:mr-4 mr-0 items-center">
             <p class="text-center pt-10 font-medium text-xl">Sign in to Your Account</p>
+            <div class="flex items-center text-white text-sm w-1/2 mt-2">
+                <div class="bg-blue-500 rounded-md px-3 py-1">1</div>
+                <div class="w-full bg-gray-200 h-2" id="bar"></div>
+                <div class="bg-gray-200 rounded-md px-3 py-1" id="secondStep">2</div>
+            </div>
             <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" class="flex flex-wrap justify-center px-12 pb-12 overflow-y-auto scrollbar">
-                <!-- username -->
-                <div class="w-full mt-3">
-                    <label for="usename" class="block capitalize font-semibold">username</label>
-                    <input type="text" name="username" maxlength="10" id="signup_usename" placeholder="_salma" class="w-full mt-1  bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-blue-400 focus:ring-blue-400" value="<?php if (isset($username)) echo htmlspecialchars($username) ?>">
-                </div>
                 <!-- email -->
                 <div class="flex w-full">
                     <div class="w-full mt-3">
-                        <label for="password" class="block capitalize font-semibold">email</label>
-                        <input type="text" name="email" id="email" placeholder="example@email.com" class="w-full mt-1  bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-blue-400 focus:ring-blue-400" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($email)) echo htmlspecialchars($email) ?>">
+                        <label for="email" class="block capitalize font-semibold">email</label>
+                        <input type="text" name="email" id="email" placeholder="example@email.com" class="w-full mt-1  bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-blue-400 focus:ring-blue-400" value="<?php if (isset($email)) echo htmlspecialchars($email) ?>">
                         <div class="text-red-500 text-sm mt-2">
                             <p class="flex items-center" id="emailError"></p>
                         </div>
@@ -146,20 +146,45 @@ if (isset($_POST['sendCode'])) {
                         </div> -->
                     </div>
                 </div>
-
+                <!-- new password -->
+                <div class="w-full mt-2">
+                    <label for="password" class="block capitalize font-semibold">new password</label>
+                    <div class="relative">
+                        <div id="eyeIcon" class="eyeIcon flex absolute inset-y-0 right-0 items-center pr-3 cursor-pointer">
+                            <svg id="opened" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 hover:text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <input type="password" name="password" id="password" placeholder="••••••••" class="w-full mt-1  bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-blue-400 focus:ring-blue-400" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($password)) echo htmlspecialchars($password) ?>">
+                    </div>
+                    <div class="text-red-500 text-sm mt-2">
+                        <p id="passwordError" class="flex items-center"></p>
+                    </div>
+                </div>
                 <!-- button -->
                 <div class="flex flex-col items-center">
-                    <button type="submit" name="sendCode" id="sendCode" class="mt-10 bg-blue-500 text-white px-14 py-3 rounded-full shadow-md font-semibold hover:bg-blue-600 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" disabled>Send a code</button>
+                    <button type="submit" name="sendCode" id="sendCode" class="mt-10 bg-blue-500 text-white px-14 py-3 rounded-full shadow-md font-semibold hover:bg-blue-600 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" data-tooltip-target="tooltip-click" data-tooltip-trigger="hover" data-tooltip-placement="top" disabled>Send a code</button>
+
                     <p class="text-xs mt-4">New user? <span class=" text-blue-600 hover:underline"><a href="createStudentAccount.php">create account</a></span></p>
                 </div>
             </form>
         </div>
-
-        <!-- right side -->
+    </div>
+    <!-- tooltip -->
+    <div id="tooltip-click" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-800 rounded-lg shadow-sm opacity-0 tooltip transition-opacity duration-200">
+        <ul>Password must be:
+            <li><span id="passLength"></span>at least 8 characters</li>
+            <li><span id="passCL"></span>contains at least one capital letter</li>
+            <li><span id="passSL"></span>contains at least one small letter</li>
+            <li><span id="passSC"></span>contains at least one special character</li>
+        </ul>
+        <div class="tooltip-arrow" data-popper-arrow></div>
     </div>
     <footer class="mt-4">
         <p class="text-sm text-gray-600 text-center">Copyright © 2022 iMaster</p>
     </footer>
+    <script src="js/main.js"></script>
     <script src="js/restorePassword.js"></script>
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>

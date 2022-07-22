@@ -1,5 +1,5 @@
 // ----------- check password -----------
-const inputPassword = document.getElementById("signup_password")
+const inputPassword = document.getElementById("password")
 const passlength = document.getElementById("passLength")
 const capitalL = document.getElementById("passCL")
 const smallL = document.getElementById("passSL")
