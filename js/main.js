@@ -122,18 +122,20 @@ const validateEmail = (email) => {
 const inputUsername = document.getElementById("signup_usename")
 const usernameError = document.getElementById("usernameError")
 let isValidUN = false
-inputUsername.addEventListener("keyup", function () {
-    if (inputUsername.value.length > 0 && !isValidUsername(inputUsername.value)) {
-        usernameError.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+if (inputUsername) {
+    inputUsername.addEventListener("keyup", function () {
+        if (inputUsername.value.length > 0 && !isValidUsername(inputUsername.value)) {
+            usernameError.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
   </svg>  Invalid username`
-        isValidUN = false
-    }
-    else {
-        usernameError.innerHTML = ""
-        isValidUN = true
-    }
-})
+            isValidUN = false
+        }
+        else {
+            usernameError.innerHTML = ""
+            isValidUN = true
+        }
+    })
+}
 function isValidUsername(str) {
     return /[a-zA-Z0-9_]{5,10}$/.test(str) && isNaN(str)
 }

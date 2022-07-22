@@ -8,47 +8,55 @@ if (isset($_POST['sendCode'])) {
     $isValidUsername = true;
     $email = filter_input(INPUT_POST, 'email');
     $newPass = filter_input(INPUT_POST, 'password');
-    $studentQuery = "SELECT * FROM student WHERE username = ? AND email = ?";
-    $instructorQuery = "SELECT * FROM instructors WHERE username = ? AND email = ?";
+    $studentQuery = "SELECT * FROM student WHERE email = ?";
+    $instructorQuery = "SELECT * FROM instructors WHERE email = ?";
     $statement1 = mysqli_stmt_init($con);
     $statement2 = mysqli_stmt_init($con);
     if (!mysqli_stmt_prepare($statement1, $studentQuery) || !mysqli_stmt_prepare($statement2, $instructorQuery)) {
         header('Location: index.php?error=SQLError');
         exit();
     } else {
-        mysqli_stmt_bind_param($statement1, "ss", $username, $email);
+        mysqli_stmt_bind_param($statement1, "s", $email);
         mysqli_stmt_execute($statement1);
         $result1 = mysqli_stmt_get_result($statement1);
-        mysqli_stmt_bind_param($statement2, "ss", $username, $email);
+        mysqli_stmt_bind_param($statement2, "s", $email);
         mysqli_stmt_execute($statement2);
         $result2 = mysqli_stmt_get_result($statement2);
-        $fetchedUsers = array();
+        $fetchedStu = array();
+        $fetchedInst = array();
         //to store all the fetched rows
         while ($stu = mysqli_fetch_assoc($result1)) {
-            $fetchedUsers[] = $stu['username'];
-            $fetchedUsers[] = $stu['email'];
+            $fetchedStu[] = $stu['email'];
         }
         while ($inst = mysqli_fetch_assoc($result2)) {
-            $fetchedUsers[] = $inst['username'];
-            $fetchedUsers[] = $inst['email'];
+            $fetchedInst[] = $inst['email'];
         }
-        if (count($fetchedUsers) == 0) {
-            $restoreError = "You have entered the wrong information, please recheck it!";
+        if (count($fetchedStu) == 0 && count($fetchedInst) == 0) {
+            $feedback = "You have entered the wrong information, please recheck it!";
         } else {
             // send the code to email
+            $_SESSION['code'] = substr(str_shuffle("0123456789"), 0, 6);
             //Recipients
             $mail->setFrom('SalmaBader.CS@gmail.com', 'iMaster');
-            // $mail->addAddress($email, 'Joe User');     //Add a recipient
-            $mail->addAddress($email);
+            // to get full name
+            if ($fetchedStu) {
+                $getFullName = "SELECT FName, LName FROM student WHERE email = '$email'";
+            } else {
+                $getFullName = "SELECT FName, LName FROM instructors WHERE email = '$email'";
+            }
+            $result = mysqli_query($con, $getFullName);
+            $row = mysqli_fetch_assoc($result);
+            $fullName = $row['FName'] . ' ' . $row['LName'];
+            $mail->addAddress($email, $fullName);     //Add a recipient
 
             //Content
-            $content = substr(str_shuffle("0123456789"), 0, 6);
-            $mail->isHTML(true);                                  //Set email format to HTML
+            $content = $_SESSION['code'];
+            $mail->isHTML(true); //Set email format to HTML
             $mail->Subject = 'Restore password code';
             $mail->Body    = 'Your restore code: <b>' . $content . '</b>';
 
             if ($mail->send()) {
-                // echo 'CODE SENT';
+                $feedback = "Code sent to: " . $email;
             }
         }
     }
@@ -103,15 +111,31 @@ if (isset($_POST['sendCode'])) {
 </head>
 
 <body class="bg-amber-50 flex flex-col items-center justify-center w-full h-screen overflow-x-hidden text-gray-700 scrollbar">
-    <div id="toast-danger" class="opacity-0 flex fixed bottom-5 right-8 duration-100 ease-in items-center p-4 mb-4 w-full max-w-xs text-gray-500 bg-white border-2 border-red-500 rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+    <!-- toast messages  -->
+    <div id="toast-danger" class="opacity-0 flex fixed bottom-5 right-8 items-center p-4 mb-4 w-full max-w-xs text-gray-500 bg-white border-2 border-red-500 rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
         <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-red-500 dark:bg-red-800 dark:text-red-200">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
             </svg>
             <span class="sr-only">Error icon</span>
         </div>
-        <div class="ml-3 text-sm font-normal" id="errorMsg"><?php if (isset($restoreError)) echo htmlspecialchars($restoreError) ?></div>
+        <div class="ml-3 text-sm font-normal" id="errorMsg"><?php if (isset($wrongInfo)) echo htmlspecialchars($wrongInfo) ?></div>
         <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-danger" aria-label="Close">
+            <span class="sr-only">Close</span>
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+        </button>
+    </div>
+    <div id="toast-success" class="opacity-0 flex fixed bottom-5 right-8 items-center p-4 mb-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 border-2 border-green-600" role="alert">
+        <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-green-600 rounded-lg dark:bg-green-800 dark:text-green-200">
+            <svg aria-hidden="true" class="h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Check icon</span>
+        </div>
+        <div class="ml-3 text-sm font-normal" id="feedback"><?php if (isset($feedback)) echo htmlspecialchars($feedback) ?></div>
+        <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
             <span class="sr-only">Close</span>
             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -139,11 +163,6 @@ if (isset($_POST['sendCode'])) {
                         <div class="text-red-500 text-sm mt-2">
                             <p class="flex items-center" id="emailError"></p>
                         </div>
-                        <!-- <div class="text-red-500 text-sm mt-2">
-                            <p id="restoreError" class="flex items-center"><?php if (isset($restoreError)) echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>' . htmlspecialchars($restoreError) ?></p>
-                        </div> -->
                     </div>
                 </div>
                 <!-- new password -->
@@ -156,7 +175,7 @@ if (isset($_POST['sendCode'])) {
                                 <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
                             </svg>
                         </div>
-                        <input type="password" name="password" id="password" placeholder="••••••••" class="w-full mt-1  bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-blue-400 focus:ring-blue-400" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($password)) echo htmlspecialchars($password) ?>">
+                        <input type="password" name="password" id="password" placeholder="••••••••" class="w-full mt-1  bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-blue-400 focus:ring-blue-400" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($newPass)) echo htmlspecialchars($newPass) ?>">
                     </div>
                     <div class="text-red-500 text-sm mt-2">
                         <p id="passwordError" class="flex items-center"></p>
@@ -164,7 +183,7 @@ if (isset($_POST['sendCode'])) {
                 </div>
                 <!-- button -->
                 <div class="flex flex-col items-center">
-                    <button type="submit" name="sendCode" id="sendCode" class="mt-10 bg-blue-500 text-white px-14 py-3 rounded-full shadow-md font-semibold hover:bg-blue-600 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" data-tooltip-target="tooltip-click" data-tooltip-trigger="hover" data-tooltip-placement="top" disabled>Send a code</button>
+                    <button type="submit" name="sendCode" id="sendCode" class="mt-10 bg-blue-500 text-white px-14 py-3 rounded-full shadow-md font-semibold hover:bg-blue-600 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" data-tooltip-target="tooltip-hover" data-tooltip-trigger="hover" data-tooltip-placement="top" disabled>Send a code</button>
 
                     <p class="text-xs mt-4">New user? <span class=" text-blue-600 hover:underline"><a href="createStudentAccount.php">create account</a></span></p>
                 </div>
@@ -179,6 +198,11 @@ if (isset($_POST['sendCode'])) {
             <li><span id="passSL"></span>contains at least one small letter</li>
             <li><span id="passSC"></span>contains at least one special character</li>
         </ul>
+        <div class="tooltip-arrow" data-popper-arrow></div>
+    </div>
+    <!-- tooltip -->
+    <div id="tooltip-hover" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-xs text-white bg-gray-800 rounded-lg shadow-sm opacity-0 tooltip transition-opacity duration-200">
+        <p>Send code to confirm the password changes</p>
         <div class="tooltip-arrow" data-popper-arrow></div>
     </div>
     <footer class="mt-4">
