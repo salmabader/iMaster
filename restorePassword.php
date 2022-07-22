@@ -1,6 +1,7 @@
 <?php
 session_start();
 require('database/db_connection.php');
+require('mailConfig.php');
 $con = OpenCon();
 if (isset($_POST['sendCode'])) {
     $isValidEmail = true;
@@ -35,15 +36,21 @@ if (isset($_POST['sendCode'])) {
             $restoreError = "You have entered the wrong information, please recheck it!";
         } else {
             // send the code to email
+            //Recipients
+            $mail->setFrom('SalmaBader.CS@gmail.com', 'iMaster');
+            // $mail->addAddress($email, 'Joe User');     //Add a recipient
+            $mail->addAddress($email);
 
-            // $to = $email;
-            // $subject = "Restore password code";
-            // $content = substr(str_shuffle("0123456789"), 0, 6);
-            // $headers = "From: salmabader.cs@gmail.com";
+            //Content
+            $content = substr(str_shuffle("0123456789"), 0, 6);
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = 'Restore password code';
+            $mail->Body    = 'Your restore code: <b>' . $content . '</b>';
 
-            // if (mail($to, $subject, $content, $headers)) {
-            //     echo 'CODE SENT';
-            // }
+            $isEmailSended = $mail->send();
+            if ($isEmailSended) {
+                echo 'CODE SENT';
+            }
         }
     }
 }
