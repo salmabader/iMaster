@@ -86,7 +86,7 @@ if (isset($_POST['signinBtn'])) {
 							<p id="signInError" class="flex items-center"></p>
 						</div>
 						<div class="text-amber-500 text-xs flex justify-end mr-2">
-							<a href="restorePassword.php" class="hover:underline">Forget password?</a>
+							<a href="resetPassword.php" class="hover:underline">Forget password?</a>
 						</div>
 					</div>
 				</div>
