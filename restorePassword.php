@@ -47,8 +47,7 @@ if (isset($_POST['sendCode'])) {
             $mail->Subject = 'Restore password code';
             $mail->Body    = 'Your restore code: <b>' . $content . '</b>';
 
-            $isEmailSended = $mail->send();
-            if ($isEmailSended) {
+            if ($mail->send()) {
                 echo 'CODE SENT';
             }
         }
