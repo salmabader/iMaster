@@ -135,7 +135,7 @@ if (isset($_POST['verify'])) {
     <a href="index.php">
         <img src="images/logo.svg" class="h-14 my-2">
     </a>
-    <div class="bg-white lg:w-[40%] md:mx-0 mx-3 max-w-3xl flex rounded-lg border-blue-400 border-x-2 shadow-md">
+    <div class="bg-white sm:w-1/2 md:mx-0 mx-3 max-w-xl flex rounded-lg border-blue-400 border-x-2 shadow-md">
         <div class="w-full flex flex-col lg:mr-4 mr-0 items-center">
             <p class="text-center pt-10 font-medium text-xl">Reset your password</p>
             <div class="flex items-center text-white text-sm w-1/2 mt-2">
