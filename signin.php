@@ -19,7 +19,7 @@ if (isset($_POST['signinBtn'])) {
 	<script src="https://cdn.tailwindcss.com"></script>
 	<link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
 	<link rel="icon" href="images/icon.svg" type="image/x-icon">
-	<title>Apply as instructor</title>
+	<title>Sign in</title>
 	<style>
 		.scrollbar::-webkit-scrollbar {
 			width: 10px;
