@@ -4,7 +4,7 @@ require('database/db_connection.php');
 $con = OpenCon();
 if (isset($_POST['signinBtn'])) {
 
-	$isnotValidUsername = true;
+	$isValidUsername = false;
 	$username = filter_input(INPUT_POST, 'username');
 	$password = filter_input(INPUT_POST, 'password');
 	$existanceQuery1 = "SELECT * FROM student WHERE username = ? ";
@@ -15,29 +15,39 @@ if (isset($_POST['signinBtn'])) {
 		header('Location: index.php?error=SQLError');
 		exit();
 	} else {
-		mysqli_stmt_bind_param($statement1, "ss", $username);
+		mysqli_stmt_bind_param($statement1, "s", $username);
 		mysqli_stmt_execute($statement1);
 		$result1 = mysqli_stmt_get_result($statement1);
-		mysqli_stmt_bind_param($statement2, "ss", $username);
+		mysqli_stmt_bind_param($statement2, "s", $username);
 		mysqli_stmt_execute($statement2);
 		$result2 = mysqli_stmt_get_result($statement2);
-		$fetchedUsers = array();
+		$fetchedStu = array();
+		$fetchedInstruc = array();
 		//to store all the fetched rows
-		while ($stu = mysqli_fetch_assoc($result1)) {
-			$fetchedUsers[] = $stu['username'];
-		}
-		while ($inst = mysqli_fetch_assoc($result2)) {
-			$fetchedUsers[] = $inst['username'];
-		}
-		if (count($fetchedUsers) > 0) {
-			if (in_array($username, $fetchedUsers) && ($result1 != null)) {
-				$isnotValidUsername = false;
-			} elseif (in_array($username, $fetchedUsers) && ($result2 != null)) {
-				$isnotValidUsername = false;
+		$stu = mysqli_fetch_assoc($result1);
+		$inst = mysqli_fetch_assoc($result2);
+
+
+		if (isset($inst)) {
+			$isValidInstPass = password_verify($password, $inst['password']);
+			if (!$isValidInstPass) {
+				$passError = "Invalid password.";
 			}
 		}
-		if ($isnotValidUsername) {
-			$usernameError = "Usename is uncorect";
+		if (isset($stu)) {
+			$isValidstuPass = password_verify($password, $stu['password']);
+			if (!$isValidstuPass) {
+				$passError = "Invalid password.";
+			}
+		}
+		if (!isset($inst) && !isset($stu)) {
+
+			$usernameError = "Invalid username.";
+		}
+		if (isset($stu) && $isValidstuPass) {
+			header('Location: student_home.html');
+		} elseif (isset($inst) && $isValidInstPass) {
+			header('Location: instructor_home.html');
 		}
 	}
 }
@@ -119,7 +129,12 @@ if (isset($_POST['signinBtn'])) {
 									<path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
 								</svg>
 							</div>
-							<input type="password" name="password" id="signup_password" placeholder="••••••••" class="w-full mt-1  bg-amber-50 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-amber-400 focus:ring-amber-400" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($password)) echo htmlspecialchars($password) ?>">
+							<input type="password" name="password" id="password" placeholder="••••••••" class="w-full mt-1  bg-amber-50 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-amber-400 focus:ring-amber-400" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($password)) echo htmlspecialchars($password) ?>">
+							<div class="text-red-500 text-sm mt-2">
+								<p class="flex items-center" id="usernameError"><?php if (isset($passError)) echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>' . $passError ?></p>
+							</div>
 						</div>
 						<div class="text-red-500 text-sm mt-2">
 							<p id="signInError" class="flex items-center"></p>

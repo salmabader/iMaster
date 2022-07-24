@@ -116,7 +116,7 @@ if (isset($_POST['createAccountBtn'])) {
                         in</a></span></p>
             <p class="text-center pt-3 capitalize font-medium text-xl">create student account</p>
             <p class="text-center p-1 text-xs mb-4 text-blue-600">please fill in all information to be able to submit the form</p>
-            <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" class="flex flex-wrap justify-center px-12 pb-12 xl:overflow-y-hidden overflow-y-auto scrollbar">
+            <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" class="flex flex-wrap justify-center px-12 pb-12 overflow-y-auto scrollbar">
                 <!-- first name -->
                 <div class="flex w-1/2">
                     <div class="w-full ">
