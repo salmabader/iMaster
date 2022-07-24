@@ -4,6 +4,7 @@
 
 // ----------- to show and hide the password -----------
 const eye = document.getElementById("eyeIcon")
+const inputPassword = document.getElementById("password")
 eye.addEventListener("click", function () {
     if (eye.children[0].id === "opened") {
         eye.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-amber-500 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
