@@ -152,7 +152,7 @@ if (isset($_POST['createAccountBtn'])) {
                                     <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
                                 </svg>
                             </div>
-                            <input type="password" name="password" id="signup_password" placeholder="••••••••" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-white focus:border-amber-400 focus:ring-amber-400 placeholder-gray-400 text-blue-800" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($password)) echo htmlspecialchars($password) ?>">
+                            <input type="password" name="password" id="password" placeholder="••••••••" class="w-full mt-1 bg-amber-100 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-white focus:border-amber-400 focus:ring-amber-400 placeholder-gray-400 text-blue-800" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($password)) echo htmlspecialchars($password) ?>">
                         </div>
                         <div class="text-red-500 text-sm mt-2">
                             <p id="passwordError" class="flex items-center"></p>

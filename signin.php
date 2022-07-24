@@ -53,7 +53,7 @@ if (isset($_POST['signinBtn'])) {
 	<script src="https://cdn.tailwindcss.com"></script>
 	<link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
 	<link rel="icon" href="images/icon.svg" type="image/x-icon">
-	<title>Apply as instructor</title>
+	<title>Sign in</title>
 	<style>
 		.scrollbar::-webkit-scrollbar {
 			width: 10px;
@@ -125,7 +125,7 @@ if (isset($_POST['signinBtn'])) {
 							<p id="signInError" class="flex items-center"></p>
 						</div>
 						<div class="text-amber-500 text-xs flex justify-end mr-2">
-							<a href="restorePassword.php" class="hover:underline">Forget password?</a>
+							<a href="resetPassword.php" class="hover:underline">Forget password?</a>
 						</div>
 					</div>
 				</div>
