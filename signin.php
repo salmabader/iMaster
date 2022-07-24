@@ -3,11 +3,45 @@ session_start();
 require('database/db_connection.php');
 $con = OpenCon();
 if (isset($_POST['signinBtn'])) {
-	$isValidEmail = true;
-	$isValidUsername = true;
+
+	$isnotValidUsername = true;
 	$username = filter_input(INPUT_POST, 'username');
 	$password = filter_input(INPUT_POST, 'password');
+	$existanceQuery1 = "SELECT * FROM student WHERE username = ? ";
+	$existanceQuery2 = "SELECT * FROM instructors WHERE username = ?";
+	$statement1 = mysqli_stmt_init($con);
+	$statement2 = mysqli_stmt_init($con);
+	if (!mysqli_stmt_prepare($statement1, $existanceQuery1) || !mysqli_stmt_prepare($statement2, $existanceQuery2)) {
+		header('Location: index.php?error=SQLError');
+		exit();
+	} else {
+		mysqli_stmt_bind_param($statement1, "ss", $username);
+		mysqli_stmt_execute($statement1);
+		$result1 = mysqli_stmt_get_result($statement1);
+		mysqli_stmt_bind_param($statement2, "ss", $username);
+		mysqli_stmt_execute($statement2);
+		$result2 = mysqli_stmt_get_result($statement2);
+		$fetchedUsers = array();
+		//to store all the fetched rows
+		while ($stu = mysqli_fetch_assoc($result1)) {
+			$fetchedUsers[] = $stu['username'];
+		}
+		while ($inst = mysqli_fetch_assoc($result2)) {
+			$fetchedUsers[] = $inst['username'];
+		}
+		if (count($fetchedUsers) > 0) {
+			if (in_array($username, $fetchedUsers) && ($result1 != null)) {
+				$isnotValidUsername = false;
+			} elseif (in_array($username, $fetchedUsers) && ($result2 != null)) {
+				$isnotValidUsername = false;
+			}
+		}
+		if ($isnotValidUsername) {
+			$usernameError = "Usename is uncorect";
+		}
+	}
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +101,12 @@ if (isset($_POST['signinBtn'])) {
 				<!-- username -->
 				<div class="w-full mt-3">
 					<label for="usename" class="block capitalize font-semibold">username</label>
-					<input type="text" name="username" maxlength="10" id="signup_usename" placeholder="_salma" class="w-full mt-1  bg-amber-50 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-amber-400 focus:ring-amber-400" value="<?php if (isset($username)) echo htmlspecialchars($username) ?>">
+					<input type="text" name="username" maxlength="10" id="signup_usename" placeholder="_salma" class="w-full mt-1  bg-amber-50 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-amber-400 focus:ring-amber-400" value="<?php if (isset($username)) echo htmlspecialchars($username)  ?>">
+					<div class="text-red-500 text-sm mt-2">
+						<p class="flex items-center" id="usernameError"><?php if (isset($usernameError)) echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>' . $usernameError ?></p>
+					</div>
 				</div>
 				<!-- password -->
 				<div class="flex w-full">

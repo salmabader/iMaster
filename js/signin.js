@@ -1,3 +1,7 @@
+
+
+
+
 // ----------- to show and hide the password -----------
 const eye = document.getElementById("eyeIcon")
 eye.addEventListener("click", function () {
