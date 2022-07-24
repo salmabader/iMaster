@@ -72,12 +72,12 @@
 			</div>
 			<!-- text -->
 			<div class="mt-20 sm:-mx-6">
-				<h1 class="text-2xl font-bold text-gray-700 rounded-lg border-l-8 border-amber-400 px-2 bg-amber-100 w-max sm:mx-6">
+				<h1 class="text-2xl font-bold text-gray-700 rounded-lg border-l-8 border-amber-400 px-2 bg-amber-100 w-max sm:mx-6" data-aos="fade-right" data-aos-easing="ease-in-out" data-aos-delay="200">
 					Expand your
 					knowledge
 				</h1>
 				<div class="relative flex">
-					<p class="mt-3 w-full md:w-3/5 md:pr-8 lg:pr-0 text-justify text-gray-600 sm:mx-6 leading-relaxed">
+					<p class="mt-3 w-full md:w-3/5 md:pr-8 lg:pr-0 text-justify text-gray-600 sm:mx-6 leading-relaxed" data-aos="fade-right" data-aos-easing="ease-in-out" data-aos-delay="400">
 						Lorem
 						ipsum dolor
 						sit amet
@@ -90,12 +90,12 @@
 						tenetur
 						eaque soluta a, esse, doloribus ex dolorum eos quos, ab quisquam similique harum quae laudantium
 						pariatur? Ratione, animi.</p>
-					<div class="absolute right-0 bottom-20 flex justify-start h-full" data-aos="fade-left" data-aos-delay="50" data-aos-duration="1000" data-aos-easing="ease-in-out">
+					<div class="absolute right-0 bottom-20 flex justify-start h-full" data-aos="fade-left" data-aos-delay="0" data-aos-easing="ease-in-out">
 						<img src="images/main_img_p1.svg" class="hidden md:h-80 md:block lg:h-96 absolute">
 						<img src="images/main_img_p2.svg" class="hidden md:h-80 md:block lg:h-96 animate-pulse">
 					</div>
 				</div>
-				<div class="max-h-5">
+				<div class="max-h-5" data-aos="fade-right" data-aos-easing="ease-in-out" data-aos-delay="800">
 					<button class="capitalize sm:mx-6 bg-blue-800 border-b-4 md:hover:border-b-8 md:hover:-translate-y-1 md:hover:shadow-lg border-amber-200 px-6 py-2 rounded-xl text-gray-100 shadow-md mt-6  duration-100 ease-in" onclick="window.location.href ='createStudentAccount.php'">join
 						us
 						now!</button>
@@ -106,90 +106,98 @@
 	<!-- main content -->
 	<main class="bg-[#FCFCFC] pt-10 flex flex-col items-center w-full">
 		<!-- about us -->
-		<h2 id="aboutUs" class="text-center font-bold text-2xl capitalize text-gray-800 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full">
+		<h2 id="aboutUs" class="text-center font-bold text-2xl capitalize text-gray-800 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full" data-aos="fade-right" data-aos-easing="ease-in-out" data-aos-delay="1000">
 			about
 			us</h2>
-		<div class="max-w-6xl pb-10 ">
-			<p class="pt-5 leading-relaxed mx-4 sm:-mx-4">iMaster is a student registration system
+		<div class="max-w-6xl pb-10">
+			<p class="pt-5 leading-relaxed mx-4 sm:-mx-4" data-aos="fade-left" data-aos-easing="ease-in-out" data-aos-delay="1200">iMaster is a student registration system
 				that provides you with
 				different courses in different fields that you need, to improve your skills and expand your knowledge.
 			</p>
 		</div>
 		<!-- features -->
-		<h2 id="features" class="text-center font-bold text-2xl capitalize text-gray-800 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full">
+		<h2 id="features" class="text-center font-bold text-2xl capitalize text-gray-800 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full" data-aos="fade-right" data-aos-easing="ease-in-out" data-aos-delay="1700">
 			features</h2>
 		<!-- container of four cards -->
 		<div class="max-w-6xl pb-10 pt-3">
 			<div class="flex flex-col sm:flex-row sm:-mx-4">
 				<!-- CARD 1 -->
-				<div class="mx-3 bg-amber-50 sm:w-1/2 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
-					<div class="flex justify-center items-center mb-3">
-						<div class="bg-amber-200 p-2 rounded-full w-16">
-							<svg class="h-12 fill-amber-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-								<path d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z" fill-rule="evenodd" clip-rule="evenodd" />
-							</svg>
+				<div data-aos="zoom-in" data-aos-easing="ease-in-out" data-aos-delay="50">
+					<div class="mx-3 bg-amber-50 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
+						<div class="flex justify-center items-center mb-3">
+							<div class="bg-amber-200 p-2 rounded-full w-16">
+								<svg class="h-12 fill-amber-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+									<path d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z" fill-rule="evenodd" clip-rule="evenodd" />
+								</svg>
+							</div>
+							<div class="text-lg font-bold text-center ml-3 text-gray-800">Title</div>
 						</div>
-						<div class="text-lg font-bold text-center ml-3 text-gray-800">Title</div>
-					</div>
-					<div class="text-gray-500 text-center mt-2 text-sm">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam enim eos a repudiandae iure
-						consequatur asperiores magni voluptate voluptatum architecto iste perferendis eveniet dolore
-						cupiditate, voluptates, vero maiores perspiciatis ipsam.
+						<div class="text-gray-500 text-center mt-2 text-sm">
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam enim eos a repudiandae iure
+							consequatur asperiores magni voluptate voluptatum architecto iste perferendis eveniet dolore
+							cupiditate, voluptates, vero maiores perspiciatis ipsam.
+						</div>
 					</div>
 				</div>
 				<!-- CARD 2 -->
-				<div class="mx-3 bg-amber-50 sm:w-1/2 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
-					<div class="flex justify-center items-center mb-3">
-						<div class="bg-amber-200 p-2 rounded-full w-16">
-							<svg class="h-12 fill-amber-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-								<path d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z" fill-rule="evenodd" clip-rule="evenodd" />
-							</svg>
+				<div data-aos="zoom-in" data-aos-easing="ease-in-out" data-aos-delay="500">
+					<div class="mx-3 bg-amber-50 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
+						<div class="flex justify-center items-center mb-3">
+							<div class="bg-amber-200 p-2 rounded-full w-16">
+								<svg class="h-12 fill-amber-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+									<path d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z" fill-rule="evenodd" clip-rule="evenodd" />
+								</svg>
+							</div>
+							<div class="text-lg font-bold text-center ml-3 text-gray-800">Title</div>
 						</div>
-						<div class="text-lg font-bold text-center ml-3 text-gray-800">Title</div>
-					</div>
-					<div class="text-gray-500 text-center mt-2 text-sm">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit debitis ipsum consequuntur eaque
-						recusandae molestiae deserunt accusamus sed tenetur blanditiis, eveniet inventore sapiente
-						distinctio delectus libero atque, doloremque quae! Repudiandae.
+						<div class="text-gray-500 text-center mt-2 text-sm">
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit debitis ipsum consequuntur eaque
+							recusandae molestiae deserunt accusamus sed tenetur blanditiis, eveniet inventore sapiente
+							distinctio delectus libero atque, doloremque quae! Repudiandae.
+						</div>
 					</div>
 				</div>
 				<!-- CARD 3 -->
-				<div class="mx-3 bg-amber-50 sm:w-1/2 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
-					<div class="flex justify-center items-center mb-3">
-						<div class="bg-amber-200 p-2 rounded-full w-16">
-							<svg class="h-12 fill-amber-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-								<path d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z" fill-rule="evenodd" clip-rule="evenodd" />
-							</svg>
+				<div data-aos="zoom-in" data-aos-easing="ease-in-out" data-aos-delay="1000">
+					<div class="mx-3 bg-amber-50 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
+						<div class="flex justify-center items-center mb-3">
+							<div class="bg-amber-200 p-2 rounded-full w-16">
+								<svg class="h-12 fill-amber-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+									<path d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z" fill-rule="evenodd" clip-rule="evenodd" />
+								</svg>
+							</div>
+							<div class="text-lg font-bold text-center ml-3 text-gray-800">Title</div>
 						</div>
-						<div class="text-lg font-bold text-center ml-3 text-gray-800">Title</div>
-					</div>
-					<div class="text-gray-500 text-center mt-2 text-sm">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit debitis ipsum consequuntur eaque
-						recusandae molestiae deserunt accusamus sed tenetur blanditiis, eveniet inventore sapiente
-						distinctio delectus libero atque, doloremque quae! Repudiandae.
+						<div class="text-gray-500 text-center mt-2 text-sm">
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit debitis ipsum consequuntur eaque
+							recusandae molestiae deserunt accusamus sed tenetur blanditiis, eveniet inventore sapiente
+							distinctio delectus libero atque, doloremque quae! Repudiandae.
+						</div>
 					</div>
 				</div>
-				<!-- CARD 4 -->
-				<div class="mx-3 bg-amber-50 sm:w-1/2 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
-					<div class="flex justify-center items-center mb-3">
-						<div class="bg-amber-200 p-2 rounded-full w-16">
-							<svg class="h-12 fill-amber-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-								<path d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z" fill-rule="evenodd" clip-rule="evenodd" />
-							</svg>
+				<div data-aos="zoom-in" data-aos-easing="ease-in-out" data-aos-delay="1500">
+					<!-- CARD 4 -->
+					<div class="mx-3 bg-amber-50 p-8 border-b-4 shadow-md border-amber-300 rounded-lg flex flex-col items-center mt-4 sm:p-3 md:p-8 md:hover:-translate-y-1 md:hover:scale-110 md:hover:shadow-lg md:hover:cursor-default duration-300">
+						<div class="flex justify-center items-center mb-3">
+							<div class="bg-amber-200 p-2 rounded-full w-16">
+								<svg class="h-12 fill-amber-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+									<path d="M18.9 19.7l-6.9 2-6.9-2L3.7 3h16.7c-.5 5.6-1 11.1-1.5 16.7zM19.4 4H4.8l1.3 14.9 5.9 1.7 5.9-1.7L19.4 4zM8.1 13.8h2V15l2 .7 2-.7.1-2.2H9.9l-.1-2h4.5l.1-2H7.7l-.1-2h9l-.2 3.9-.4 5.8-3.9 1.3-3.9-1.3-.1-2.7z" fill-rule="evenodd" clip-rule="evenodd" />
+								</svg>
+							</div>
+							<div class="text-lg font-bold text-center ml-3 text-gray-800">Title</div>
 						</div>
-						<div class="text-lg font-bold text-center ml-3 text-gray-800">Title</div>
-					</div>
-					<div class="text-gray-500 text-center mt-2 text-sm">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit debitis ipsum consequuntur eaque
-						recusandae molestiae deserunt accusamus sed tenetur blanditiis, eveniet inventore sapiente
-						distinctio delectus libero atque, doloremque quae! Repudiandae.
+						<div class="text-gray-500 text-center mt-2 text-sm">
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit debitis ipsum consequuntur eaque
+							recusandae molestiae deserunt accusamus sed tenetur blanditiis, eveniet inventore sapiente
+							distinctio delectus libero atque, doloremque quae! Repudiandae.
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="bg-blue-900 w-full flex justify-center pt-10">
 			<div class="max-w-6xl flex md:flex-row flex-col justify-between items-center text-white w-full mx-4">
-				<div class="md:w-1/4">
+				<div class="md:w-1/4" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="10">
 					<p><span class="text-3xl font-medium">iMaster</span><br><span class="tracking-widest">Master your
 							skills.</span>
 					</p>
@@ -208,15 +216,15 @@
 					</p>
 				</div>
 				<div class="md:w-3/4 w-full">
-					<h2 id="contactUs" class="text-center font-bold text-2xl capitalize text-gray-100 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full mb-6">
+					<h2 id="contactUs" class="text-center font-bold text-2xl capitalize text-gray-100 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full mb-6" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="100">
 						contact
 						us</h2>
 					<form action="#" method="POST" class="flex flex-col items-center">
-						<input type="text" id="fullName" placeholder="Your name" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50">
-						<input type="email" id="email" placeholder="Your email" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50">
-						<input type="text" id="subject" placeholder="Email subject" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50">
-						<textarea placeholder="Message" id="msg" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50"></textarea>
-						<button type="submit" class="bg-blue-300 px-6 py-3 w-3/4 rounded-2xl md:hover:bg-blue-400 duration-200 ease-in-out font-medium text-blue-900 hover:text-blue-50">Send
+						<input type="text" id="fullName" placeholder="Your name" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="100">
+						<input type="email" id="email" placeholder="Your email" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="200">
+						<input type="text" id="subject" placeholder="Email subject" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="300">
+						<textarea placeholder="Message" id="msg" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="400"></textarea>
+						<button type="submit" class="bg-blue-300 px-6 py-3 w-3/4 rounded-2xl md:hover:bg-blue-400 duration-200 ease-in-out font-medium text-blue-900 hover:text-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="500">Send
 							message</button>
 					</form>
 				</div>
@@ -252,7 +260,10 @@
 	</script>
 	<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 	<script>
-		AOS.init();
+		AOS.init({
+			duration: 1000,
+			once: true,
+		})
 	</script>
 </body>
 
