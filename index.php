@@ -219,12 +219,12 @@
 					<h2 id="contactUs" class="text-center font-bold text-2xl capitalize text-gray-100 before:content-[''] before:w-10 before:h-[3px] before:inline-block before:bg-amber-400 before:rounded-full after:content-[''] after:w-10 after:h-[3px] after:inline-block after:bg-amber-400 after:ml-2 after:rounded-full mb-6" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="100">
 						contact
 						us</h2>
-					<form action="#" method="POST" class="flex flex-col items-center">
+					<form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" class="flex flex-col items-center">
 						<input type="text" id="fullName" placeholder="Your name" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="100">
 						<input type="email" id="email" placeholder="Your email" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="200">
 						<input type="text" id="subject" placeholder="Email subject" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="300">
 						<textarea placeholder="Message" id="msg" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="400"></textarea>
-						<button type="submit" class="bg-blue-300 px-6 py-3 w-3/4 rounded-2xl md:hover:bg-blue-400 duration-200 ease-in-out font-medium text-blue-900 hover:text-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="500">Send
+						<button type="submit" name="sendMsgBtn" id="sendMsgBtn" class="bg-blue-300 px-6 py-3 w-3/4 rounded-2xl md:hover:bg-blue-400 duration-200 ease-in-out font-medium text-blue-900 hover:text-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="500">Send
 							message</button>
 					</form>
 				</div>
