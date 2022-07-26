@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2022 at 09:34 AM
+-- Generation Time: Jul 26, 2022 at 10:19 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -97,7 +97,8 @@ CREATE TABLE `instructors` (
   `previous_course` text NOT NULL,
   `degree` varchar(50) NOT NULL,
   `experience` varchar(50) NOT NULL,
-  `bio` varchar(200) NOT NULL
+  `bio` varchar(200) NOT NULL,
+  `IsAccepted` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
