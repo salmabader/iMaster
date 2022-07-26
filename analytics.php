@@ -73,7 +73,7 @@ if (isset($_SESSION['type'])) {
 		<!-- right side -->
 		<div id="rightSide" class="lg:w-4/5 lg:mx-0 mx-5 w-full h-full transition-all duration-500">
 			<div class="flex h-full">
-				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae nobis eos asperiores earum aliquid. Aspernatur consequuntur harum ex deserunt fuga magnam ab iusto, tempore ipsa, necessitatibus explicabo inventore quis veritatis!
+
 			</div>
 		</div> <!-- end of right side-->
 	</main>

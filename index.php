@@ -1,4 +1,11 @@
 <?php
+include('mailConfig.php');
+require 'vendor/autoload.php';
+
+use Mailgun\Mailgun;
+// First, instantiate the SDK with your API credentials
+$mg = Mailgun::create('47359c682dda11becda36cd2a3ad308b-835621cf-cdeb07ce'); // For US servers
+define("MY_DOMAIN", 'sandbox1dba6c378c6e4ca18fa63c3136263035.mailgun.org');
 session_start();
 if (isset($_SESSION['type'])) {
 	$privilage = $_SESSION['type'];
@@ -13,6 +20,21 @@ if (isset($_SESSION['type'])) {
 		exit();
 	}
 }
+if (isset($_POST['sendMsgBtn'])) {
+	$fullName = filter_input(INPUT_POST, 'fullName');
+	$email = filter_input(INPUT_POST, 'email');
+	$subject = filter_input(INPUT_POST, 'subject');
+	$msg = filter_input(INPUT_POST, 'msg');
+
+	// Now, compose and send your message.
+	$mg->messages()->send(MY_DOMAIN, [
+		'from'    => $fullName . '<' . $email . '>',
+		'to'      => 'iMaster.learn@gmail.com',
+		'subject' => $subject,
+		'text'    => $msg
+	]);
+	$feedback = "Thank you for contacting us, we will reply to you as soon as possible";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +44,7 @@ if (isset($_SESSION['type'])) {
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
 	<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 	<link rel="icon" href="images/icon.svg" type="image/x-icon">
 	<title>iMaster</title>
@@ -49,6 +72,12 @@ if (isset($_SESSION['type'])) {
 			background: #b45309;
 		}
 	</style>
+	<!-- prevent resubmission when refresh the page -->
+	<script>
+		if (window.history.replaceState) {
+			window.history.replaceState(null, null, window.location.href);
+		}
+	</script>
 </head>
 
 <body class="flex flex-col items-center scrollbar overflow-x-hidden">
@@ -236,10 +265,10 @@ if (isset($_SESSION['type'])) {
 						contact
 						us</h2>
 					<form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" class="flex flex-col items-center">
-						<input type="text" id="fullName" placeholder="Your name" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="100">
-						<input type="email" id="email" placeholder="Your email" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="200">
-						<input type="text" id="subject" placeholder="Email subject" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="300">
-						<textarea placeholder="Message" id="msg" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="400"></textarea>
+						<input type="text" id="fullName" name="fullName" placeholder="Your name" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="100">
+						<input type="email" id="email" name="email" placeholder="Your email" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="200">
+						<input type="text" id="subject" name="subject" placeholder="Email subject" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="300">
+						<textarea placeholder="Message" name="msg" id="msg" class="bg-blue-100 px-6 py-2 rounded-md border-2 border-white shadow-md mb-3 placeholder-blue-900 text-blue-900 w-3/4 focus:bg-white duration-200 ease-in-out hover:bg-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="400"></textarea>
 						<button type="submit" name="sendMsgBtn" id="sendMsgBtn" class="bg-blue-300 px-6 py-3 w-3/4 rounded-2xl md:hover:bg-blue-400 duration-200 ease-in-out font-medium text-blue-900 hover:text-blue-50" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="500">Send
 							message</button>
 					</form>
@@ -250,6 +279,23 @@ if (isset($_SESSION['type'])) {
 				<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd" />
 			</svg></button>
 	</main>
+	<!-- toast msg -->
+	<div id="toast-success" class="opacity-0 flex fixed bottom-5 right-9 items-center p-4 mb-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+		<div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-green-600 rounded-lg dark:bg-green-800 dark:text-green-200">
+			<svg aria-hidden="true" class="h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+			</svg>
+			<span class="sr-only">Check icon</span>
+		</div>
+		<div class="ml-3 text-sm font-normal" id="feedback"><?php if (isset($feedback)) echo htmlspecialchars($feedback) ?></div>
+		<button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
+			<span class="sr-only">Close</span>
+			<svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+			</svg>
+		</button>
+	</div>
+
 	<footer class="bg-blue-900 pt-20 pb-10 text-gray-100 w-full flex flex-col ">
 		<p class="text-sm text-gray-300 text-center">Copyright © 2022 iMaster</p>
 	</footer>
@@ -273,8 +319,19 @@ if (isset($_SESSION['type'])) {
 				myButton.style.opacity = "0";
 			}
 		}
+
+		// to show toast msg
+		const toast = document.getElementById("toast-success")
+		const msg = document.getElementById("feedback")
+		window.addEventListener('load', function() {
+			if (msg.innerHTML.length > 0) {
+				toast.classList.remove("opacity-0")
+				toast.classList.add("opacity-100")
+			}
+		})
 	</script>
 	<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+	<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 	<script>
 		AOS.init({
 			duration: 1000,
