@@ -113,8 +113,10 @@ if (isset($_POST['createAccountBtn'])) {
 </head>
 
 <body class="bg-gray-100 flex flex-col items-center justify-center w-full h-screen overflow-x-hidden text-gray-700 scrollbar">
-    <img src="images/logo.svg" class="lg:hidden block h-14 mb-2">
-    <div class="bg-white w-3/4 flex rounded-lg border-blue-500 border-x-2 shadow-md h-4/5">
+    <a href="index.php">
+        <img src="images/logo.svg" class="lg:hidden block h-14 mb-2">
+    </a>
+    <div class="bg-white lg:w-3/4 w-4/5 flex rounded-lg border-blue-500 border-x-2 shadow-md h-4/5">
         <!-- left side -->
         <div class="lg:w-2/3 w-full flex flex-col lg:mr-4 mr-0">
             <p class="text-xs text-right pt-6 pr-6">Already have an account? <span class="text-blue-600 hover:underline"><a href="signin.php">Sign

@@ -126,7 +126,9 @@ if (isset($_POST['signinBtn'])) {
 </head>
 
 <body class="bg-blue-50 flex flex-col items-center justify-center w-full h-screen overflow-x-hidden text-gray-700 scrollbar">
-	<img src="images/logo.svg" class="lg:hidden block h-14 mb-2">
+	<a href="index.php">
+		<img src="images/logo.svg" class="lg:hidden block h-14 mb-2">
+	</a>
 	<div class="bg-white w-2/3 flex rounded-lg border-amber-400 border-x-2 shadow-md">
 		<!-- left side -->
 		<div class="lg:w-2/3 w-full flex flex-col lg:mr-4 mr-0">

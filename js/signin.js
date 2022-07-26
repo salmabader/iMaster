@@ -1,7 +1,3 @@
-
-
-
-
 // ----------- to show and hide the password -----------
 const eye = document.getElementById("eyeIcon")
 const inputPassword = document.getElementById("password")
