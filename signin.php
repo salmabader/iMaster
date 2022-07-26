@@ -1,5 +1,6 @@
 <?php
 session_start();
+require('database/db_connection.php');
 if (isset($_SESSION['type'])) {
 	$privilage = $_SESSION['type'];
 	if (isset($_SESSION['username']) && $privilage == "student") {
@@ -13,7 +14,6 @@ if (isset($_SESSION['type'])) {
 		exit();
 	}
 }
-require('database/db_connection.php');
 $con = OpenCon();
 if (isset($_POST['signinBtn'])) {
 
@@ -193,8 +193,24 @@ if (isset($_POST['signinBtn'])) {
 	<footer class="mt-4">
 		<p class="text-sm text-gray-600 text-center">Copyright © 2022 iMaster</p>
 	</footer>
-	<script src="js/signin.js"></script>
+	<div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
+		<div class="relative p-4 w-full max-w-md h-full md:h-auto">
+			<div class="relative bg-white rounded-lg shadow-lg dark:bg-gray-700">
+				<div class="p-6 text-center">
+					<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" viewBox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+					</svg>
+
+					<h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Your password has been successfully reset<br>you can sign in now</h3>
+					<button id="okBtn" data-modal-toggle="popup-modal" type="button" class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+						Ok
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+	<script src="js/signin.js"></script>
 </body>
 
 </html>

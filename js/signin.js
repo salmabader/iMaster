@@ -35,3 +35,18 @@ const checkEnableButton = () => {
         inputFeilds[0].value && inputFeilds[1].value
     )
 }
+
+// -------------- to activate sign in button -------------
+const urlParams = new URLSearchParams(window.location.search)
+const popup = document.getElementById("popup-modal")
+const ok = document.getElementById("okBtn")
+const modal = new Modal(popup);
+window.addEventListener('load', function () {
+    if (urlParams.has('success')) {
+        modal.show()
+    }
+})
+ok.addEventListener('click', function () {
+    modal.hide()
+    window.location.replace("signin.php");
+})
