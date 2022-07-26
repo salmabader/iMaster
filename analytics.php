@@ -1,5 +1,11 @@
 <?php
-// create a session and check if the current session for the admin
+session_start();
+if (isset($_SESSION['type'])) {
+	$privilage = $_SESSION['type'];
+	if ($privilage != "admin") {
+		header('Location: index.php');
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

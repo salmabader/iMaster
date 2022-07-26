@@ -1,3 +1,19 @@
+<?php
+session_start();
+if (isset($_SESSION['type'])) {
+	$privilage = $_SESSION['type'];
+	if (isset($_SESSION['username']) && $privilage == "student") {
+		header('Location: signin.php');
+		exit();
+	} elseif (isset($_SESSION['username']) && $privilage == "instructor") {
+		header('Location: signin.php');
+		exit();
+	} else {
+		header('Location: analytics.php');
+		exit();
+	}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

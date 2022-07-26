@@ -1,5 +1,18 @@
 <?php
 session_start();
+if (isset($_SESSION['type'])) {
+	$privilage = $_SESSION['type'];
+	if (isset($_SESSION['username']) && $privilage == "student") {
+		header('Location: student_home.html');
+		exit();
+	} elseif (isset($_SESSION['username']) && $privilage == "instructor") {
+		header('Location: instructor_home.html');
+		exit();
+	} else {
+		header('Location: analytics.php');
+		exit();
+	}
+}
 require('database/db_connection.php');
 $con = OpenCon();
 if (isset($_POST['signinBtn'])) {
@@ -27,7 +40,6 @@ if (isset($_POST['signinBtn'])) {
 		$stu = mysqli_fetch_assoc($result1);
 		$inst = mysqli_fetch_assoc($result2);
 
-
 		if (isset($inst)) {
 			$isValidInstPass = password_verify($password, $inst['password']);
 			if (!$isValidInstPass) {
@@ -45,8 +57,20 @@ if (isset($_POST['signinBtn'])) {
 			$usernameError = "Invalid username.";
 		}
 		if (isset($stu) && $isValidstuPass) {
+			session_start();
+			$_SESSION['username'] = $username;
+			$_SESSION['email'] = $stu['email'];
+			$_SESSION['firstName'] = $stu['FName'];
+			$_SESSION['lastName'] = $stu['LName'];
+			$_SESSION['type'] = "student";
 			header('Location: student_home.html');
-		} elseif (isset($inst) && $isValidInstPass) {
+		} elseif (isset($inst) && $isValidInstPass && $inst['isAccepted'] == 1) {
+			session_start();
+			$_SESSION['username'] = $username;
+			$_SESSION['email'] = $inst['email'];
+			$_SESSION['firstName'] = $inst['FName'];
+			$_SESSION['lastName'] = $inst['LName'];
+			$_SESSION['type'] = "instructor";
 			header('Location: instructor_home.html');
 		}
 	}

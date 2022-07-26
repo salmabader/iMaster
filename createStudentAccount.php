@@ -1,5 +1,18 @@
 <?php
 session_start();
+if (isset($_SESSION['type'])) {
+    $privilage = $_SESSION['type'];
+    if (isset($_SESSION['username']) && $privilage == "student") {
+        header('Location: student_home.html');
+        exit();
+    } elseif (isset($_SESSION['username']) && $privilage == "instructor") {
+        header('Location: instructor_home.html');
+        exit();
+    } else {
+        header('Location: analytics.php');
+        exit();
+    }
+}
 require('database/db_connection.php');
 $con = OpenCon();
 if (isset($_POST['createAccountBtn'])) {
@@ -59,6 +72,7 @@ if (isset($_POST['createAccountBtn'])) {
                     $insertInterests = "INSERT INTO student_interests (interests,student_username) VALUES('$item','$username')";
                     mysqli_query($con, $insertInterests);
                 }
+                header('Location: signin.php');
             }
         }
     }
