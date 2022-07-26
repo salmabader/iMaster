@@ -18,9 +18,35 @@ if (isset($_SESSION['type'])) {
 	<link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
 	<link rel="icon" href="images/icon.svg" type="image/x-icon">
 	<title>Analytics</title>
+	<style>
+		.scrollbar::-webkit-scrollbar {
+			width: 10px;
+		}
+
+		.scrollbar::-webkit-scrollbar-track {
+			border-radius: 100vh;
+			background: none;
+		}
+
+		.scrollbar::-webkit-scrollbar-thumb {
+			background: #dadada;
+			border-radius: 100vh;
+			border: 3px solid white;
+		}
+
+		.scrollbar::-webkit-scrollbar-thumb:hover {
+			background: rgb(193, 193, 193);
+		}
+	</style>
 </head>
 
-<body class="overflow-x-hidden h-screen w-screen">
+<body class="h-screen w-screen overflow-hidden">
+	<?php
+	// retreive admin info:
+	// $username = $_SESSION['username'];
+	// $query = "SELECT * FROM admin WHERE username = '$username'";
+	// compelete here
+	?>
 	<main class="flex w-full h-full">
 		<!-- left side -->
 		<div id="leftSide" class="flex flex-col lg:w-1/5 lg:block hidden h-full mr-4 transition-all duration-500">
@@ -58,7 +84,7 @@ if (isset($_SESSION['type'])) {
 				</div>
 				<!-- sign out button -->
 				<div class="mb-10">
-					<button id="signoutBtn" class="bg-blue-100 hover:bg-blue-200 duration-200 ease-in-out px-8 py-2 text-blue-800 rounded-xl"><span id="signOutTtitle" class="toHide">Sign
+					<button onclick="window.location.href='database/destroy_session.php'" id="signoutBtn" class="bg-blue-100 hover:bg-blue-200 duration-200 ease-in-out px-8 py-2 text-blue-800 rounded-xl"><span id="signOutTtitle" class="toHide">Sign
 							out</span> <svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline" viewBox="0 0 20 20" fill="currentColor">
 							<path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" />
 						</svg></button>
@@ -71,9 +97,46 @@ if (isset($_SESSION['type'])) {
 			</div>
 		</div> <!-- end of left side-->
 		<!-- right side -->
-		<div id="rightSide" class="lg:w-4/5 lg:mx-0 mx-5 w-full h-full transition-all duration-500">
-			<div class="flex h-full">
+		<div id="rightSide" class="lg:w-4/5 lg:mx-0 lg:mr-4 mx-5 w-full h-full transition-all duration-500">
+			<div class="flex flex-col h-full">
+				<!-- col 1: header -->
+				<div class="w-full h-[15%] flex justify-between mt-3 border-b-[1px] border-gray-200">
+					<!-- profile -->
+					<div class="w-2/3 flex items-center mb-2">
+						<!-- personal photo -->
+						<div class="md:w-1/6 sm:w-1/4 h-full flex md:justify-end sm:justify-start justify-center w-1/2">
+							<a href="#profile">
+								<img src="images/default_user_img.jpg" class="h-full rounded-full ml-2 border-[1px] border-gray-400">
+							</a>
+						</div>
+						<!-- greeting -->
+						<div class="md:w-5/6 flex flex-col h-full justify-center sm:ml-3 sm:w-3/4 w-1/2">
+							<div class="w-full md:text-xl text-lg font-semibold text-gray-800">Welcome back, <span class="capitalize">salma 👋🏻</span></div>
+							<div class="w-full text-sm text-gray-600 capitalize">admin</div>
+						</div>
+					</div>
+					<!-- notifications -->
+					<div class="w-1/3 mr-5 flex items-center justify-end text-gray-500">
+						<!-- notification icon -->
+						<button>
+							<div class="bg-gray-200 shadow rounded-md p-2">
+								<div class="relative">
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+										<path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+									</svg>
+									<div class="absolute bg-blue-500 h-2 w-2 rounded-full top-1.5 right-1 "></div>
+									<div class="absolute bg-blue-500 h-2 w-2 rounded-full top-1.5 animate-ping right-1 "></div>
+								</div>
+							</div>
+						</button>
+					</div>
+				</div>
+				<!-- col 2: content -->
+				<div class="w-full h-[85%] overflow-y-auto scrollbar">
+					<div class="w-full h-full">
 
+					</div>
+				</div>
 			</div>
 		</div> <!-- end of right side-->
 	</main>
