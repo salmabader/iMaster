@@ -195,14 +195,21 @@ if (isset($_POST['signinBtn'])) {
 	</footer>
 	<div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
 		<div class="relative p-4 w-full max-w-md h-full md:h-auto">
-			<div class="relative bg-white rounded-lg shadow-lg dark:bg-gray-700">
-				<div class="p-6 text-center">
-					<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" viewBox="0 0 20 20" fill="currentColor">
-						<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+			<div class="relative bg-white rounded-lg shadow-lg dark:bg-gray-700 ">
+				<div class="p-6 text-center flex flex-col items-center">
+					<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="h-24" fill="none">
+						<style>
+							@keyframes check {
+								to {
+									stroke-dashoffset: 0;
+								}
+							}
+						</style>
+						<circle cx="12" cy="12" r="8" stroke="#4C4C4C" stroke-width="1" />
+						<path stroke="#087D04" stroke-linecap="round" stroke-width="1.5" d="M9.215 12.052l1.822 1.805 3.748-3.714" style="animation:check 2s infinite cubic-bezier(.99,-.1,.01,1.02)" stroke-dashoffset="100" stroke-dasharray="100" />
 					</svg>
-
 					<h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Your password has been successfully reset<br>you can sign in now</h3>
-					<button id="okBtn" data-modal-toggle="popup-modal" type="button" class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+					<button id="okBtn" data-modal-toggle="popup-modal" type="button" class="text-white bg-green-600 hover:bg-green-800 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-8 py-2 text-center mr-2">
 						Ok
 					</button>
 				</div>
