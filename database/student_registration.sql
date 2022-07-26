@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2022 at 02:42 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Jul 26, 2022 at 09:34 AM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -76,7 +76,9 @@ CREATE TABLE `course` (
   `level` int(3) NOT NULL,
   `collaborator` varchar(10) DEFAULT NULL,
   `instructor_usename` varchar(10) NOT NULL,
-  `admin_username` varchar(10) NOT NULL
+  `admin_username` varchar(10) NOT NULL,
+  `image` text NOT NULL,
+  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -126,6 +128,13 @@ CREATE TABLE `student` (
   `password` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`username`, `FName`, `LName`, `email`, `password`) VALUES
+('_noor', 'noor', 'Ali', 'noor@gmail.com', '$2y$10$euA0aPQgM0ZUmPrh0eIn2u73IDGKPOhXXeNFQZPzXWJ77VkI9ua7u');
+
 -- --------------------------------------------------------
 
 --
@@ -147,6 +156,14 @@ CREATE TABLE `student_interests` (
   `interests` varchar(50) NOT NULL,
   `student_username` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `student_interests`
+--
+
+INSERT INTO `student_interests` (`interests`, `student_username`) VALUES
+('IT & Software', '_noor'),
+('programming', '_noor');
 
 --
 -- Indexes for dumped tables
