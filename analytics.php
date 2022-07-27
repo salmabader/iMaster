@@ -1,10 +1,15 @@
 <?php
 session_start();
+require 'database/db_connection.php';
+// if there is a session but user is not admin
 if (isset($_SESSION['type'])) {
 	$privilage = $_SESSION['type'];
 	if ($privilage != "admin") {
 		header('Location: index.php');
 	}
+} else { // if there is no session
+	header('Location: index.php');
+	exit();
 }
 ?>
 <!DOCTYPE html>
@@ -132,8 +137,23 @@ if (isset($_SESSION['type'])) {
 					</div>
 				</div>
 				<!-- col 2: content -->
-				<div class="w-full h-[85%] overflow-y-auto scrollbar">
-					<div class="w-full h-full">
+				<div class="w-full h-[85%] overflow-y-auto overflow-x-hidden scrollbar">
+					<div class="w-full flex flex-wrap ml-5 mt-5">
+						<!-- registred students -->
+						<?php
+						$con = OpenCon();
+						$query = "SELECT username FROM student";
+						$result = mysqli_query($con, $query);
+						$numOfStudents = mysqli_num_rows($result);
+
+						$query = "SELECT username FROM instructors";
+						$result = mysqli_query($con, $query);
+						$numOfInstructors = mysqli_num_rows($result);
+
+						$query = "SELECT courseID FROM course";
+						$result = mysqli_query($con, $query);
+						$numOfCourses = mysqli_num_rows($result);
+						?>
 
 					</div>
 				</div>

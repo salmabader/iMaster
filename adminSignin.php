@@ -65,7 +65,7 @@ if (isset($_POST['signinBtn'])) {
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
     <link rel="icon" href="images/icon.svg" type="image/x-icon">
-    <title>Sign in</title>
+    <title>Sign in for admin</title>
     <style>
         .scrollbar::-webkit-scrollbar {
             width: 10px;
@@ -110,7 +110,7 @@ if (isset($_POST['signinBtn'])) {
     <div class="bg-white md:w-1/2 w-3/4 flex rounded-lg border-blue-400 border-x-2 shadow-md">
         <!-- left side -->
         <div class="w-full flex flex-col lg:mr-4 mr-0">
-            <p class="text-center pt-10 font-medium text-xl">Sign in to Your Account</p>
+            <p class="text-center pt-10 font-medium text-xl">Sign in to Your Admin Account</p>
             <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" class="flex flex-wrap justify-center px-12 pb-12 overflow-y-auto scrollbar">
                 <!-- username -->
                 <div class="w-full mt-3">

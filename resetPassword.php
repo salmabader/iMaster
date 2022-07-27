@@ -33,7 +33,7 @@ if (isset($_POST['sendCode'])) {
             $fetchedInst[] = $inst['email'];
         }
         if (count($fetchedStu) == 0 && count($fetchedInst) == 0) {
-            $wrongInfo = "You have entered the wrong information, please recheck it!";
+            $wrongInfo = "Sorry, this email in not registred!";
         } else {
             // send the code to email
             $_SESSION['code'] = substr(str_shuffle("0123456789"), 0, 6);
