@@ -60,8 +60,8 @@ if (isset($_SESSION['type'])) {
 					</div>
 					<!-- options -->
 					<div id="optionsDiv" class="max-w-1/2 flex flex-col text-gray-700 font-semibold text-lg">
-						<div class="hover:text-blue-800 duration-100 ease-in-out mb-5">
-							<a href="" class="hover:border-l-[3px] duration-100 ease-in-out hover:border-l-amber-500 flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-4 optionIcons" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+						<div class="text-blue-800 duration-100 ease-in-out mb-5">
+							<a href="analytics.php" class="border-l-[3px] duration-100 ease-in-out border-l-amber-500 flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-4 optionIcons" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
 									<path stroke-linecap="round" stroke-linejoin="round" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
 								</svg><span class="toHide">Analytics</span></a>
 						</div>
@@ -111,8 +111,8 @@ if (isset($_SESSION['type'])) {
 						</div>
 						<!-- greeting -->
 						<div class="md:w-5/6 flex flex-col h-full justify-center sm:ml-3 sm:w-3/4 w-1/2">
-							<div class="w-full md:text-xl text-lg font-semibold text-gray-800">Welcome back, <span class="capitalize">salma 👋🏻</span></div>
-							<div class="w-full text-sm text-gray-600 capitalize">admin</div>
+							<div class="w-full md:text-xl text-lg font-semibold text-gray-800">Welcome back, <span class="capitalize"><?php if (isset($_SESSION['firstName'])) echo $_SESSION['firstName']; ?> 👋🏻</span></div>
+							<div class="w-full text-sm text-gray-600 capitalize"><?php if (isset($_SESSION['type'])) echo $_SESSION['type']; ?></div>
 						</div>
 					</div>
 					<!-- notifications -->

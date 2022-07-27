@@ -16,62 +16,40 @@ if (isset($_SESSION['type'])) {
 }
 $con = OpenCon();
 if (isset($_POST['signinBtn'])) {
-
     $isValidUsername = false;
+    $wrongInfo = false;
     $username = filter_input(INPUT_POST, 'username');
     $password = filter_input(INPUT_POST, 'password');
-    $existanceQuery1 = "SELECT * FROM student WHERE username = ? ";
-    $existanceQuery2 = "SELECT * FROM instructors WHERE username = ?";
+    $existanceQuery1 = "SELECT * FROM admin WHERE username = ? ";
     $statement1 = mysqli_stmt_init($con);
-    $statement2 = mysqli_stmt_init($con);
-    if (!mysqli_stmt_prepare($statement1, $existanceQuery1) || !mysqli_stmt_prepare($statement2, $existanceQuery2)) {
+    if (!mysqli_stmt_prepare($statement1, $existanceQuery1)) {
         header('Location: index.php?error=SQLError');
         exit();
     } else {
         mysqli_stmt_bind_param($statement1, "s", $username);
         mysqli_stmt_execute($statement1);
         $result1 = mysqli_stmt_get_result($statement1);
-        mysqli_stmt_bind_param($statement2, "s", $username);
-        mysqli_stmt_execute($statement2);
-        $result2 = mysqli_stmt_get_result($statement2);
-        $fetchedStu = array();
-        $fetchedInstruc = array();
-        //to store all the fetched rows
-        $stu = mysqli_fetch_assoc($result1);
-        $inst = mysqli_fetch_assoc($result2);
-
-        if (isset($inst)) {
-            $isValidInstPass = password_verify($password, $inst['password']);
-            if (!$isValidInstPass) {
-                $passError = "Invalid password.";
+        $admin = mysqli_fetch_assoc($result1);
+        if (isset($admin)) {
+            $isValidPass = password_verify($password, $admin['password']);
+            if (!$isValidPass) {
+                $wrongInfo = true;
+            } else {
+                $wrongInfo = false;
             }
+        } else {
+            $wrongInfo = true;
         }
-        if (isset($stu)) {
-            $isValidstuPass = password_verify($password, $stu['password']);
-            if (!$isValidstuPass) {
-                $passError = "Invalid password.";
-            }
-        }
-        if (!isset($inst) && !isset($stu)) {
-
-            $usernameError = "Invalid username.";
-        }
-        if (isset($stu) && $isValidstuPass) {
+        if ($wrongInfo) {
+            $feedback = "Username or password is incorrect";
+        } else {
             session_start();
             $_SESSION['username'] = $username;
-            $_SESSION['email'] = $stu['email'];
-            $_SESSION['firstName'] = $stu['FName'];
-            $_SESSION['lastName'] = $stu['LName'];
-            $_SESSION['type'] = "student";
-            header('Location: student_home.html');
-        } elseif (isset($inst) && $isValidInstPass && $inst['isAccepted'] == 1) {
-            session_start();
-            $_SESSION['username'] = $username;
-            $_SESSION['email'] = $inst['email'];
-            $_SESSION['firstName'] = $inst['FName'];
-            $_SESSION['lastName'] = $inst['LName'];
-            $_SESSION['type'] = "instructor";
-            header('Location: instructor_home.html');
+            $_SESSION['email'] = $admin['email'];
+            $_SESSION['firstName'] = $admin['FName'];
+            $_SESSION['lastName'] = $admin['LName'];
+            $_SESSION['type'] = "admin";
+            header('Location: analytics.php');
         }
     }
 }
@@ -156,14 +134,11 @@ if (isset($_POST['signinBtn'])) {
                                 </svg>
                             </div>
                             <input type="password" name="password" id="password" placeholder="••••••••" class="w-full mt-1  bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-blue-400 focus:ring-blue-400" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($password)) echo htmlspecialchars($password) ?>">
-                            <div class="text-red-500 text-sm mt-2">
-                                <p class="flex items-center" id="usernameError"><?php if (isset($passError)) echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>' . $passError ?></p>
-                            </div>
                         </div>
                         <div class="text-red-500 text-sm mt-2">
-                            <p id="signInError" class="flex items-center"></p>
+                            <p id="signInError" class="flex items-center"><?php if (isset($feedback)) echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>' . $feedback ?></p>
                         </div>
                     </div>
                 </div>
@@ -202,7 +177,7 @@ if (isset($_POST['signinBtn'])) {
         </div>
     </div>
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
-    <script src="js/signin.js"></script>
+    <script src="js/adminSignin.js"></script>
 </body>
 
 </html>
