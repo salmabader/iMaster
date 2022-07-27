@@ -138,8 +138,8 @@ if (isset($_SESSION['type'])) {
 				</div>
 				<!-- col 2: content -->
 				<div class="w-full h-[85%] overflow-y-auto overflow-x-hidden scrollbar">
-					<div class="w-full flex flex-wrap ml-5 mt-5">
-						<!-- registred students -->
+					<div class="w-full flex lg:flex-col flex-row flex-wrap ml-5 mt-5">
+						<!-- get numbers -->
 						<?php
 						$con = OpenCon();
 						$query = "SELECT username FROM student";
@@ -153,8 +153,60 @@ if (isset($_SESSION['type'])) {
 						$query = "SELECT courseID FROM course";
 						$result = mysqli_query($con, $query);
 						$numOfCourses = mysqli_num_rows($result);
-						?>
 
+						$query = "SELECT requestID FROM requests WHERE status = 'waiting'";
+						$result = mysqli_query($con, $query);
+						$numOfRequests = mysqli_num_rows($result);
+						?>
+						<!-- three numbers -->
+						<div class="flex w-full mt-4">
+							<!-- students -->
+							<div class="w-fit mr-3">
+								<div class="flex items-center w-full bg-amber-50 px-5 py-4 shadow border border-amber-100 rounded-md">
+									<div>
+										<svg xmlns="http://www.w3.org/2000/svg" class="h-8 mr-3 border-r-2" viewBox="0 0 20 20" fill="currentColor">
+											<path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+										</svg>
+									</div>
+									<div>
+										<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfStudents ?></h5>
+										<p class="text-gray-700"><?php if ($numOfStudents > 1) echo "Registred students";
+																	elseif ($numOfStudents == 0) echo "There is no regirstred students yet";
+																	else echo "Registred student" ?></p>
+									</div>
+								</div>
+							</div>
+							<!-- instructors -->
+							<div class="w-fit mr-3">
+								<div class="w-full bg-amber-50 px-5 py-4 shadow border border-amber-100 rounded-md">
+									<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfInstructors ?></h5>
+									<p class="text-gray-700"><?php if ($numOfInstructors > 1) echo "Registred instructors";
+																elseif ($numOfInstructors == 0) echo "There is no regirstred instructors yet";
+																else echo "Instructor" ?></p>
+								</div>
+							</div>
+							<!-- courses -->
+							<div class="w-fit mr-3">
+								<div class="w-full bg-amber-50 px-5 py-4 shadow border border-amber-100 rounded-md">
+									<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfCourses ?></h5>
+									<p class="text-gray-700"><?php if ($numOfCourses > 1) echo "Published courses";
+																elseif ($numOfCourses == 0) echo "There is no published courses yet";
+																else echo "Published courses" ?></p>
+								</div>
+							</div>
+							<!-- requests -->
+							<div class="w-fit mr-3">
+								<div class="w-full bg-amber-50 px-5 py-4 shadow border border-amber-100 rounded-md">
+									<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfRequests ?></h5>
+									<p class="text-gray-700"><?php if ($numOfRequests > 1) echo "New requests";
+																elseif ($numOfRequests == 0) echo "You have been replied for all requests";
+																else echo "New request" ?></p>
+								</div>
+							</div>
+						</div>
+						<!-- another content -->
+						<div>
+						</div>
 					</div>
 				</div>
 			</div>

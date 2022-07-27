@@ -186,10 +186,10 @@ if (isset($_POST['verify'])) {
                 </div>
                 <div id="verifyCode" class="hidden w-full flex flex-col items-center">
                     <div class="flex w-full">
-                        <!-- email -->
+                        <!-- code -->
                         <div class="w-full mt-3">
                             <label for="code" class="block capitalize font-semibold">Code</label>
-                            <input type="text" name="code" id="code" maxlength="6" class="w-full mt-1  bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-blue-400 focus:ring-blue-400">
+                            <input type="text" name="code" id="code" maxlength="6" class="w-full mt-1  bg-blue-50 pl-2 pr-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-blue-400 focus:ring-blue-400">
                         </div>
                     </div>
                     <button type="submit" name="verify" id="verify" class="flex justify-center items-center mt-10 bg-blue-500 text-white px-14 py-3 rounded-full shadow-md font-semibold hover:bg-blue-600 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" disabled>verify</button>
