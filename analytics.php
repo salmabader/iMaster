@@ -158,8 +158,8 @@ if (isset($_SESSION['type'])) {
 						$result = mysqli_query($con, $query);
 						$numOfRequests = mysqli_num_rows($result);
 						?>
-						<!-- three numbers -->
-						<div class="flex w-full mt-4">
+						<!-- four numbers -->
+						<div id="fourCards" class="flex mt-4 mr-5">
 							<!-- students -->
 							<div class="w-fit mr-3">
 								<div class="flex items-center w-full bg-amber-50 px-5 py-4 shadow border border-amber-100 rounded-md">

@@ -2,6 +2,7 @@
 const minimize = document.getElementById("minimizeBtn")
 const leftSide = document.getElementById("leftSide")
 const rightSide = document.getElementById("rightSide")
+const cards = document.getElementById("fourCards")
 let leftClasses = ""
 // ---------- logo variables ----------
 const logo = document.getElementById("logo")
@@ -14,6 +15,7 @@ const signOutBtn = document.getElementById("signoutBtn")
 // ---------- handling ----------
 minimize.addEventListener('click', function () {
     leftClasses = leftSide.className.split(' ')
+    // minimize
     if (leftClasses.includes("lg:w-1/5")) {
         // width
         leftSide.classList.remove("lg:w-1/5")
@@ -39,7 +41,10 @@ minimize.addEventListener('click', function () {
         hideAll.forEach(function (el) {
             el.classList.add("hidden")
         })
-    } else {
+
+        cards.classList.remove("mr-3")
+
+    } else { // expand
         // width
         leftSide.classList.remove("lg:w-fit")
         leftSide.classList.add("lg:w-1/5")
@@ -67,5 +72,7 @@ minimize.addEventListener('click', function () {
             el.classList.remove("hidden")
             el.classList.add("block")
         })
+
+        cards.classList.add("mr-5")
     }
 })
