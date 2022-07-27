@@ -193,9 +193,9 @@ if (isset($_SESSION['type'])) {
 									</div>
 									<div>
 										<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfInstructors ?></h5>
-										<p class="text-gray-700"><?php if ($numOfInstructors > 1) echo "Registered instructors";
-																	elseif ($numOfInstructors == 0) echo "There is no regirstred instructors yet";
-																	else echo "Instructor" ?></p>
+										<p class="text-gray-700 text-sm"><?php if ($numOfInstructors > 1) echo "Registered instructors";
+																			elseif ($numOfInstructors == 0) echo "There is no regirstred instructors yet";
+																			else echo "Instructor" ?></p>
 									</div>
 								</div>
 							</div>
@@ -209,9 +209,9 @@ if (isset($_SESSION['type'])) {
 									</div>
 									<div>
 										<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfCourses ?></h5>
-										<p class="text-gray-700"><?php if ($numOfCourses > 1) echo "Published courses";
-																	elseif ($numOfCourses == 0) echo "There is no published courses yet";
-																	else echo "Published courses" ?></p>
+										<p class="text-gray-700 text-sm"><?php if ($numOfCourses > 1) echo "Published courses";
+																			elseif ($numOfCourses == 0) echo "There is no published courses yet";
+																			else echo "Published courses" ?></p>
 									</div>
 								</div>
 								<!-- requests -->
@@ -224,9 +224,9 @@ if (isset($_SESSION['type'])) {
 									</div>
 									<div>
 										<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfRequests ?></h5>
-										<p class="text-gray-700"><?php if ($numOfRequests > 1) echo "New requests";
-																	elseif ($numOfRequests == 0) echo "You have been replied for all requests";
-																	else echo "New request" ?></p>
+										<p class="text-gray-700 text-sm"><?php if ($numOfRequests > 1) echo "New requests";
+																			elseif ($numOfRequests == 0) echo "You have been replied for all requests";
+																			else echo "New request" ?></p>
 									</div>
 								</div>
 							</div>
