@@ -138,7 +138,16 @@ if (isset($_SESSION['type'])) {
 				</div>
 				<!-- col 2: content -->
 				<div class="w-full h-[85%] overflow-y-auto overflow-x-hidden scrollbar">
-					<div class="flex lg:flex-col flex-row flex-wrap md:ml-5 mt-5">
+					<div class="md:ml-5 mt-5">
+						<!-- Title -->
+						<p class="text-xl font-semibold capitalize w-full tracking-wide text-gray-700">Analytics dashboard</p>
+						<!-- date -->
+						<div class="text-sm tracking-wide text-gray-500 mt-1">
+							<?php echo date('F', mktime(0, 0, 0, date("m"))) . ' ' . date("d") . ', ' . date("l"); ?>
+						</div>
+					</div>
+					<!-- top cards -->
+					<div class="flex flex-col md:ml-5">
 						<!-- get numbers -->
 						<?php
 						$con = OpenCon();
@@ -158,75 +167,73 @@ if (isset($_SESSION['type'])) {
 						$result = mysqli_query($con, $query);
 						$numOfRequests = mysqli_num_rows($result);
 						?>
-						<!-- Title -->
-						<p class="text-xl font-semibold capitalize w-full tracking-wide text-gray-700">Analytics dashboard</p>
-						<!-- date -->
-						<div class="text-sm tracking-wide text-gray-500 mt-1">
-							<?php echo date('F', mktime(0, 0, 0, date("m"))) . ' ' . date("d") . ', ' . date("l"); ?>
-						</div>
 						<!-- four numbers -->
-						<div id="fourCards" class="flex flex-col md:flex-row mt-4 mr-5 w-full">
-							<!-- students -->
-							<div class="mr-3 md:mb-0 mb-3 flex items-center w-full bg-amber-50 px-5 py-4 shadow border border-amber-100 rounded-md">
-								<div>
-									<svg xmlns="http://www.w3.org/2000/svg" class="h-8 mr-3 pr-3 border-r border-gray-400" viewBox="0 0 20 20" fill="currentColor">
-										<path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
-									</svg>
+						<div id="fourCards" class="flex flex-col md:flex-row mt-4 mr-2 w-full">
+							<div class="flex w-full">
+								<!-- students -->
+								<div class="mr-3 md:mb-0 mb-3 flex items-center w-full bg-amber-50 px-3 py-4 border border-gray-300 rounded-md">
+									<div class="bg-amber-300 rounded-full p-3 text-gray-800 mr-2">
+										<svg xmlns="http://www.w3.org/2000/svg" class="h-8" viewBox="0 0 20 20" fill="currentColor">
+											<path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+										</svg>
+									</div>
+									<div>
+										<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfStudents ?></h5>
+										<p class="text-gray-700 text-sm"><?php if ($numOfStudents > 1) echo "Registered students";
+																			elseif ($numOfStudents == 0) echo "There is no regirstred students yet";
+																			else echo "Registered student" ?></p>
+									</div>
 								</div>
-								<div>
-									<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfStudents ?></h5>
-									<p class="text-gray-700"><?php if ($numOfStudents > 1) echo "Registered students";
-																elseif ($numOfStudents == 0) echo "There is no regirstred students yet";
-																else echo "Registered student" ?></p>
-								</div>
-							</div>
-							<!-- instructors -->
-							<div class="mr-3 md:mb-0 mb-3 flex items-center w-full bg-amber-50 px-5 py-4 shadow border border-amber-100 rounded-md">
-								<div>
-									<svg xmlns="http://www.w3.org/2000/svg" class="h-8 mr-3 pr-3 border-r border-gray-400" viewBox="0 0 20 20" fill="currentColor">
-										<path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
-									</svg>
-								</div>
-								<div>
-									<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfInstructors ?></h5>
-									<p class="text-gray-700"><?php if ($numOfInstructors > 1) echo "Registered instructors";
-																elseif ($numOfInstructors == 0) echo "There is no regirstred instructors yet";
-																else echo "Instructor" ?></p>
-								</div>
-							</div>
-							<!-- courses -->
-							<div class="mr-3 md:mb-0 mb-3 flex items-center w-full bg-amber-50 px-5 py-4 shadow border border-amber-100 rounded-md">
-								<div>
-									<svg xmlns="http://www.w3.org/2000/svg" class="h-8 mr-3 pr-3 border-r border-gray-400" viewBox="0 0 20 20" fill="currentColor">
-										<path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
-									</svg>
-								</div>
-								<div>
-									<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfCourses ?></h5>
-									<p class="text-gray-700"><?php if ($numOfCourses > 1) echo "Published courses";
-																elseif ($numOfCourses == 0) echo "There is no published courses yet";
-																else echo "Published courses" ?></p>
+								<!-- instructors -->
+								<div class="mr-3 md:mb-0 mb-3 flex items-center w-full bg-amber-50 px-3 py-4 border border-gray-300 rounded-md">
+									<div class="bg-amber-300 rounded-full p-3 text-gray-800 mr-2">
+										<svg xmlns="http://www.w3.org/2000/svg" class="h-8" viewBox="0 0 20 20" fill="currentColor">
+											<path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+										</svg>
+									</div>
+									<div>
+										<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfInstructors ?></h5>
+										<p class="text-gray-700"><?php if ($numOfInstructors > 1) echo "Registered instructors";
+																	elseif ($numOfInstructors == 0) echo "There is no regirstred instructors yet";
+																	else echo "Instructor" ?></p>
+									</div>
 								</div>
 							</div>
-							<!-- requests -->
-							<div class="mr-3 md:mb-0 mb-3 flex items-center w-full bg-amber-50 px-5 py-4 shadow border border-amber-100 rounded-md">
-								<div>
-									<svg xmlns="http://www.w3.org/2000/svg" class="h-8 mr-3 pr-3 border-r border-gray-400" viewBox="0 0 20 20" fill="currentColor">
-										<path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
-										<path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
-									</svg>
+							<div class="flex w-full">
+								<!-- courses -->
+								<div class="mr-3 md:mb-0 mb-3 flex items-center w-full bg-amber-50 px-3 py-4 border border-gray-300 rounded-md">
+									<div class="bg-amber-300 rounded-full p-3 text-gray-800 mr-2">
+										<svg xmlns="http://www.w3.org/2000/svg" class="h-8" viewBox="0 0 20 20" fill="currentColor">
+											<path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+										</svg>
+									</div>
+									<div>
+										<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfCourses ?></h5>
+										<p class="text-gray-700"><?php if ($numOfCourses > 1) echo "Published courses";
+																	elseif ($numOfCourses == 0) echo "There is no published courses yet";
+																	else echo "Published courses" ?></p>
+									</div>
 								</div>
-								<div>
-									<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfRequests ?></h5>
-									<p class="text-gray-700"><?php if ($numOfRequests > 1) echo "New requests";
-																elseif ($numOfRequests == 0) echo "You have been replied for all requests";
-																else echo "New request" ?></p>
+								<!-- requests -->
+								<div class="mr-3 md:mb-0 mb-3 flex items-center w-full bg-amber-50 px-3 py-4 border border-gray-300 rounded-md">
+									<div class="bg-amber-300 rounded-full p-3 text-gray-800 mr-2">
+										<svg xmlns="http://www.w3.org/2000/svg" class="h-8" viewBox="0 0 20 20" fill="currentColor">
+											<path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+											<path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+										</svg>
+									</div>
+									<div>
+										<h5 class="text-2xl font-semibold text-gray-800"><?php echo $numOfRequests ?></h5>
+										<p class="text-gray-700"><?php if ($numOfRequests > 1) echo "New requests";
+																	elseif ($numOfRequests == 0) echo "You have been replied for all requests";
+																	else echo "New request" ?></p>
+									</div>
 								</div>
 							</div>
 						</div>
-						<!-- another content -->
-						<div>
-						</div>
+					</div> <!-- end of top cards -->
+					<!-- another content -->
+					<div class="">
 					</div>
 				</div>
 			</div>
