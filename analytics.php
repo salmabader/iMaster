@@ -1,6 +1,7 @@
 <?php
 session_start();
 require 'database/db_connection.php';
+$con = OpenCon();
 // if there is a session but user is not admin
 if (isset($_SESSION['type'])) {
 	$privilage = $_SESSION['type'];
@@ -10,6 +11,18 @@ if (isset($_SESSION['type'])) {
 } else { // if there is no session
 	header('Location: index.php');
 	exit();
+}
+if (isset($_POST['saveChangesBtn'])) {
+	$fName = filter_input(INPUT_POST, 'fname');
+	$lName = filter_input(INPUT_POST, 'lname');
+	// need to catch the photo
+	// $photo = filter_input(INPUT_POST, 'photo');
+	// $password = filter_input(INPUT_POST, 'password');
+	$query = "UPDATE $privilage SET FName = ?, LName = ? WHERE username ='" . $_SESSION['username'] . "'";
+	$statement = mysqli_stmt_init($con);
+	mysqli_stmt_prepare($statement, $query);
+	mysqli_stmt_bind_param($statement, "ss", $fName, $lName);
+	mysqli_stmt_execute($statement);
 }
 ?>
 <!DOCTYPE html>
@@ -43,14 +56,20 @@ if (isset($_SESSION['type'])) {
 			background: rgb(193, 193, 193);
 		}
 	</style>
+	<!-- prevent resubmission when refresh the page -->
+	<script>
+		if (window.history.replaceState) {
+			window.history.replaceState(null, null, window.location.href);
+		}
+	</script>
 </head>
 
 <body class="h-screen w-screen overflow-hidden">
 	<?php
 	// retreive admin info:
-	// $username = $_SESSION['username'];
-	// $query = "SELECT * FROM admin WHERE username = '$username'";
-	// compelete here
+	$query = "SELECT * FROM admin WHERE username ='" . $_SESSION['username'] . "'";
+	$result = mysqli_query($con, $query);
+	$admin = mysqli_fetch_assoc($result);
 	?>
 	<main class="flex w-full h-full">
 		<!-- left side -->
@@ -109,14 +128,19 @@ if (isset($_SESSION['type'])) {
 					<!-- profile -->
 					<div class="w-2/3 flex items-center mb-2">
 						<!-- personal photo -->
-						<div class="md:w-1/6 sm:w-1/4 h-full flex md:justify-end sm:justify-start justify-center w-1/2">
-							<a href="#profile">
-								<img src="images/default_user_img.jpg" class="h-full rounded-full ml-2 border-[1px] border-gray-400">
-							</a>
+						<div class="md:w-1/6 sm:w-1/4 h-full flex md:justify-end sm:justify-start justify-center w-1/2 ">
+							<button data-modal-toggle="profile-modal" class="relative">
+								<img src="images/default_user_img.jpg" class="h-full rounded-full ml-2 border-[1px] border-gray-400 hover:shadow-md hover:shadow-amber-300 shadow transition-all ease-in-out duration-200">
+								<div class="absolute bottom-3 -right-1 bg-amber-200 p-[2px] rounded-full border-[1px] border-gray-400">
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-4" viewBox="0 0 20 20" fill="currentColor">
+										<path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+									</svg>
+								</div>
+							</button>
 						</div>
 						<!-- greeting -->
 						<div class="md:w-5/6 flex flex-col h-full justify-center sm:ml-3 sm:w-3/4 w-1/2">
-							<div class="w-full md:text-xl text-lg font-semibold text-gray-800">Welcome back, <span class="capitalize"><?php if (isset($_SESSION['firstName'])) echo $_SESSION['firstName']; ?> 👋🏻</span></div>
+							<div class="w-full md:text-xl text-lg font-semibold text-gray-800">Welcome back, <span class="capitalize"><?php if (isset($admin['FName'])) echo $admin['FName']; ?> 👋🏻</span></div>
 							<div class="w-full text-sm text-gray-600 capitalize"><?php if (isset($_SESSION['type'])) echo $_SESSION['type']; ?></div>
 						</div>
 					</div>
@@ -150,7 +174,6 @@ if (isset($_SESSION['type'])) {
 					<div class="flex flex-col md:ml-5">
 						<!-- get numbers -->
 						<?php
-						$con = OpenCon();
 						$query = "SELECT username FROM student";
 						$result = mysqli_query($con, $query);
 						$numOfStudents = mysqli_num_rows($result);
@@ -239,7 +262,62 @@ if (isset($_SESSION['type'])) {
 			</div>
 		</div> <!-- end of right side-->
 	</main>
+
+	<!-- profile modal -->
+	<div id="profile-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+		<div class="relative p-4 w-full max-w-md h-full md:h-auto">
+			<!-- Modal content -->
+			<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+				<button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="profile-modal">
+					<svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+					</svg>
+					<span class="sr-only">Close modal</span>
+				</button>
+				<div class="py-6 px-6 lg:px-8">
+					<h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">My Profile</h3>
+					<form class="space-y-6" action="analytics.php" method="POST">
+						<div>
+							<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="file_input">Photo</label>
+							<div class="flex items-center">
+								<img src="images/<?php echo $admin['photo'] ?>" class="w-1/4 rounded-full mr-2">
+								<div class="w-3/4">
+									<input class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none id=" file_input" name="photo" type="file">
+								</div>
+							</div>
+						</div>
+						<div class="flex">
+							<div class="w-1/2 mr-2">
+								<label for="fname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">First name</label>
+								<input type="text" name="fname" id="fname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value="<?php echo $admin['FName'] ?>" required>
+							</div>
+							<div class="w-1/2">
+								<label for="lname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Last name</label>
+								<input type="text" name="lname" id="lname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value="<?php echo $admin['LName'] ?>" required>
+
+							</div>
+						</div>
+						<div>
+							<label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Username</label>
+							<input type="text" disabled name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed" value="<?php echo $admin['username'] ?>">
+						</div>
+						<div>
+							<label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
+							<input disabled type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed" value="<?php echo $admin['email'] ?>">
+						</div>
+						<div class="relative">
+							<label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Password</label>
+							<input disabled type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+							<a class="text-blue-500 font-semibold hover:underline text-sm absolute top-10 right-3 cursor-pointer">Change</a>
+						</div>
+						<button type="submit" name="saveChangesBtn" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save changes</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script src="js/analytics.js"></script>
+	<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>
 
 </html>
