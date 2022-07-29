@@ -142,7 +142,7 @@ if (isset($_POST['saveChangesBtn'])) {
 		<div id="rightSide" class="lg:w-4/5 lg:mx-0 lg:mr-4 mx-5 w-full h-full transition-all duration-500">
 			<div class="flex flex-col h-full">
 				<!-- col 1: header -->
-				<div class="w-full h-[15%] flex justify-between mt-3 border-b-[1px] border-gray-200">
+				<div class="w-full h-[100px] flex justify-between mt-3 border-b-[1px] border-gray-200">
 					<!-- profile -->
 					<div class="w-2/3 flex items-center mb-2">
 						<!-- personal photo -->
