@@ -43,21 +43,27 @@
 
         <div
             class=" flex-none snap-always snap-center flex flex-col w-[70%] h-[70%] bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <!-- col 1: img -->
             <div class="h-[45%]  rounded-lg bg-slate-300  mt-0">
                 <img class="rounded-t-lg object-fill h-[100%] w-[100%]  " src="images/avatar.png" alt="">
             </div>
-            <div class="p-3 flex flex-col">
-                <a href="#">
-                    <h5 class="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">Title</h5>
-                </a>
+            <!-- col 2: content -->
+            <div class="p-3 flex flex-col h-[55%]">
+                <!-- col 1: Title -->
+                <h5 class="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">Title</h5>
+                <!-- col 2: description -->
                 <p class="mb-2 text-md font-normal text-gray-700 dark:text-gray-400">description</p>
+                <!-- col 3: instructors,categ,level -->
                 <div class="flex justify-between">
                     <div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">instructors</div>
                     <div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">categ</div>
                     <div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">level</div>
                 </div>
+                <!-- col 4: line -->
                 <div class=" border-t-2 border-dashed border-zinc-300 mb-2  "></div>
+                <!-- col 5: (+)Button,FavButton -->
                 <div class="flex justify-end pt-3 ">
+                    <!-- row 1: (+)Button -->
                     <a href="#"
                         class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
@@ -68,6 +74,7 @@
                             </path>
                         </svg>
                     </a>
+                    <!-- row 2: FavButton -->
                     <a href="#"
                         class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
@@ -78,6 +85,7 @@
                         </svg>
                     </a>
                 </div>
+
             </div>
 
         </div>
