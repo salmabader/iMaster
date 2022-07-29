@@ -4,7 +4,7 @@ require('database/db_connection.php');
 if (isset($_SESSION['type'])) {
 	$privilage = $_SESSION['type'];
 	if (isset($_SESSION['username']) && $privilage == "student") {
-		header('Location: student_home.html');
+		header('Location: studentDashboard.php');
 		exit();
 	} elseif (isset($_SESSION['username']) && $privilage == "instructor") {
 		header('Location: instructorHome.php');
@@ -16,12 +16,12 @@ if (isset($_SESSION['type'])) {
 }
 $con = OpenCon();
 if (isset($_POST['signinBtn'])) {
-
 	$isValidUsername = false;
+	$isValidstuPass = false;
 	$username = filter_input(INPUT_POST, 'username');
 	$password = filter_input(INPUT_POST, 'password');
 	$existanceQuery1 = "SELECT * FROM student WHERE username = ? ";
-	$existanceQuery2 = "SELECT * FROM instructors WHERE username = ?";
+	$existanceQuery2 = "SELECT * FROM instructor WHERE username = ?";
 	$statement1 = mysqli_stmt_init($con);
 	$statement2 = mysqli_stmt_init($con);
 	if (!mysqli_stmt_prepare($statement1, $existanceQuery1) || !mysqli_stmt_prepare($statement2, $existanceQuery2)) {
@@ -34,21 +34,19 @@ if (isset($_POST['signinBtn'])) {
 		mysqli_stmt_bind_param($statement2, "s", $username);
 		mysqli_stmt_execute($statement2);
 		$result2 = mysqli_stmt_get_result($statement2);
-		$fetchedStu = array();
-		$fetchedInstruc = array();
 		//to store all the fetched rows
 		$stu = mysqli_fetch_assoc($result1);
 		$inst = mysqli_fetch_assoc($result2);
 
 		if (isset($inst)) {
 			$isValidInstPass = password_verify($password, $inst['password']);
-			if (!$isValidInstPass) {
+			if ($isValidInstPass == 0) {
 				$passError = "Invalid password.";
 			}
 		}
 		if (isset($stu)) {
 			$isValidstuPass = password_verify($password, $stu['password']);
-			if (!$isValidstuPass) {
+			if ($isValidstuPass == 0) {
 				$passError = "Invalid password.";
 			}
 		}
@@ -63,7 +61,7 @@ if (isset($_POST['signinBtn'])) {
 			$_SESSION['firstName'] = $stu['FName'];
 			$_SESSION['lastName'] = $stu['LName'];
 			$_SESSION['type'] = "student";
-			header('Location: student_home.html');
+			header('Location: studentDashboard.php');
 		} elseif (isset($inst) && $isValidInstPass && $inst['isAccepted'] == 1) {
 			session_start();
 			$_SESSION['username'] = $username;

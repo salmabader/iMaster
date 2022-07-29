@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2022 at 04:12 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.2
+-- Generation Time: Jul 29, 2022 at 07:08 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,15 +32,16 @@ CREATE TABLE `admin` (
   `FName` varchar(10) NOT NULL,
   `LName` varchar(10) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` text NOT NULL
+  `password` text NOT NULL,
+  `photo` text NOT NULL DEFAULT 'default_user_img.jpg'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`username`, `FName`, `LName`, `email`, `password`) VALUES
-('_Admin', 'Ali', 'Alqahtani', 'Ali123@gmail.com', 'Ali@123');
+INSERT INTO `admin` (`username`, `FName`, `LName`, `email`, `password`, `photo`) VALUES
+('admin', 'Salma', 'Ahmad', 'salmabader.cs@gmail.com', '$2y$10$k4C61T5G2Xs8VhwzCQtrDO0HJOPiqUQJla/.Pq83iSRwN3GynArLO', 'default_user_img.jpg');
 
 -- --------------------------------------------------------
 
@@ -93,15 +94,16 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`courseID`, `title`, `category`, `objectives`, `requirements`, `level`, `collaborator`, `instructor_usename`, `admin_username`, `image`, `description`) VALUES
-(1, 'Math', 'Programming', '####non', '####non', 1, NULL, '_amal', '_Admin', 'math.jpg', 'Develops algebraic concepts and skills needed to graph and solve linear equations and inequalities.');
+(2, 'hi', 'programming', 'jkkj', 'nj', 0, NULL, 'inst', 'admin', 'jj', 'jj'),
+(3, 'jj', 'math', 'jhj', 'jhj', 2, NULL, 'inst', 'admin', 'jhhj', 'hhj');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `instructors`
+-- Table structure for table `instructor`
 --
 
-CREATE TABLE `instructors` (
+CREATE TABLE `instructor` (
   `username` varchar(10) NOT NULL,
   `FName` varchar(10) NOT NULL,
   `LName` varchar(10) NOT NULL,
@@ -116,11 +118,11 @@ CREATE TABLE `instructors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `instructors`
+-- Dumping data for table `instructor`
 --
 
-INSERT INTO `instructors` (`username`, `FName`, `LName`, `email`, `password`, `field`, `previous_course`, `degree`, `experience`, `bio`, `IsAccepted`) VALUES
-('_amal', 'Amal', 'Ali', 'Amal123@gmail.com', '$2y$10$htUiZDoUB.yyBaNCsd8XWu8NlifyJaGfqoCuq1g7IQdBVWrte7k8m', 'programming', '', 'bachelor', '2', '###', 0);
+INSERT INTO `instructor` (`username`, `FName`, `LName`, `email`, `password`, `field`, `previous_course`, `degree`, `experience`, `bio`, `IsAccepted`) VALUES
+('inst', 'Noor', 'Ahmad', 'jjh', 'jhj', 'programming', 'jh', 'b', '7', 'jjhhj', 1);
 
 -- --------------------------------------------------------
 
@@ -155,7 +157,7 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`username`, `FName`, `LName`, `email`, `password`) VALUES
-('_noor', 'noor', 'Ali', 'noor@gmail.com', '$2y$10$euA0aPQgM0ZUmPrh0eIn2u73IDGKPOhXXeNFQZPzXWJ77VkI9ua7u');
+('_noor', 'Noor', 'Ali', 'salma.ccsit@gmail.com', '$2y$10$SwA0cn/zvXKyQkmJXVyhf.REdxAcX3UX2yObvxj/oCP8.x9kt/10a');
 
 -- --------------------------------------------------------
 
@@ -165,8 +167,15 @@ INSERT INTO `student` (`username`, `FName`, `LName`, `email`, `password`) VALUES
 
 CREATE TABLE `student_course` (
   `stu_username` varchar(10) NOT NULL,
-  `courseID` int(11) NOT NULL
+  `coID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `student_course`
+--
+
+INSERT INTO `student_course` (`stu_username`, `coID`) VALUES
+('_noor', 2);
 
 -- --------------------------------------------------------
 
@@ -220,9 +229,9 @@ ALTER TABLE `course`
   ADD KEY `admin_username` (`admin_username`);
 
 --
--- Indexes for table `instructors`
+-- Indexes for table `instructor`
 --
-ALTER TABLE `instructors`
+ALTER TABLE `instructor`
   ADD PRIMARY KEY (`username`);
 
 --
@@ -243,8 +252,8 @@ ALTER TABLE `student`
 -- Indexes for table `student_course`
 --
 ALTER TABLE `student_course`
-  ADD PRIMARY KEY (`stu_username`,`courseID`),
-  ADD KEY `courseID` (`courseID`);
+  ADD PRIMARY KEY (`stu_username`,`coID`),
+  ADD KEY `courseID` (`coID`);
 
 --
 -- Indexes for table `student_interests`
@@ -273,7 +282,7 @@ ALTER TABLE `content`
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `courseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `courseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `requests`
@@ -302,20 +311,20 @@ ALTER TABLE `content`
 --
 ALTER TABLE `course`
   ADD CONSTRAINT `course_ibfk_1` FOREIGN KEY (`admin_username`) REFERENCES `admin` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `course_ibfk_2` FOREIGN KEY (`instructor_usename`) REFERENCES `instructors` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `course_ibfk_2` FOREIGN KEY (`instructor_usename`) REFERENCES `instructor` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `requests`
 --
 ALTER TABLE `requests`
-  ADD CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`instructor_username`) REFERENCES `instructors` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`instructor_username`) REFERENCES `instructor` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `requests_ibfk_2` FOREIGN KEY (`admin_username`) REFERENCES `admin` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student_course`
 --
 ALTER TABLE `student_course`
-  ADD CONSTRAINT `student_course_ibfk_1` FOREIGN KEY (`courseID`) REFERENCES `course` (`courseID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_course_ibfk_1` FOREIGN KEY (`coID`) REFERENCES `course` (`courseID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `student_course_ibfk_2` FOREIGN KEY (`stu_username`) REFERENCES `student` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

@@ -1,5 +1,18 @@
 <?php
 session_start();
+if (isset($_SESSION['type'])) {
+    $privilage = $_SESSION['type'];
+    if (isset($_SESSION['username']) && $privilage == "student") {
+        header('Location: student_home.html');
+        exit();
+    } elseif (isset($_SESSION['username']) && $privilage == "instructor") {
+        header('Location: instructor_home.html');
+        exit();
+    } else {
+        header('Location: analytics.php');
+        exit();
+    }
+}
 require('database/db_connection.php');
 $con = OpenCon();
 if (isset($_POST['createAccountBtn'])) {
@@ -16,7 +29,7 @@ if (isset($_POST['createAccountBtn'])) {
     $field = filter_input(INPUT_POST, 'field');
     $year = filter_input(INPUT_POST, 'year');
     $existanceQuery1 = "SELECT * FROM student WHERE username = ? OR email = ?";
-    $existanceQuery2 = "SELECT * FROM instructors WHERE username = ? OR email = ?";
+    $existanceQuery2 = "SELECT * FROM instructor WHERE username = ? OR email = ?";
     $statement1 = mysqli_stmt_init($con);
     $statement2 = mysqli_stmt_init($con);
     if (!mysqli_stmt_prepare($statement1, $existanceQuery1) || !mysqli_stmt_prepare($statement2, $existanceQuery2)) {
@@ -50,7 +63,7 @@ if (isset($_POST['createAccountBtn'])) {
             }
         }
         if ($isValidUsername && $isValidEmail) {
-            $insertQuery = "INSERT INTO instructors (username,FName,LName,email,password,field,previous_course,degree,experience,bio) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            $insertQuery = "INSERT INTO instructor (username,FName,LName,email,password,field,previous_course,degree,experience,bio) VALUES (?,?,?,?,?,?,?,?,?,?)";
             $statement = mysqli_stmt_init($con);
             if (!mysqli_stmt_prepare($statement, $insertQuery)) {
                 header('Location: index.php?error=InsertionError');
