@@ -212,15 +212,17 @@ $con = OpenCon();
                         $query = "SELECT * FROM student_course, course WHERE stu_username = '" . $_SESSION['username'] . "' AND coID = courseID";
                         $result = mysqli_query($con, $query);
                         $course = mysqli_fetch_assoc($result);
+                        // $sql = "SELECT * FROM `course`, instructor WHERE instructor_usename = username;";
+                        // $query = "SELECT * FROM instructor, course WHERE instructor_usename = username";
+                        // $result = mysqli_query($con, $query);
+                        // $instructor = mysqli_fetch_assoc($result);
+
                         ?>
 
                     </div>
-                    <!-- recomended for you -->
-                    <div id="myCoursesSection" class="md:ml-5 mt-5">
-                        <p class="text-xl font-bold capitalize w-full tracking-wide text-gray-700">Recommended for you</p>
-                    </div>
                 </div>
             </div>
+        </div>
         </div> <!-- end of right side-->
     </main>
 

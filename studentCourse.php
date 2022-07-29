@@ -204,17 +204,6 @@ $con = OpenCon();
 				</div>
 				<!-- col 2: content -->
 				<div class="w-full h-[85%] overflow-y-auto overflow-x-hidden scrollbar">
-					<!-- my courses -->
-					<div id="myCoursesSection" class="md:ml-5 mt-5">
-						<p class="text-xl font-bold capitalize w-full tracking-wide text-gray-700">My courses</p>
-						<!-- get student's courses -->
-						<?php
-						$query = "SELECT * FROM student_course, course WHERE stu_username = '" . $_SESSION['username'] . "' AND coID = courseID";
-						$result = mysqli_query($con, $query);
-						$course = mysqli_fetch_assoc($result);
-						?>
-
-					</div>
 					<!-- recomended for you -->
 					<div id="myCoursesSection" class="md:ml-5 mt-5">
 						<p class="text-xl font-bold capitalize w-full tracking-wide text-gray-700">Recommended for you</p>
