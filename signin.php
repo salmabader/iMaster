@@ -21,7 +21,7 @@ if (isset($_POST['signinBtn'])) {
 	$username = filter_input(INPUT_POST, 'username');
 	$password = filter_input(INPUT_POST, 'password');
 	$existanceQuery1 = "SELECT * FROM student WHERE username = ? ";
-	$existanceQuery2 = "SELECT * FROM instructors WHERE username = ?";
+	$existanceQuery2 = "SELECT * FROM instructor WHERE username = ?";
 	$statement1 = mysqli_stmt_init($con);
 	$statement2 = mysqli_stmt_init($con);
 	if (!mysqli_stmt_prepare($statement1, $existanceQuery1) || !mysqli_stmt_prepare($statement2, $existanceQuery2)) {

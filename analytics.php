@@ -236,7 +236,7 @@ if (isset($_POST['saveChangesBtn'])) {
 						$result = mysqli_query($con, $query);
 						$numOfStudents = mysqli_num_rows($result);
 
-						$query = "SELECT username FROM instructors";
+						$query = "SELECT username FROM instructor";
 						$result = mysqli_query($con, $query);
 						$numOfInstructors = mysqli_num_rows($result);
 
@@ -385,7 +385,7 @@ if (isset($_POST['saveChangesBtn'])) {
 		$query = "SELECT * FROM course WHERE category = '" . $cate['category'] . "'";
 		$result2 = mysqli_query($con, $query);
 		$numbers .=  mysqli_num_rows($result2) . ",";
-		$query = "SELECT * FROM instructors WHERE field = '" . $cate['category'] . "' AND NOT isAccepted = 0";
+		$query = "SELECT * FROM instructor WHERE field = '" . $cate['category'] . "' AND NOT isAccepted = 0";
 		$result2 = mysqli_query($con, $query);
 		$instructors .=  mysqli_num_rows($result2) . ",";
 	}

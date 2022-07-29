@@ -25,7 +25,7 @@ if (isset($_POST['sendCode'])) {
     $_SESSION['resetEmail'] = $email;
     $_SESSION['newPass'] = $newPass;
     $studentQuery = "SELECT * FROM student WHERE email = ?";
-    $instructorQuery = "SELECT * FROM instructors WHERE email = ?";
+    $instructorQuery = "SELECT * FROM instructor WHERE email = ?";
     $statement1 = mysqli_stmt_init($con);
     $statement2 = mysqli_stmt_init($con);
     if (!mysqli_stmt_prepare($statement1, $studentQuery) || !mysqli_stmt_prepare($statement2, $instructorQuery)) {
@@ -59,7 +59,7 @@ if (isset($_POST['sendCode'])) {
                 $getFullName = "SELECT FName, LName FROM student WHERE email = '$email'";
                 $isStudent = true;
             } else {
-                $getFullName = "SELECT FName, LName FROM instructors WHERE email = '$email'";
+                $getFullName = "SELECT FName, LName FROM instructor WHERE email = '$email'";
                 $isStudent = false;
             }
             $result = mysqli_query($con, $getFullName);
@@ -87,7 +87,7 @@ if (isset($_POST['verify'])) {
         if ($_SESSION['privilage']) {
             $updateQuery = "UPDATE student SET password = '$hashedPass' WHERE email ='" . $_SESSION['resetEmail'] . "'";
         } else {
-            $updateQuery = "UPDATE instructors SET password = '$hashedPass' WHERE  email ='" . $_SESSION['resetEmail'] . "'";
+            $updateQuery = "UPDATE instructor SET password = '$hashedPass' WHERE  email ='" . $_SESSION['resetEmail'] . "'";
         }
         $result = mysqli_query($con, $updateQuery);
         if ($result) {

@@ -29,7 +29,7 @@ if (isset($_POST['createAccountBtn'])) {
     $field = filter_input(INPUT_POST, 'field');
     $year = filter_input(INPUT_POST, 'year');
     $existanceQuery1 = "SELECT * FROM student WHERE username = ? OR email = ?";
-    $existanceQuery2 = "SELECT * FROM instructors WHERE username = ? OR email = ?";
+    $existanceQuery2 = "SELECT * FROM instructor WHERE username = ? OR email = ?";
     $statement1 = mysqli_stmt_init($con);
     $statement2 = mysqli_stmt_init($con);
     if (!mysqli_stmt_prepare($statement1, $existanceQuery1) || !mysqli_stmt_prepare($statement2, $existanceQuery2)) {
@@ -63,7 +63,7 @@ if (isset($_POST['createAccountBtn'])) {
             }
         }
         if ($isValidUsername && $isValidEmail) {
-            $insertQuery = "INSERT INTO instructors (username,FName,LName,email,password,field,previous_course,degree,experience,bio) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            $insertQuery = "INSERT INTO instructor (username,FName,LName,email,password,field,previous_course,degree,experience,bio) VALUES (?,?,?,?,?,?,?,?,?,?)";
             $statement = mysqli_stmt_init($con);
             if (!mysqli_stmt_prepare($statement, $insertQuery)) {
                 header('Location: index.php?error=InsertionError');
