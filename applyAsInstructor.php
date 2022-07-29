@@ -12,9 +12,6 @@ if (isset($_SESSION['type'])) {
         header('Location: analytics.php');
         exit();
     }
-} else {
-    header('Location: index.php');
-    exit();
 }
 require('database/db_connection.php');
 $con = OpenCon();
