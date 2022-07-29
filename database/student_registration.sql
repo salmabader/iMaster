@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2022 at 10:19 AM
+-- Generation Time: Jul 27, 2022 at 04:12 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -34,6 +34,13 @@ CREATE TABLE `admin` (
   `email` varchar(100) NOT NULL,
   `password` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`username`, `FName`, `LName`, `email`, `password`) VALUES
+('_Admin', 'Ali', 'Alqahtani', 'Ali123@gmail.com', 'Ali@123');
 
 -- --------------------------------------------------------
 
@@ -81,6 +88,13 @@ CREATE TABLE `course` (
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `course`
+--
+
+INSERT INTO `course` (`courseID`, `title`, `category`, `objectives`, `requirements`, `level`, `collaborator`, `instructor_usename`, `admin_username`, `image`, `description`) VALUES
+(1, 'Math', 'Programming', '####non', '####non', 1, NULL, '_amal', '_Admin', 'math.jpg', 'Develops algebraic concepts and skills needed to graph and solve linear equations and inequalities.');
+
 -- --------------------------------------------------------
 
 --
@@ -100,6 +114,13 @@ CREATE TABLE `instructors` (
   `bio` varchar(200) NOT NULL,
   `IsAccepted` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `instructors`
+--
+
+INSERT INTO `instructors` (`username`, `FName`, `LName`, `email`, `password`, `field`, `previous_course`, `degree`, `experience`, `bio`, `IsAccepted`) VALUES
+('_amal', 'Amal', 'Ali', 'Amal123@gmail.com', '$2y$10$htUiZDoUB.yyBaNCsd8XWu8NlifyJaGfqoCuq1g7IQdBVWrte7k8m', 'programming', '', 'bachelor', '2', '###', 0);
 
 -- --------------------------------------------------------
 
@@ -252,7 +273,7 @@ ALTER TABLE `content`
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `courseID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `courseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `requests`
