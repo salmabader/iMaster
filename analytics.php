@@ -343,15 +343,6 @@ if (isset($_POST['saveChangesBtn'])) {
 				<div class="py-6 px-6 lg:px-8">
 					<h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">My Profile</h3>
 					<form class="space-y-6" action="analytics.php" method="POST">
-						<div>
-							<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="file_input">Photo</label>
-							<div class="flex items-center">
-								<img src="images/<?php echo $admin['photo'] ?>" class="w-1/4 rounded-full mr-2">
-								<div class="w-3/4">
-									<input class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none id=" file_input" name="photo" type="file">
-								</div>
-							</div>
-						</div>
 						<div class="flex">
 							<div class="w-1/2 mr-2">
 								<label for="fname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">First name</label>
