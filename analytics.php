@@ -146,16 +146,16 @@ if (isset($_POST['saveChangesBtn'])) {
 					<!-- profile -->
 					<div class="w-2/3 flex items-center mb-2">
 						<!-- personal photo -->
-						<div class="md:w-1/6 sm:w-1/4 h-full flex md:justify-end sm:justify-start justify-center w-1/2 ">
-							<button data-modal-toggle="profile-modal" class="relative">
-								<img src="images/default_user_img.jpg" class="h-full rounded-full ml-2 border-[1px] border-gray-400 hover:shadow-md hover:shadow-amber-300 shadow transition-all ease-in-out duration-200">
-								<div class="absolute bottom-3 -right-1 bg-amber-200 p-[2px] rounded-full border-[1px] border-gray-400">
-									<svg xmlns="http://www.w3.org/2000/svg" class="h-4" viewBox="0 0 20 20" fill="currentColor">
-										<path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-									</svg>
-								</div>
-							</button>
-						</div>
+						<button data-modal-toggle="profile-modal" class="relative flex justify-start items-center bg-blue-200  rounded-full p-7 border border-blue-400 hover:shadow-md hover:shadow-amber-300 shadow transition-all ease-in-out duration-200 sm:mr-0 mr-3">
+							<span class="text-blue-800 text-3xl font-semibold">
+								<?php echo ucfirst(substr($admin['FName'], 0, 1)) . ucfirst(substr($admin['LName'], 0, 1)) ?>
+							</span>
+							<div class="absolute bottom-3 -right-1 bg-amber-200 p-[2px] rounded-full border-[1px] border-blue-400 text-gray-700">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-4" viewBox="0 0 20 20" fill="currentColor">
+									<path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+								</svg>
+							</div>
+						</button>
 						<!-- greeting -->
 						<div class="md:w-5/6 flex flex-col h-full justify-center sm:ml-3 sm:w-3/4 w-1/2">
 							<div class="w-full md:text-xl sm:text-lg text-md font-semibold text-gray-800">Welcome back, <span class="capitalize"><?php if (isset($admin['FName'])) echo $admin['FName']; ?> 👋🏻</span></div>
@@ -314,15 +314,15 @@ if (isset($_POST['saveChangesBtn'])) {
 						</div>
 					</div> <!-- end of top cards -->
 					<!-- another content -->
-					<div class="flex md:flex-row flex-col md:ml-5 mr-4 md:mt-5 mt-2">
-						<div class="flex flex-col md:w-1/2 bg-amber-50 rounded-md px-3 py-4 border border-gray-300 md:mb-0 mb-3">
+					<div class="flex md:flex-row flex-col md:ml-5 mr-3 md:mt-5 mt-2">
+						<div class="flex flex-col md:w-1/2 md:mr-3 bg-amber-50 rounded-md px-3 py-4 border border-gray-300 md:mb-0 mb-3">
 							<p class="text-gray-800 font-semibold text-lg mb-3 ml-2">Courses per categories</p>
 							<canvas id="coursesChart"></canvas>
 						</div>
-						<!-- <div class="flex flex-col md:w-1/2 bg-amber-50 rounded-md px-3 py-4 border border-gray-300">
+						<div class="flex flex-col md:w-1/2 bg-amber-50 rounded-md px-3 py-4 border border-gray-300">
 							<p class="text-gray-800 font-semibold text-lg mb-3 ml-2">Instructor per fields</p>
 							<canvas id="instructorsChart"></canvas>
-						</div> -->
+						</div>
 					</div>
 				</div>
 			</div>
