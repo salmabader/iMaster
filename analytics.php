@@ -147,7 +147,7 @@ if (isset($_POST['saveChangesBtn'])) {
 					<div class="w-2/3 flex items-center mb-2">
 						<!-- personal photo -->
 						<button data-modal-toggle="profile-modal" class="relative flex justify-start items-center bg-blue-200  rounded-full p-7 border border-blue-400 hover:shadow-md hover:shadow-amber-300 shadow transition-all ease-in-out duration-200 sm:mr-0 mr-3">
-							<span class="text-blue-800 text-3xl font-semibold">
+							<span class="text-blue-800 text-2xl font-semibold">
 								<?php echo ucfirst(substr($admin['FName'], 0, 1)) . ucfirst(substr($admin['LName'], 0, 1)) ?>
 							</span>
 							<div class="absolute bottom-3 -right-1 bg-amber-200 p-[2px] rounded-full border-[1px] border-blue-400 text-gray-700">
