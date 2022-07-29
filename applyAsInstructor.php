@@ -1,5 +1,21 @@
 <?php
 session_start();
+if (isset($_SESSION['type'])) {
+    $privilage = $_SESSION['type'];
+    if (isset($_SESSION['username']) && $privilage == "student") {
+        header('Location: student_home.html');
+        exit();
+    } elseif (isset($_SESSION['username']) && $privilage == "instructor") {
+        header('Location: instructor_home.html');
+        exit();
+    } else {
+        header('Location: analytics.php');
+        exit();
+    }
+} else {
+    header('Location: index.php');
+    exit();
+}
 require('database/db_connection.php');
 $con = OpenCon();
 if (isset($_POST['createAccountBtn'])) {

@@ -35,6 +35,7 @@ if (isset($_POST['saveChangesBtn'])) {
 	<script src="https://cdn.tailwindcss.com"></script>
 	<link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
 	<link rel="icon" href="images/icon.svg" type="image/x-icon">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.2/dist/chart.min.js"></script>
 	<title>Analytics</title>
 	<style>
 		.scrollbar::-webkit-scrollbar {
@@ -204,7 +205,6 @@ if (isset($_POST['saveChangesBtn'])) {
 										<div class="text-xs text-gray-600">a few minutes ago</div>
 									</div>
 								</a>
-
 							</div>
 							<a href="#" class="block py-2 text-sm font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
 								<div class="inline-flex items-center ">
@@ -314,7 +314,15 @@ if (isset($_POST['saveChangesBtn'])) {
 						</div>
 					</div> <!-- end of top cards -->
 					<!-- another content -->
-					<div class="">
+					<div class="flex md:flex-row flex-col md:ml-5 mr-4 md:mt-5 mt-2">
+						<div class="flex flex-col md:w-1/2 bg-amber-50 rounded-md px-3 py-4 border border-gray-300 md:mb-0 mb-3">
+							<p class="text-gray-800 font-semibold text-lg mb-3 ml-2">Courses per categories</p>
+							<canvas id="coursesChart"></canvas>
+						</div>
+						<!-- <div class="flex flex-col md:w-1/2 bg-amber-50 rounded-md px-3 py-4 border border-gray-300">
+							<p class="text-gray-800 font-semibold text-lg mb-3 ml-2">Instructor per fields</p>
+							<canvas id="instructorsChart"></canvas>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -374,6 +382,92 @@ if (isset($_POST['saveChangesBtn'])) {
 			</div>
 		</div>
 	</div>
+	<?php
+	// get course in categories:
+	$query = "SELECT DISTINCT category FROM course";
+	$result = mysqli_query($con, $query);
+	$categories = "";
+	$numbers = "";
+	$instructors = "";
+	while ($cate = mysqli_fetch_assoc($result)) {
+		$categories .= '"' . ucfirst($cate['category']) . '",';
+		$query = "SELECT * FROM course WHERE category = '" . $cate['category'] . "'";
+		$result2 = mysqli_query($con, $query);
+		$numbers .=  mysqli_num_rows($result2) . ",";
+		$query = "SELECT * FROM instructors WHERE field = '" . $cate['category'] . "' AND NOT isAccepted = 0";
+		$result2 = mysqli_query($con, $query);
+		$instructors .=  mysqli_num_rows($result2) . ",";
+	}
+	// get number of courses for each category:
+
+	?>
+	<script>
+		const ctx = document.getElementById('coursesChart').getContext('2d');
+		const myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: [<?= $categories ?>],
+				datasets: [{
+					label: '# of courses: ',
+					data: [<?= $numbers ?>],
+					backgroundColor: [
+						'rgba(75, 192, 192, 1)',
+						'rgba(54, 162, 235, 1)',
+						'rgba(255, 99, 132, 1)',
+						'rgba(255, 206, 86, 1)',
+						'rgba(255, 159, 64, 1)'
+					]
+				}]
+			},
+			options: {
+				plugins: {
+					legend: {
+						display: false
+					}
+				},
+				scales: {
+					x: {
+						grid: {
+							display: false
+						}
+					}
+				}
+			}
+		});
+		const ctx2 = document.getElementById('instructorsChart').getContext('2d');
+		const myChart2 = new Chart(ctx2, {
+			type: 'bar',
+			data: {
+				labels: [<?= $categories ?>],
+				datasets: [{
+					label: '# of courses: ',
+					data: [<?= $instructors ?>],
+					backgroundColor: [
+						'rgba(75, 192, 192, 1)',
+						'rgba(54, 162, 235, 1)',
+						'rgba(255, 99, 132, 1)',
+						'rgba(255, 206, 86, 1)',
+						'rgba(255, 159, 64, 1)'
+					]
+				}]
+			},
+			options: {
+				plugins: {
+					legend: {
+						display: false
+					}
+				},
+				scales: {
+					x: {
+						grid: {
+							display: false
+						}
+					}
+				}
+			}
+		});
+	</script>
+
 	<script src="js/analytics.js"></script>
 	<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>
