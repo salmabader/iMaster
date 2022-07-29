@@ -158,7 +158,7 @@ if (isset($_POST['saveChangesBtn'])) {
 						</div>
 						<!-- greeting -->
 						<div class="md:w-5/6 flex flex-col h-full justify-center sm:ml-3 sm:w-3/4 w-1/2">
-							<div class="w-full md:text-xl text-lg font-semibold text-gray-800">Welcome back, <span class="capitalize"><?php if (isset($admin['FName'])) echo $admin['FName']; ?> 👋🏻</span></div>
+							<div class="w-full md:text-xl sm:text-lg text-md font-semibold text-gray-800">Welcome back, <span class="capitalize"><?php if (isset($admin['FName'])) echo $admin['FName']; ?> 👋🏻</span></div>
 							<div class="w-full text-sm text-gray-600 capitalize"><?php if (isset($_SESSION['type'])) echo $_SESSION['type']; ?></div>
 						</div>
 					</div>
