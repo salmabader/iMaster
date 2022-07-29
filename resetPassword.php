@@ -2,6 +2,19 @@
 session_start();
 require('database/db_connection.php');
 require('mailConfig.php');
+if (isset($_SESSION['type'])) {
+    $privilage = $_SESSION['type'];
+    if (isset($_SESSION['username']) && $privilage == "student") {
+        header('Location: studentDashboard.php');
+        exit();
+    } elseif (isset($_SESSION['username']) && $privilage == "instructor") {
+        header('Location: instructorHome.php');
+        exit();
+    } else {
+        header('Location: analytics.php');
+        exit();
+    }
+}
 $con = OpenCon();
 $isStudent = false;
 if (isset($_POST['sendCode'])) {
@@ -9,6 +22,8 @@ if (isset($_POST['sendCode'])) {
     $isValidUsername = true;
     $email = filter_input(INPUT_POST, 'email');
     $newPass = filter_input(INPUT_POST, 'password');
+    $_SESSION['resetEmail'] = $email;
+    $_SESSION['newPass'] = $newPass;
     $studentQuery = "SELECT * FROM student WHERE email = ?";
     $instructorQuery = "SELECT * FROM instructors WHERE email = ?";
     $statement1 = mysqli_stmt_init($con);
@@ -57,6 +72,7 @@ if (isset($_POST['sendCode'])) {
             $mail->Subject = 'Restore password code';
             $mail->Body    = 'Your restore code: <b>' . $content . '</b>';
 
+            $_SESSION['privilage'] = $isStudent;
             if ($mail->send()) {
                 $feedback = "Code sent to: " . $email;
             }
@@ -65,17 +81,17 @@ if (isset($_POST['sendCode'])) {
 }
 if (isset($_POST['verify'])) {
     $enteredCode = filter_input(INPUT_POST, 'code');
-    echo $isStudent;
     if ($enteredCode == $_SESSION['code']) {
         //update db
-        $hashedPass = password_hash($newPass, PASSWORD_DEFAULT);
-        if ($isStudent) {
-            $updateQuery = "UPDATE student SET password = '$hashedPass' WHERE email = '$email'";
+        $hashedPass = password_hash($_SESSION['newPass'], PASSWORD_DEFAULT);
+        if ($_SESSION['privilage']) {
+            $updateQuery = "UPDATE student SET password = '$hashedPass' WHERE email ='" . $_SESSION['resetEmail'] . "'";
         } else {
-            $updateQuery = "UPDATE instructors SET password = '$hashedPass' WHERE email = '$email'";
+            $updateQuery = "UPDATE instructors SET password = '$hashedPass' WHERE  email ='" . $_SESSION['resetEmail'] . "'";
         }
         $result = mysqli_query($con, $updateQuery);
         if ($result) {
+            $_SESSION = array(); //clear session
             header('Location: signin.php?success=password-is-updated');
         }
     } else {

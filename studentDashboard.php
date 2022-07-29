@@ -3,15 +3,15 @@
 session_start();
 require 'database/db_connection.php';
 // if there is a session but user is not student
-// if (isset($_SESSION['type'])) {
-//     $privilage = $_SESSION['type'];
-//     if ($privilage != "student") {
-//         header('Location: index.php');
-//     }
-// } else { // if there is no session
-//     header('Location: index.php');
-//     exit();
-// }
+if (isset($_SESSION['type'])) {
+    $privilage = $_SESSION['type'];
+    if ($privilage != "student") {
+        header('Location: index.php');
+    }
+} else { // if there is no session
+    header('Location: index.php');
+    exit();
+}
 
 ?>
 <!DOCTYPE html>
