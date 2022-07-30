@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 29, 2022 at 07:08 PM
+-- Generation Time: Jul 30, 2022 at 11:19 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -94,8 +94,13 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`courseID`, `title`, `category`, `objectives`, `requirements`, `level`, `collaborator`, `instructor_usename`, `admin_username`, `image`, `description`) VALUES
-(2, 'hi', 'programming', 'jkkj', 'nj', 0, NULL, 'inst', 'admin', 'jj', 'jj'),
-(3, 'jj', 'math', 'jhj', 'jhj', 2, NULL, 'inst', 'admin', 'jhhj', 'hhj');
+(2, 'Python', 'programming', 'jkkj', 'nj', 0, NULL, 'inst', 'admin', 'python.jpg', 'jj'),
+(3, 'math', 'math', 'jhj', 'jhj', 2, NULL, 'inst', 'admin', 'math.jpg', 'hhj'),
+(4, 'customer services training', 'Business', 'ghjk', 'hjkl', 2, NULL, 'inst', 'admin', 'business1.jpg', 'dfghjk'),
+(5, 'C++', 'Programming', 'dfghj', 'dfghj', 0, NULL, 'inst', 'admin', 'c++.jpg', 'fghjkl;\''),
+(6, 'Java', 'Programming', 'dfghjk', 'fghjk', 2, NULL, 'inst', 'admin', 'java.jpg', 'sdfghjk'),
+(7, 'powerful speaking ', 'Business', 'cfgvbhnjmk', 'fgbhnjmk', 1, NULL, 'inst', 'admin', 'business2.jpg', 'dfghjkl'),
+(8, 'creating 3D environments in blender', 'Design', 'sdfghjk', 'dfghjk', 0, NULL, 'inst', 'admin', 'Design.jpg', 'derftgyhujk');
 
 -- --------------------------------------------------------
 
@@ -175,7 +180,13 @@ CREATE TABLE `student_course` (
 --
 
 INSERT INTO `student_course` (`stu_username`, `coID`) VALUES
-('_noor', 2);
+('_noor', 2),
+('_noor', 3),
+('_noor', 4),
+('_noor', 5),
+('_noor', 6),
+('_noor', 7),
+('_noor', 8);
 
 -- --------------------------------------------------------
 
@@ -282,7 +293,7 @@ ALTER TABLE `content`
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-  MODIFY `courseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `courseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `requests`
