@@ -204,6 +204,10 @@ $con = OpenCon();
                 </div>
                 <!-- col 2: content -->
                 <div class="w-full h-[85%] overflow-y-auto overflow-x-hidden scrollbar">
+                    <!-- statistics -->
+                    <div>
+                        COMPLETE HERE
+                    </div>
                     <!-- my courses -->
                     <div id="myCoursesSection" class="md:ml-5 mt-5 flex md:flex-wrap gap-3 md:flex-row flex-col">
                         <!-- get student's courses -->

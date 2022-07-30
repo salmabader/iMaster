@@ -207,6 +207,195 @@ $con = OpenCon();
 					<!-- recomended for you -->
 					<div id="myCoursesSection" class="md:ml-5 mt-5">
 						<p class="text-xl font-bold capitalize w-full tracking-wide text-gray-700">Recommended for you</p>
+						<section class=" items-center flex flex-nowrap overflow-x-auto snap-x snap-mandatory gap-5 px-5  h-[70%] w-[25%]  scrollbar">
+
+
+							<!-- card 1 -->
+
+
+							<div class=" flex-none snap-always snap-center flex flex-col w-[70%] h-[70%] bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+								<!-- col 1: img -->
+								<div class="h-[45%]  rounded-lg bg-slate-300  mt-0">
+									<img class="rounded-t-lg object-fill h-[100%] w-[100%]  " src="images/avatar.png" alt="">
+								</div>
+								<!-- col 2: content -->
+								<div class="p-3 flex flex-col h-[55%]">
+									<!-- col 1: Title -->
+									<h5 class="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">Title</h5>
+									<!-- col 2: description -->
+									<p class="mb-2 text-md font-normal text-gray-700 dark:text-gray-400">description</p>
+									<!-- col 3: instructors,categ,level -->
+									<div class="flex justify-between">
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">instructors</div>
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">categ</div>
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">level</div>
+									</div>
+									<!-- col 4: line -->
+									<div class=" border-t-2 border-dashed border-zinc-300 mb-2  "></div>
+									<!-- col 5: (+)Button,FavButton -->
+									<div class="flex justify-end pt-3 ">
+										<!-- row 1: (+)Button -->
+										<a href="#" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+
+											<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+												</path>
+											</svg>
+										</a>
+										<!-- row 2: FavButton -->
+										<a href="#" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+
+											<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+											</svg>
+										</a>
+									</div>
+
+								</div>
+
+							</div>
+
+							<!-- card 2 -->
+
+							<div class=" flex-none snap-always snap-center flex flex-col w-[70%] h-[70%] bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+								<div class="h-[45%]  rounded-lg bg-slate-300  mt-0">
+									<img class="rounded-t-lg object-fill h-[100%] w-[100%]  " src="images/avatar.png" alt="">
+								</div>
+								<div class="p-3 flex flex-col">
+									<a href="#">
+										<h5 class="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">Title</h5>
+									</a>
+									<p class="mb-2 text-md font-normal text-gray-700 dark:text-gray-400">description</p>
+									<div class="flex justify-between">
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">instructors</div>
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">categ</div>
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">level</div>
+									</div>
+									<div class=" border-t-2 border-dashed border-zinc-300 mb-2  "></div>
+									<div class="flex justify-end pt-3 ">
+										<a href="#" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+
+											<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+												</path>
+											</svg>
+										</a>
+										<a href="#" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+
+											<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+											</svg>
+										</a>
+									</div>
+								</div>
+
+							</div>
+							<!-- card 3 -->
+
+							<div class=" flex-none snap-always snap-center flex flex-col w-[70%] h-[70%] bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+								<div class="h-[45%]  rounded-lg bg-slate-300  mt-0">
+									<img class="rounded-t-lg object-fill h-[100%] w-[100%]  " src="images/avatar.png" alt="">
+								</div>
+								<div class="p-3 flex flex-col">
+									<a href="#">
+										<h5 class="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">Title</h5>
+									</a>
+									<p class="mb-2 text-md font-normal text-gray-700 dark:text-gray-400">description</p>
+									<div class="flex justify-between">
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">instructors</div>
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">categ</div>
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">level</div>
+									</div>
+									<div class=" border-t-2 border-dashed border-zinc-300 mb-2  "></div>
+									<div class="flex justify-end pt-3 ">
+										<a href="#" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+
+											<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+												</path>
+											</svg>
+										</a>
+										<a href="#" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+
+											<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+											</svg>
+										</a>
+									</div>
+								</div>
+
+							</div>
+							<!-- card 4 -->
+
+							<div class=" flex-none snap-always snap-center flex flex-col w-[70%] h-[70%] bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+								<div class="h-[45%]  rounded-lg bg-slate-300  mt-0">
+									<img class="rounded-t-lg object-fill h-[100%] w-[100%]  " src="images/avatar.png" alt="">
+								</div>
+								<div class="p-3 flex flex-col">
+									<a href="#">
+										<h5 class="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">Title</h5>
+									</a>
+									<p class="mb-2 text-md font-normal text-gray-700 dark:text-gray-400">description</p>
+									<div class="flex justify-between">
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">instructors</div>
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">categ</div>
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">level</div>
+									</div>
+									<div class=" border-t-2 border-dashed border-zinc-300 mb-2  "></div>
+									<div class="flex justify-end pt-3 ">
+										<a href="#" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+
+											<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+												</path>
+											</svg>
+										</a>
+										<a href="#" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+
+											<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+											</svg>
+										</a>
+									</div>
+								</div>
+
+							</div>
+							<!-- card 5 -->
+
+							<div class=" flex-none snap-always snap-center flex flex-col w-[70%] h-[70%] bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+								<div class="h-[45%]  rounded-lg bg-slate-300  mt-0">
+									<img class="rounded-t-lg object-fill h-[100%] w-[100%]  " src="images/avatar.png" alt="">
+								</div>
+								<div class="p-3 flex flex-col">
+									<a href="#">
+										<h5 class="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">Title</h5>
+									</a>
+									<p class="mb-2 text-md font-normal text-gray-700 dark:text-gray-400">description</p>
+									<div class="flex justify-between">
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">instructors</div>
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">categ</div>
+										<div class="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">level</div>
+									</div>
+									<div class=" border-t-2 border-dashed border-zinc-300 mb-2  "></div>
+									<div class="flex justify-end pt-3 ">
+										<a href="#" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+
+											<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+												</path>
+											</svg>
+										</a>
+										<a href="#" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+
+											<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+											</svg>
+										</a>
+									</div>
+								</div>
+
+							</div>
+
 					</div>
 				</div>
 			</div>
