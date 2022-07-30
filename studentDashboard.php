@@ -205,9 +205,52 @@ $con = OpenCon();
                 <!-- col 2: content -->
                 <div class="w-full h-[85%] overflow-y-auto overflow-x-hidden scrollbar">
                     <!-- statistics -->
-                    <div>
-                        COMPLETE HERE
+
+                    <div class="flex md:flex-row flex-col md:ml-5 mr-3 md:mt-5 mt-2">
+                        <div class="flex flex-col md:w-[20%] h-[30%] md:mr-3 bg-gray-50 shadow-lg  rounded-md px-3 py-4 border border-gray-300 md:mb-0 mb-3">
+                            <p class="text-gray-800 font-semibold text-lg mb-3 ml-2">Total Courses </p>
+
+                            <!-- // get Total number of courses: -->
+                            <?php
+                            $query = "SELECT * FROM student_course, course WHERE stu_username = '" . $_SESSION['username'] . "' AND coID = courseID";
+                            $result = mysqli_query($con, $query);
+                            $Totalnumbers = "";
+                            $Totalnumbers .=  mysqli_num_rows($result) . ",";
+                            ?>
+
+                            <p class="flex text-gray-800 font-bold text-xl mt-3 ml-8">
+                                <?php echo ucfirst(substr($Totalnumbers, 0, 1)) ?> ! <img class="ml-3" src="images/icons8-books-49.png" alt=""></p>
+                            <canvas id="TotalcoursesChart"></canvas>
+                        </div>
+
+                        <div class="flex flex-col md:w-1/2 bg-gray-50 rounded-md px-3 py-4 border shadow-lg border-gray-300">
+                            <p class="text-gray-800 font-semibold text-lg mb-3 ml-2">Courses per categories</p>
+                            <canvas id="ChartPerCateg"></canvas>
+                        </div>
                     </div>
+
+
+                    <?php
+                    // get # course in categories:
+                    $query1 = "SELECT DISTINCT category FROM course";
+                    $result1 = mysqli_query($con, $query1);
+                    $categories = "";
+                    $numbers = "";
+                    $students = "";
+
+                    while ($cate = mysqli_fetch_assoc($result1)) {
+                        $categories .= '"' . ucfirst($cate['category']) . '",';
+                        $query = "SELECT * FROM course WHERE category = '" . $cate['category'] . "'";
+                        $result3 = mysqli_query($con, $query);
+                        $numbers .=  mysqli_num_rows($result3) . ",";
+                        $query = "SELECT * FROM student_course, course WHERE stu_username = '" . $_SESSION['username'] . "' AND coID = courseID";
+                        $result = mysqli_query($con, $query);
+                        $students .=  mysqli_num_rows($result3) . ",";
+                    }
+
+                    ?>
+
+
                     <!-- my courses -->
                     <div id="myCoursesSection" class="md:ml-5 mt-5 flex md:flex-wrap gap-3 md:flex-row flex-col">
                         <!-- get student's courses -->
@@ -304,6 +347,36 @@ $con = OpenCon();
             </div>
         </div>
     </div>
+    <script>
+        const ctx2 = document.getElementById('ChartPerCateg').getContext('2d');
+        const myChart2 = new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: [<?= $categories ?>],
+                datasets: [{
+                    label: '# of courses: ',
+                    data: [<?= $students ?>],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ]
+                }]
+            },
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Chart.js Pie Chart'
+                }
+            }
+        });
+    </script>
     <script src="js/analytics.js"></script>
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>
