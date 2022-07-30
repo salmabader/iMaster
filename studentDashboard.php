@@ -24,7 +24,7 @@ $con = OpenCon();
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
     <link rel="icon" href="images/icon.svg" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.2/dist/chart.min.js"></script>
-    <title>Analytics</title>
+    <title>Dashboard</title>
     <style>
         .scrollbar::-webkit-scrollbar {
             width: 10px;
@@ -205,20 +205,50 @@ $con = OpenCon();
                 <!-- col 2: content -->
                 <div class="w-full h-[85%] overflow-y-auto overflow-x-hidden scrollbar">
                     <!-- my courses -->
-                    <div id="myCoursesSection" class="md:ml-5 mt-5">
-                        <p class="text-xl font-bold capitalize w-full tracking-wide text-gray-700">My courses</p>
+                    <div id="myCoursesSection" class="md:ml-5 mt-5 flex md:flex-wrap gap-3 md:flex-row flex-col">
                         <!-- get student's courses -->
                         <?php
                         $query = "SELECT * FROM student_course, course WHERE stu_username = '" . $_SESSION['username'] . "' AND coID = courseID";
                         $result = mysqli_query($con, $query);
-                        $course = mysqli_fetch_assoc($result);
-                        // $sql = "SELECT * FROM `course`, instructor WHERE instructor_usename = username;";
-                        // $query = "SELECT * FROM instructor, course WHERE instructor_usename = username";
-                        // $result = mysqli_query($con, $query);
-                        // $instructor = mysqli_fetch_assoc($result);
-
-                        ?>
-
+                        if (mysqli_num_rows($result) > 0) { ?>
+                            <p class="text-xl font-bold capitalize w-full tracking-wide text-gray-700">My courses</p>
+                            <?php while ($course = mysqli_fetch_assoc($result)) {
+                            ?>
+                                <!-- card -->
+                                <div class="w-full md:w-1/5 bg-gray-50 rounded-md shadow-sm border border-gray-300 relative" role="button">
+                                    <!-- Image -->
+                                    <img class="h-40 object-cover rounded-t-md w-full" src="upload/<?php echo $course['image'] ?>">
+                                    <p class="absolute top-1 right-1
+                                    <?php if ($course['level'] == 0) echo "bg-yellow-100 text-yellow-800";
+                                    elseif ($course['level'] == 1) echo "bg-green-100 text-green-800";
+                                    else echo "bg-red-100 text-red-800";
+                                    ?> 
+                                    text-[10px] font-medium px-2.5 py-0.5 rounded">
+                                        <?php if ($course['level'] == 0) echo "Beginners";
+                                        elseif ($course['level'] == 1) echo "Intermediate";
+                                        else echo "Advanced"; ?>
+                                    </p>
+                                    <div class="p-2">
+                                        <!-- title -->
+                                        <p class="text-[10px] font-semibold pt-0 text-blue-700"><?php echo ucfirst($course['category']) ?></p>
+                                        <h2 class="font-bold text-lg mb-1 border-b border-gray-200 truncate"><?php echo ucfirst($course['title']) ?></h2>
+                                        <!-- instructor -->
+                                        <?php
+                                        // $sql = "SELECT * FROM course, instructor WHERE instructor_usename = username;";
+                                        $query = "SELECT * FROM instructor, course WHERE username = '" . $course['instructor_usename'] . "'";
+                                        $result2 = mysqli_query($con, $query);
+                                        $instructor = mysqli_fetch_assoc($result2);
+                                        ?>
+                                        <p class="text-sm text-gray-600 flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-3 inline mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clip-rule="evenodd" />
+                                            </svg><?php echo ucfirst($instructor['FName']) . " " . ucfirst($instructor['LName']) ?></p>
+                                    </div>
+                                    <!-- btns -->
+                                    <button class="py-1 bg-blue-200 rounded-b-md w-full flex justify-center text-md font-bold text-blue-700">View</button>
+                                </div>
+                                <!-- end of card -->
+                        <?php }
+                        } ?>
                     </div>
                 </div>
             </div>
