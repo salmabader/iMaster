@@ -203,33 +203,34 @@ $con = OpenCon();
                     </div>
                 </div>
                 <!-- col 2: content -->
-                <div class="w-full h-[85%] overflow-y-auto overflow-x-hidden scrollbar">
+                <div class="w-full h-[85%] overflow-y-auto overflow-x-hidden scrollbar pb-5">
                     <!-- statistics -->
-
-                    <div class="flex md:flex-row flex-col md:ml-5 mr-3 md:mt-5 mt-2">
-                        <div class="flex flex-col md:w-[20%] h-[30%] md:mr-3 bg-gray-50 shadow-lg  rounded-md px-3 py-4 border border-gray-300 md:mb-0 mb-3">
-                            <p class="text-gray-800 font-semibold text-lg mb-3 ml-2">Total Courses </p>
-
-                            <!-- // get Total number of courses: -->
-                            <?php
-                            $query = "SELECT * FROM student_course, course WHERE stu_username = '" . $_SESSION['username'] . "' AND coID = courseID";
-                            $result = mysqli_query($con, $query);
-                            $Totalnumbers = "";
-                            $Totalnumbers .=  mysqli_num_rows($result) . ",";
-                            ?>
-
-                            <p class="flex text-gray-800 font-bold text-xl mt-3 ml-8">
-                                <?php echo ucfirst(substr($Totalnumbers, 0, 1)) ?> ! <img class="ml-3" src="images/icons8-books-49.png" alt=""></p>
-                            <canvas id="TotalcoursesChart"></canvas>
-                        </div>
-
-                        <div class="flex flex-col md:w-1/2 bg-gray-50 rounded-md px-3 py-4 border shadow-lg border-gray-300">
-                            <p class="text-gray-800 font-semibold text-lg mb-3 ml-2">Courses per categories</p>
-                            <canvas id="ChartPerCateg"></canvas>
+                    <div class="flex flex-col md:ml-5 mt-5">
+                        <p class="text-xl font-bold capitalize w-full tracking-wide text-gray-700 mb-2">Statistics</p>
+                        <div class="flex gap-5">
+                            <!-- pie chart -->
+                            <div class="w-1/2 lg:w-1/4 bg-gray-100 rounded-md px-3 py-4 border shadow-sm border-gray-300">
+                                <canvas id="ChartPerCateg"></canvas>
+                            </div>
+                            <!-- another numbers -->
+                            <div class="w-1/2 lg:w-3/4 flex flex-col">
+                                <!-- total courses -->
+                                <div class="w-1/2 lg:w-1/5 bg-gray-100 rounded-md px-3 py-4 border shadow-sm border-gray-300 flex flex-col">
+                                    <p class="capitalize text-sm font-medium">registered courses</p>
+                                    <!-- // get Total number of courses: -->
+                                    <?php
+                                    $query = "SELECT * FROM student_course, course WHERE stu_username = '" . $_SESSION['username'] . "' AND coID = courseID";
+                                    $result = mysqli_query($con, $query);
+                                    $Totalnumbers =  mysqli_num_rows($result);
+                                    ?>
+                                    <div class="flex items-center text-gray-800 gap-3">
+                                        <p class="text-3xl font-bold w-1/2"><?php echo $Totalnumbers ?></p>
+                                        <img src="images/courses.png" class="w-1/2">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-
                     <?php
                     // get # course in categories:
                     $query1 = "SELECT DISTINCT category FROM course";
