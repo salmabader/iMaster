@@ -50,8 +50,7 @@ if (isset($_POST['signinBtn'])) {
 				$passError = "Invalid password.";
 			}
 		}
-		if (!isset($inst) && !isset($stu)) {
-
+		if (!isset($inst) && !isset($stu) || $inst['isAccepted'] == 0) {
 			$usernameError = "Invalid username.";
 		}
 		if (isset($stu) && $isValidstuPass) {
@@ -69,7 +68,7 @@ if (isset($_POST['signinBtn'])) {
 			$_SESSION['firstName'] = $inst['FName'];
 			$_SESSION['lastName'] = $inst['LName'];
 			$_SESSION['type'] = "instructor";
-			header('Location: instructor_home.html');
+			header('Location: instructorHome.php');
 		}
 	}
 }
