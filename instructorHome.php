@@ -194,21 +194,7 @@ $con = OpenCon();
 				</div>
 				<!-- col 2: content -->
 				<div class="w-full h-[85%] overflow-y-auto overflow-x-hidden scrollbar">
-					<!-- my courses -->
-					<div id="myCoursesSection" class="md:ml-5 mt-5">
-						<p class="text-xl font-bold capitalize w-full tracking-wide text-gray-700">My courses</p>
-						<!-- get student's courses -->
-						<?php
-						$query = "SELECT * FROM student_course, course WHERE stu_username = '" . $_SESSION['username'] . "' AND coID = courseID";
-						$result = mysqli_query($con, $query);
-						$course = mysqli_fetch_assoc($result);
-						?>
 
-					</div>
-					<!-- recomended for you -->
-					<div id="myCoursesSection" class="md:ml-5 mt-5">
-						<p class="text-xl font-bold capitalize w-full tracking-wide text-gray-700">Recommended for you</p>
-					</div>
 				</div>
 			</div>
 		</div> <!-- end of right side-->
@@ -227,7 +213,7 @@ $con = OpenCon();
 				</button>
 				<div class="py-6 px-6 lg:px-8">
 					<h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">My Profile</h3>
-					<form class="space-y-6" action="analytics.php" method="POST">
+					<form class="space-y-4" action="analytics.php" method="POST">
 						<div class="flex">
 							<div class="w-1/2 mr-2">
 								<label for="fname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">First name</label>
@@ -240,7 +226,11 @@ $con = OpenCon();
 							</div>
 						</div>
 						<div>
-							<label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Username</label>
+							<label for="bio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Bio</label>
+							<textarea name="bio" id="bio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"><?php echo $user['bio'] ?></textarea>
+						</div>
+						<div>
+							<label for=" username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Username</label>
 							<input type="text" disabled name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed" value="<?php echo $user['username'] ?>">
 						</div>
 						<div>

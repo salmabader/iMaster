@@ -415,7 +415,7 @@ $con = OpenCon();
 				</button>
 				<div class="py-6 px-6 lg:px-8">
 					<h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">My Profile</h3>
-					<form class="space-y-6" action="analytics.php" method="POST">
+					<form class="space-y-4" action="analytics.php" method="POST">
 						<div class="flex">
 							<div class="w-1/2 mr-2">
 								<label for="fname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">First name</label>
