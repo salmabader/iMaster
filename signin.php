@@ -68,7 +68,7 @@ if (isset($_POST['signinBtn'])) {
 			$_SESSION['firstName'] = $inst['FName'];
 			$_SESSION['lastName'] = $inst['LName'];
 			$_SESSION['type'] = "instructor";
-			header('Location: instructorHome.php');
+			header('Location: instructorDashboard.php');
 		}
 	}
 }
