@@ -18,40 +18,41 @@ const step3 = document.getElementById("step3")
 const step4 = document.getElementById("step4")
 
 next1.addEventListener('click', function () {
-    form1.style.left = "-1500px"
-    form2.style.left = "149px"
-    progressBar.style.width = "600px"
+    form1.classList.add("hidden")
+    form2.style.display = "block"
+    progressBar.style.width = "50%"
     step2.classList.add("text-white")
 })
 back1.addEventListener('click', function () {
-    form1.style.left = "149px"
-    form2.style.left = "1500px"
-    progressBar.style.width = "250px"
+    form1.classList.remove("hidden")
+    form1.classList.add("block")
+    form2.style.display = "none"
+    progressBar.style.width = "20%"
     step2.classList.remove("text-white")
 })
 
 next2.addEventListener('click', function () {
-    form2.style.left = "-1500px"
-    form3.style.left = "149px"
-    progressBar.style.width = "1000px"
+    form2.style.display = "none"
+    form3.style.display = "block"
+    progressBar.style.width = "75%"
     step3.classList.add("text-white")
 })
 back2.addEventListener('click', function () {
-    form2.style.left = "149px"
-    form3.style.left = "1500px"
-    progressBar.style.width = "600px"
+    form2.style.display = "block"
+    form3.style.display = "none"
+    progressBar.style.width = "50%"
     step3.classList.remove("text-white")
 })
 
 next3.addEventListener('click', function () {
-    form3.style.left = "-1500px"
-    form4.style.left = "149px"
-    progressBar.style.width = "1500px"
+    form3.style.display = "none"
+    form4.style.display = "block"
+    progressBar.style.width = "100%"
     step4.classList.add("text-white")
 })
 back3.addEventListener('click', function () {
-    form3.style.left = "149px"
-    form4.style.left = "1500px"
-    progressBar.style.width = "1000px"
+    form3.style.display = "block"
+    form4.style.display = "none"
+    progressBar.style.width = "75%"
     step4.classList.remove("text-white")
 })
