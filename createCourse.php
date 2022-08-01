@@ -51,6 +51,18 @@ $con = OpenCon();
 			border-top: 1px solid #f3f4f6;
 			border-left: 1px solid #f3f4f6;
 		}
+
+		#progress::after {
+			content: "";
+			height: 100%;
+			width: 0;
+			border-top: 18px solid transparent;
+			border-bottom: 18px solid transparent;
+			position: absolute;
+			right: -20px;
+			top: 0;
+			border-left: 20px solid #3b82f6;
+		}
 	</style>
 	<!-- prevent resubmission when refresh the page -->
 	<script>
@@ -195,8 +207,241 @@ $con = OpenCon();
 				<!-- col 2: content -->
 				<div class="w-full h-[85%] overflow-y-auto overflow-x-hidden scrollbar">
 					<!-- steps -->
-					<div class="bg-gray-100 mt-3 rounded-md flex flex-col items-center">
+					<div class="bg-gray-100 mt-3 rounded-lg flex flex-col items-center mx-2 w-[98%] h-full mb-5 relative overflow-hidden">
+						<div class="flex justify-between w-full px-20 text-sm font-medium py-2 bg-blue-50 shadow-sm border-b border-gray-300 relative">
+							<div id="progress" class="w-[250px] h-full absolute bg-gradient-to-r from-cyan-500 to-blue-500 top-0 left-0 transition-all duration-1000"></div>
+							<div class="relative text-white">Step 1</div>
+							<div class="relative transition-all duration-1000" id="step2">Step 2</div>
+							<div class="relative transition-all duration-1000" id="step3">Step 3</div>
+							<div class="relative transition-all duration-1000" id="step4">Step 4</div>
+						</div>
+						<!-- form1: step1 -->
+						<form id="form1" class="flex flex-col w-3/4 gap-5 absolute top-14 transition-all duration-500">
+							<div class="w-full">
+								<p class="text-xl font-semibold text-gray-800 text-center capitalize">Main information</p>
+							</div>
+							<div class="flex">
+								<div class="flex flex-col mr-4 w-1/2">
+									<label for="title" class="text-md font-semibold text-gray-800 mb-2">Course title</label>
+									<input type="text" name="title" id="title" class="rounded-md border border-gray-300">
+								</div>
+								<div class="flex flex-col w-1/2">
+									<label for="category" class="text-md font-semibold text-gray-800 mb-2">Category</label>
+									<select id="category" name="category" class="rounded-md border border-gray-300 pl-2 h-full">
+										<option selected value="0">Course category</option>
+										<option value="programming">Programming</option>
+										<option value="mathematics">Mathematics</option>
+										<option value="marketing">Marketing</option>
+										<option value="IT & Software">IT & Software</option>
+										<option value="business">Business</option>
+									</select>
+								</div>
+							</div>
+							<div class="flex flex-col w-full">
+								<label for="objectives" class="text-md font-semibold text-gray-800 mb-2">Course objectives</label>
+								<textarea name="objectives" id="objectives" class="rounded-md border border-gray-300 p-3"></textarea>
+							</div>
+							<div class="flex flex-col w-full">
+								<label for="requirement" class="text-md font-semibold text-gray-800 mb-2">Course requirement</label>
+								<textarea name="requirement" id="requirement" class="rounded-md border border-gray-300 p-3"></textarea>
+							</div>
+							<div class="flex flex-col w-full">
+								<label for="level" class="text-md font-semibold text-gray-800 mb-2">Level</label>
+								<select id="level" name="level" class="rounded-md border border-gray-300 pl-2 h-full py-2">
+									<option selected value="0">Course level</option>
+									<option value="0">Beginner</option>
+									<option value="1">Intermediate</option>
+									<option value="2">Advanced</option>
+								</select>
+							</div>
+							<!-- buttons -->
+							<div class="flex justify-end">
+								<button type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="next1">
+									<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+									<span>Next</span>
+									<svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
+										<path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+									</svg>
+								</button>
+							</div>
+						</form>
+						<!-- form2: step2 -->
+						<form id="form2" class="flex flex-col w-3/4 gap-5 absolute left-[1500px] top-14 transition-all duration-500">
+							<div class="w-full">
+								<p class="text-xl font-semibold text-gray-800 text-center capitalize">Course outlines</p>
+							</div>
+							<div class="flex flex-col w-full">
+								<div class="flex w-full">
+									<div id="chapterNum" class="text-lg font-bold flex items-center justify-center bg-amber-400 text-gray-800 px-2 rounded-l-md">1</div>
+									<div class="bg-blue-100 p-5 rounded-r-md w-full">
+										<div class="flex">
+											<div class="flex flex-col mr-4 w-1/2">
+												<label for="title" class="text-md font-semibold text-gray-800 mb-2">Chapter title</label>
+												<input type="text" name="title" id="title" class="rounded-md border border-gray-300">
+											</div>
+											<div class="flex flex-col w-1/2">
+												<label for="title" class="text-md font-semibold text-gray-800 mb-2">Lesson<span id="lessonNum">#1</span> title</label>
+												<input type="text" name="title" id="title" class="rounded-md border border-gray-300">
+												<div class="flex justify-end mt-1">
+													<button class="text-xs font-medium flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
+															<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+														</svg><span>Add more lesson</span></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="mt-1">
+									<button class="text-xs font-medium flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
+											<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+										</svg><span>Add more chapter</span></button>
+								</div>
+							</div>
+							<!-- buttons -->
+							<div class="flex justify-between">
+								<button type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="back1">
+									<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+									<svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
+										<path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+									</svg>
+									<span>Back</span>
+								</button>
+								<button type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="next2">
+									<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+									<span>Next</span>
+									<svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
+										<path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+									</svg>
+								</button>
+							</div>
+						</form>
+						<!-- form3: step3 -->
+						<form id="form3" class="flex flex-col w-3/4 gap-5 absolute left-[1500px] top-14 transition-all duration-500">
+							<div class="w-full">
+								<p class="text-xl font-semibold text-gray-800 text-center capitalize">Lesson contents</p>
+							</div>
+							<div class="flex flex-col w-full">
+								<div id="accordion-color" class="bg-white rounded-xl mb-5" data-accordion="collapse" data-active-classes="bg-amber-100">
+									<h2 id="accordion-color-heading-1">
+										<button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left border border-b-0 border-gray-200 rounded-t-xl hover:bg-amber-100" data-accordion-target="#accordion-color-body-1" aria-expanded="true" aria-controls="accordion-color-body-1">
+											<span>Chapter 1: Title</span>
+											<svg data-accordion-icon="" class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+												<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+											</svg>
+										</button>
+									</h2>
+									<div id="accordion-color-body-1" aria-labelledby="accordion-color-heading-1">
+										<div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+											<a href="" class="text-blue-700">1. Title of lesson 1</a>
+										</div>
+									</div>
+									<h2 id="accordion-color-heading-2">
+										<button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 hover:bg-blue-100" data-accordion-target="#accordion-color-body-2" aria-expanded="false" aria-controls="accordion-color-body-2">
+											<span>Chapter 2: Title</span>
+											<svg data-accordion-icon="" class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+												<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+											</svg>
+										</button>
+									</h2>
+									<div id="accordion-color-body-2" class="hidden" aria-labelledby="accordion-color-heading-2">
+										<div class="p-5 font-light border border-b-0 border-gray-200 dark:border-gray-700">
+											<p class="mb-2 text-gray-500 dark:text-gray-400">Flowbite is first conceptualized and designed using the Figma software so everything you see in the library has a design equivalent in our Figma file.</p>
+											<p class="text-gray-500 dark:text-gray-400">Check out the <a href="https://flowbite.com/figma/" class="text-blue-600 dark:text-blue-500 hover:underline">Figma design system</a> based on the utility classes from Tailwind CSS and components from Flowbite.</p>
+										</div>
+									</div>
+									<h2 id="accordion-color-heading-3">
+										<button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-200 hover:bg-blue-100" data-accordion-target="#accordion-color-body-3" aria-expanded="false" aria-controls="accordion-color-body-3">
+											<span>Chapter 3: Title</span>
+											<svg data-accordion-icon="" class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+												<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+											</svg>
+										</button>
+									</h2>
+									<div id="accordion-color-body-3" class="hidden" aria-labelledby="accordion-color-heading-3">
+										<div class="p-5 font-light border border-t-0 border-gray-200 dark:border-gray-700">
+											<p class="mb-2 text-gray-500 dark:text-gray-400">The main difference is that the core components from Flowbite are open source under the MIT license, whereas Tailwind UI is a paid product. Another difference is that Flowbite relies on smaller and standalone components, whereas Tailwind UI offers sections of pages.</p>
+											<p class="mb-2 text-gray-500 dark:text-gray-400">However, we actually recommend using both Flowbite, Flowbite Pro, and even Tailwind UI as there is no technical reason stopping you from using the best of two worlds.</p>
+											<p class="mb-2 text-gray-500 dark:text-gray-400">Learn more about these technologies:</p>
+											<ul class="pl-5 text-gray-500 list-disc dark:text-gray-400">
+												<li><a href="https://flowbite.com/pro/" class="text-blue-600 dark:text-blue-500 hover:underline">Flowbite Pro</a></li>
+												<li><a href="https://tailwindui.com/" rel="nofollow" class="text-blue-600 dark:text-blue-500 hover:underline">Tailwind UI</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
 
+								<!-- buttons -->
+								<div class="flex justify-between">
+									<button type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="back2">
+										<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+										<svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
+											<path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+										</svg>
+										<span>Back</span>
+									</button>
+									<button type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="next3">
+										<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+										<span>Next</span>
+										<svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
+											<path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+										</svg>
+									</button>
+								</div>
+							</div>
+						</form>
+						<!-- form4: step4 -->
+						<form id="form4" class="flex flex-col w-3/4 gap-5 absolute left-[1500px] top-14 transition-all duration-500">
+							<div class="w-full">
+								<p class="text-xl font-semibold text-gray-800 text-center capitalize">Course outlines</p>
+							</div>
+							<div class="flex flex-col w-full gap-2">
+								<div class="flex flex-col w-full">
+									<label for="description" class="text-md font-semibold text-gray-800 mb-2">Course description</label>
+									<textarea name="description" id="description" class="rounded-md border border-gray-300 p-3"></textarea>
+								</div>
+								<div class="flex flex-col w-full">
+									<label for="image" class="text-md font-semibold text-gray-800 mb-2">Course image</label>
+									<input id="image" name="image" class="block mb-5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file">
+								</div>
+								<div class="flex flex-col w-full">
+									<div class="flex gap-5">
+										<label class="block text-md font-semibold text-gray-800 mb-2">Is there a collaborator?</label>
+										<div>
+											<input type="radio" name="radioBtns[]" value="yes" id="yes" class="h-4 w-4 border border-gray-400 bg-white checked:bg-blue-400 checked:border-blue-300  focus:outline-none focus:ring-blue-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer"><label for="yes" class="capitalize"> yes</label>
+										</div>
+										<div>
+											<input type="radio" name="radioBtns[]" value="no" id="no" class="h-4 w-4 border border-gray-400 bg-white checked:bg-blue-400 checked:border-blue-300  focus:outline-none focus:ring-blue-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer"><label for="no" class="capitalize"> no</label>
+										</div>
+									</div>
+									<div class="block w-full">
+										<div class="flex">
+											<span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300">
+												@
+											</span>
+											<input type="text" id="website-admin" class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 " placeholder="please enter the collaborator's username">
+										</div>
+									</div>
+								</div>
+
+								<!-- buttons -->
+								<div class="flex justify-between">
+									<button type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="back3">
+										<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+										<svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
+											<path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+										</svg>
+										<span>Back</span>
+									</button>
+									<button class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="done">
+										<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+										<span>Done</span>
+										<svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
+											<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+										</svg>
+									</button>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -252,6 +497,7 @@ $con = OpenCon();
 		</div>
 	</div>
 	<script src="js/analytics.js"></script>
+	<script src="js/createCourse.js"></script>
 	<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>
 
