@@ -265,20 +265,20 @@ $con = OpenCon();
 
 						<!-- form2: step2 -->
 						<form id="form2" class="hidden flex flex-col xl:w-[900px] md:w-[700px] w-[400px] gap-3 transition-all duration-500 mt-5">
-							<div class="flex flex-col w-full">
+							<div class="flex flex-col w-full" id="chapterSection">
 								<div class="flex lg:flex-row flex-col w-full">
-									<div id="chapterNum" class="text-lg font-bold flex items-center justify-center bg-amber-300 text-gray-800 px-2 lg:rounded-l-md lg:rounded-tr-none rounded-t-md">1</div>
+									<div class="text-lg font-bold flex items-center justify-center bg-amber-300 text-gray-800 px-2 lg:rounded-l-md lg:rounded-tr-none rounded-t-md">1</div>
 									<div class="bg-blue-100 p-5 rounded-r-md w-full">
 										<div class="flex lg:flex-row flex-col">
 											<div class="flex flex-col mr-4 lg:w-1/2 w-full">
-												<label for="title" class="text-md font-semibold text-gray-800 mb-2">Chapter title</label>
-												<input type="text" name="title" id="title" class="rounded-md border border-gray-300">
+												<label for="chapterTitle1" class="text-md font-semibold text-gray-800 mb-2">Chapter title</label>
+												<input type="text" name="chapterTitle[]" id="chapterTitle1" class="rounded-md border border-gray-300">
 											</div>
 											<div class="flex flex-col lg:w-1/2 w-full">
-												<label for="title" class="text-md font-semibold text-gray-800 mb-2">Lesson<span id="lessonNum">#1</span> title</label>
-												<input type="text" name="title" id="title" class="rounded-md border border-gray-300">
+												<label for="lessonTitle1" class="text-md font-semibold text-gray-800 mb-2">Lesson<span id="lessonNum">#1</span> title</label>
+												<input type="text" name="lessonTitle[]" id="lessonTitle1" class="rounded-md border border-gray-300">
 												<div class="flex justify-end mt-1">
-													<button type="button" class="hover:bg-blue-300 px-2 rounded-md text-xs font-medium flex items-center duration-150 ease-in-out"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
+													<button type="button" onclick="addLesson()" class="hover:bg-blue-300 px-2 rounded-md text-xs font-medium flex items-center duration-150 ease-in-out"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
 															<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
 														</svg><span>Add more lesson</span></button>
 												</div>
@@ -286,11 +286,11 @@ $con = OpenCon();
 										</div>
 									</div>
 								</div>
-								<div class="mt-1">
-									<button type="button" class="hover:bg-gray-300 px-2 rounded-md text-xs font-medium flex items-center duration-150 ease-in-out"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
-											<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
-										</svg><span>Add more chapter</span></button>
-								</div>
+							</div>
+							<div class="mt-1">
+								<button onclick="addChapter()" type="button" id="moreChapter" class="hover:bg-gray-300 px-2 rounded-md text-xs font-medium flex items-center duration-150 ease-in-out"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
+										<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+									</svg><span>Add more chapter</span></button>
 							</div>
 							<!-- buttons -->
 							<div class="flex justify-between mt-5">
