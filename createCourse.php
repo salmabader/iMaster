@@ -278,7 +278,7 @@ $con = OpenCon();
 												<label for="title" class="text-md font-semibold text-gray-800 mb-2">Lesson<span id="lessonNum">#1</span> title</label>
 												<input type="text" name="title" id="title" class="rounded-md border border-gray-300">
 												<div class="flex justify-end mt-1">
-													<button class="text-xs font-medium flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
+													<button type="button" class="hover:bg-blue-300 px-2 rounded-md text-xs font-medium flex items-center duration-150 ease-in-out"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
 															<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
 														</svg><span>Add more lesson</span></button>
 												</div>
@@ -287,7 +287,7 @@ $con = OpenCon();
 									</div>
 								</div>
 								<div class="mt-1">
-									<button class="text-xs font-medium flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
+									<button type="button" class="hover:bg-gray-300 px-2 rounded-md text-xs font-medium flex items-center duration-150 ease-in-out"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
 											<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
 										</svg><span>Add more chapter</span></button>
 								</div>
@@ -413,7 +413,7 @@ $con = OpenCon();
 									</div>
 								</div>
 								<!-- buttons -->
-								<div class="flex justify-between">
+								<div class="flex justify-between mt-3">
 									<button type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="back3">
 										<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
 										<svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
