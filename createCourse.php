@@ -207,23 +207,20 @@ $con = OpenCon();
 				<!-- col 2: content -->
 				<div class="w-full h-[85%] overflow-y-auto overflow-x-hidden scrollbar">
 					<!-- steps -->
-					<div class="bg-gray-100 mt-3 rounded-lg flex flex-col items-center mx-2 w-[98%] h-full mb-5 relative overflow-hidden">
-						<div class="flex justify-between w-full px-20 text-sm font-medium py-2 bg-blue-50 shadow-sm border-b border-gray-300 relative">
-							<div id="progress" class="w-[250px] h-full absolute bg-gradient-to-r from-cyan-500 to-blue-500 top-0 left-0 transition-all duration-1000"></div>
-							<div class="relative text-white">Step 1</div>
-							<div class="relative transition-all duration-1000" id="step2">Step 2</div>
-							<div class="relative transition-all duration-1000" id="step3">Step 3</div>
-							<div class="relative transition-all duration-1000" id="step4">Step 4</div>
+					<div class="bg-gray-100 mt-3 rounded-lg flex flex-col items-center mx-2 w-[98%] pb-5 mb-5 relative overflow-hidden">
+						<div class="flex justify-between w-full text-sm font-medium py-2 bg-blue-50 shadow-sm border-b border-gray-300 relative">
+							<div id="progress" class="w-1/5 h-full absolute bg-gradient-to-r from-cyan-500 to-blue-500 top-0 left-0 transition-all duration-1000"></div>
+							<div class="relative text-white pl-5">Step 1<span class="text-xs font-normal sm:inline hidden">: Main info</span></div>
+							<div class="relative transition-all duration-1000" id="step2">Step 2<span class="text-xs font-normal sm:inline hidden">: Course outlines</span></div>
+							<div class="relative transition-all duration-1000" id="step3">Step 3<span class="text-xs font-normal sm:inline hidden">: Lesson contents</span></div>
+							<div class="relative transition-all duration-1000 pr-5" id="step4">Step 4<span class="text-xs font-normal sm:inline hidden">: Finilizing</span></div>
 						</div>
 						<!-- form1: step1 -->
-						<form id="form1" class="flex flex-col w-3/4 gap-5 absolute top-14 transition-all duration-500">
-							<div class="w-full">
-								<p class="text-xl font-semibold text-gray-800 text-center capitalize">Main information</p>
-							</div>
+						<form id="form1" class="flex flex-col xl:w-[900px] md:w-[700px] sm:w-[500px] w-[400px] gap-3 transition-all duration-500 mt-5">
 							<div class="flex">
 								<div class="flex flex-col mr-4 w-1/2">
-									<label for="title" class="text-md font-semibold text-gray-800 mb-2">Course title</label>
-									<input type="text" name="title" id="title" class="rounded-md border border-gray-300">
+									<label for="courseTitle" class="text-md font-semibold text-gray-800 mb-2">Course title</label>
+									<input type="text" name="courseTitle" id="courseTitle" class="rounded-md border border-gray-300">
 								</div>
 								<div class="flex flex-col w-1/2">
 									<label for="category" class="text-md font-semibold text-gray-800 mb-2">Category</label>
@@ -256,7 +253,7 @@ $con = OpenCon();
 							</div>
 							<!-- buttons -->
 							<div class="flex justify-end">
-								<button type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="next1">
+								<button disabled type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300 disabled:pointer-events-none disabled:bg-gray-400" id="next1">
 									<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
 									<span>Next</span>
 									<svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
@@ -265,25 +262,25 @@ $con = OpenCon();
 								</button>
 							</div>
 						</form>
+
 						<!-- form2: step2 -->
-						<form id="form2" class="flex flex-col w-3/4 gap-5 absolute left-[1500px] top-14 transition-all duration-500">
-							<div class="w-full">
-								<p class="text-xl font-semibold text-gray-800 text-center capitalize">Course outlines</p>
-							</div>
-							<div class="flex flex-col w-full">
-								<div class="flex w-full">
-									<div id="chapterNum" class="text-lg font-bold flex items-center justify-center bg-amber-400 text-gray-800 px-2 rounded-l-md">1</div>
-									<div class="bg-blue-100 p-5 rounded-r-md w-full">
-										<div class="flex">
-											<div class="flex flex-col mr-4 w-1/2">
-												<label for="title" class="text-md font-semibold text-gray-800 mb-2">Chapter title</label>
-												<input type="text" name="title" id="title" class="rounded-md border border-gray-300">
+						<form id="form2" class="hidden flex flex-col xl:w-[900px] md:w-[700px] w-[400px] gap-3 transition-all duration-500 mt-5">
+							<div class="flex flex-col w-full" id="chapterSection">
+								<div class="flex lg:flex-row flex-col w-full">
+									<div class="chapterN text-lg font-bold flex items-center justify-center bg-amber-300 text-gray-800 px-2 lg:rounded-l-md lg:rounded-tr-none rounded-t-md">1</div>
+									<div class="bg-blue-100 p-5 lg:rounded-r-md lg:rounded-bl-none rounded-b-md w-full">
+										<div class="flex lg:flex-row flex-col">
+											<div class="flex flex-col mr-4 lg:w-1/2 w-full">
+												<label for="chapterTitle1" class="text-md font-semibold text-gray-800 mb-2">Chapter title</label>
+												<input type="text" name="chapterTitle[]" id="chapterTitle1" class="rounded-md border border-gray-300">
 											</div>
-											<div class="flex flex-col w-1/2">
-												<label for="title" class="text-md font-semibold text-gray-800 mb-2">Lesson<span id="lessonNum">#1</span> title</label>
-												<input type="text" name="title" id="title" class="rounded-md border border-gray-300">
+											<div class="flex flex-col lg:w-1/2 w-full">
+												<div id="lessonSection" class="mt-2">
+													<label for="lessonTitle1" class="text-md font-semibold text-gray-800 mb-2">Lesson titles</label>
+													<input type="text" name="lessonTitle[]" id="lessonTitle1" class="rounded-md border border-gray-300 w-full">
+												</div>
 												<div class="flex justify-end mt-1">
-													<button class="text-xs font-medium flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
+													<button type="button" onclick="addLesson(this)" class="hover:bg-blue-300 px-2 rounded-md text-xs font-medium flex items-center duration-150 ease-in-out"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
 															<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
 														</svg><span>Add more lesson</span></button>
 												</div>
@@ -291,14 +288,14 @@ $con = OpenCon();
 										</div>
 									</div>
 								</div>
-								<div class="mt-1">
-									<button class="text-xs font-medium flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
-											<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
-										</svg><span>Add more chapter</span></button>
-								</div>
+							</div>
+							<div class="mt-1">
+								<button onclick="addChapter()" type="button" id="moreChapter" class="hover:bg-gray-300 px-2 rounded-md text-xs font-medium flex items-center duration-150 ease-in-out"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
+										<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+									</svg><span>Add more chapter</span></button>
 							</div>
 							<!-- buttons -->
-							<div class="flex justify-between">
+							<div class="flex justify-between mt-5">
 								<button type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="back1">
 									<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
 									<svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
@@ -315,11 +312,9 @@ $con = OpenCon();
 								</button>
 							</div>
 						</form>
+
 						<!-- form3: step3 -->
-						<form id="form3" class="flex flex-col w-3/4 gap-5 absolute left-[1500px] top-14 transition-all duration-500">
-							<div class="w-full">
-								<p class="text-xl font-semibold text-gray-800 text-center capitalize">Lesson contents</p>
-							</div>
+						<form id="form3" class="hidden flex flex-col xl:w-[900px] md:w-[700px] w-[400px] gap-3 transition-all duration-500 mt-5">
 							<div class="flex flex-col w-full">
 								<div id="accordion-color" class="bg-white rounded-xl mb-5" data-accordion="collapse" data-active-classes="bg-amber-100">
 									<h2 id="accordion-color-heading-1">
@@ -369,7 +364,6 @@ $con = OpenCon();
 										</div>
 									</div>
 								</div>
-
 								<!-- buttons -->
 								<div class="flex justify-between">
 									<button type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="back2">
@@ -389,11 +383,9 @@ $con = OpenCon();
 								</div>
 							</div>
 						</form>
+
 						<!-- form4: step4 -->
-						<form id="form4" class="flex flex-col w-3/4 gap-5 absolute left-[1500px] top-14 transition-all duration-500">
-							<div class="w-full">
-								<p class="text-xl font-semibold text-gray-800 text-center capitalize">Course outlines</p>
-							</div>
+						<form id="form4" class="hidden flex flex-col xl:w-[900px] md:w-[700px] w-[400px] gap-3 transition-all duration-500 mt-5">
 							<div class="flex flex-col w-full gap-2">
 								<div class="flex flex-col w-full">
 									<label for="description" class="text-md font-semibold text-gray-800 mb-2">Course description</label>
@@ -407,24 +399,23 @@ $con = OpenCon();
 									<div class="flex gap-5">
 										<label class="block text-md font-semibold text-gray-800 mb-2">Is there a collaborator?</label>
 										<div>
-											<input type="radio" name="radioBtns[]" value="yes" id="yes" class="h-4 w-4 border border-gray-400 bg-white checked:bg-blue-400 checked:border-blue-300  focus:outline-none focus:ring-blue-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer"><label for="yes" class="capitalize"> yes</label>
+											<input type="radio" name="radioBtns" value="yes" id="yes" class="h-4 w-4 border border-gray-400 bg-white checked:bg-blue-400 checked:border-blue-300  focus:outline-none focus:ring-blue-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer"><label for="yes" class="capitalize"> yes</label>
 										</div>
 										<div>
-											<input type="radio" name="radioBtns[]" value="no" id="no" class="h-4 w-4 border border-gray-400 bg-white checked:bg-blue-400 checked:border-blue-300  focus:outline-none focus:ring-blue-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer"><label for="no" class="capitalize"> no</label>
+											<input type="radio" name="radioBtns" value="no" id="no" class="h-4 w-4 border border-gray-400 bg-white checked:bg-blue-400 checked:border-blue-300  focus:outline-none focus:ring-blue-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer"><label for="no" class="capitalize"> no</label>
 										</div>
 									</div>
-									<div class="block w-full">
+									<div class="hidden w-full" id="collaborator">
 										<div class="flex">
 											<span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300">
 												@
 											</span>
-											<input type="text" id="website-admin" class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 " placeholder="please enter the collaborator's username">
+											<input type="text" id="coUsername" class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 " placeholder="please enter the collaborator's username">
 										</div>
 									</div>
 								</div>
-
 								<!-- buttons -->
-								<div class="flex justify-between">
+								<div class="flex justify-between mt-3">
 									<button type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="back3">
 										<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
 										<svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
@@ -432,7 +423,7 @@ $con = OpenCon();
 										</svg>
 										<span>Back</span>
 									</button>
-									<button class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="done">
+									<button disabled class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300 disabled:pointer-events-none disabled:bg-gray-400" id="done">
 										<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
 										<span>Done</span>
 										<svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
@@ -496,8 +487,8 @@ $con = OpenCon();
 			</div>
 		</div>
 	</div>
-	<script src="js/analytics.js"></script>
 	<script src="js/createCourse.js"></script>
+	<script src="js/analytics.js"></script>
 	<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>
 
