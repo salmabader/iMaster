@@ -6,6 +6,7 @@ const form4 = document.getElementById("form4")
 const next1 = document.getElementById("next1")
 const next2 = document.getElementById("next2")
 const next3 = document.getElementById("next3")
+const done = document.getElementById("done")
 
 const back1 = document.getElementById("back1")
 const back2 = document.getElementById("back2")
@@ -88,4 +89,73 @@ function addChapter() {
 
 function addLesson() {
 
+}
+
+
+// to active buttons
+const title = document.getElementById("courseTitle")
+const category = document.getElementById("category")
+const objective = document.getElementById("objectives")
+const requirement = document.getElementById("requirement")
+const level = document.getElementById("level")
+const form1_inputs = [title, objective, requirement]
+const form1_lists = [category, level]
+
+form1_inputs.forEach(element => {
+    element.addEventListener('keyup', function () {
+        activeNext1()
+    })
+});
+form1_lists.forEach(element => {
+    element.addEventListener('change', function () {
+        activeNext1()
+    })
+});
+
+function activeNext1() {
+    next1.disabled = !(title.value && category.selectedIndex != 0 && objective.value && requirement.value && level.selectedIndex != 0)
+}
+
+const description = document.getElementById("description")
+const image = document.getElementById("image")
+const collaborator = document.querySelectorAll('input[type="radio"]')
+const co = document.getElementById("collaborator")
+const coUsername = document.getElementById("coUsername")
+const form4_inputs = [description, coUsername]
+let checked = ""
+let isThereCo = true
+
+form4_inputs.forEach(element => {
+    element.addEventListener('keyup', function () {
+        activeDone()
+    })
+})
+
+collaborator.forEach(element => {
+    element.addEventListener('change', function () {
+        if (element.checked) {
+            if (element.value == 'yes') {
+                co.style.display = "block"
+                checked = "yes"
+            } else {
+                co.style.display = "none"
+                checked = "no"
+            }
+        }
+        activeDone()
+    })
+})
+image.addEventListener('change', function () {
+    activeDone()
+})
+
+function activeDone() {
+    if (checked == "yes" && !coUsername.value) {
+        isThereCo = false
+    } else if (checked == "yes" && coUsername.value) {
+        isThereCo = true
+    } else {
+        isThereCo = true
+    }
+    done.disabled = !(description.value && image.value && isThereCo)
 }

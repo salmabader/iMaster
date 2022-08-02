@@ -219,8 +219,8 @@ $con = OpenCon();
 						<form id="form1" class="flex flex-col xl:w-[900px] md:w-[700px] sm:w-[500px] w-[400px] gap-3 transition-all duration-500 mt-5">
 							<div class="flex">
 								<div class="flex flex-col mr-4 w-1/2">
-									<label for="title" class="text-md font-semibold text-gray-800 mb-2">Course title</label>
-									<input type="text" name="title" id="title" class="rounded-md border border-gray-300">
+									<label for="courseTitle" class="text-md font-semibold text-gray-800 mb-2">Course title</label>
+									<input type="text" name="courseTitle" id="courseTitle" class="rounded-md border border-gray-300">
 								</div>
 								<div class="flex flex-col w-1/2">
 									<label for="category" class="text-md font-semibold text-gray-800 mb-2">Category</label>
@@ -253,7 +253,7 @@ $con = OpenCon();
 							</div>
 							<!-- buttons -->
 							<div class="flex justify-end">
-								<button type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="next1">
+								<button disabled type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300 disabled:pointer-events-none disabled:bg-gray-400" id="next1">
 									<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
 									<span>Next</span>
 									<svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
@@ -397,18 +397,18 @@ $con = OpenCon();
 									<div class="flex gap-5">
 										<label class="block text-md font-semibold text-gray-800 mb-2">Is there a collaborator?</label>
 										<div>
-											<input type="radio" name="radioBtns[]" value="yes" id="yes" class="h-4 w-4 border border-gray-400 bg-white checked:bg-blue-400 checked:border-blue-300  focus:outline-none focus:ring-blue-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer"><label for="yes" class="capitalize"> yes</label>
+											<input type="radio" name="radioBtns" value="yes" id="yes" class="h-4 w-4 border border-gray-400 bg-white checked:bg-blue-400 checked:border-blue-300  focus:outline-none focus:ring-blue-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer"><label for="yes" class="capitalize"> yes</label>
 										</div>
 										<div>
-											<input type="radio" name="radioBtns[]" value="no" id="no" class="h-4 w-4 border border-gray-400 bg-white checked:bg-blue-400 checked:border-blue-300  focus:outline-none focus:ring-blue-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer"><label for="no" class="capitalize"> no</label>
+											<input type="radio" name="radioBtns" value="no" id="no" class="h-4 w-4 border border-gray-400 bg-white checked:bg-blue-400 checked:border-blue-300  focus:outline-none focus:ring-blue-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer"><label for="no" class="capitalize"> no</label>
 										</div>
 									</div>
-									<div class="block w-full">
+									<div class="hidden w-full" id="collaborator">
 										<div class="flex">
 											<span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300">
 												@
 											</span>
-											<input type="text" id="website-admin" class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 " placeholder="please enter the collaborator's username">
+											<input type="text" id="coUsername" class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 " placeholder="please enter the collaborator's username">
 										</div>
 									</div>
 								</div>
@@ -421,7 +421,7 @@ $con = OpenCon();
 										</svg>
 										<span>Back</span>
 									</button>
-									<button class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="done">
+									<button disabled class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300 disabled:pointer-events-none disabled:bg-gray-400" id="done">
 										<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
 										<span>Done</span>
 										<svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
