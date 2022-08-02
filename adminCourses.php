@@ -225,15 +225,15 @@ if (isset($_POST['saveChangesBtn'])) {
                         <p class="text-xl font-semibold capitalize w-full tracking-wide text-gray-700">All published courses</p>
                     </div>
                     <div id="myCoursesSection" class="md:ml-5 mt-5 flex md:flex-wrap gap-3 md:flex-row flex-col">
-                        <!-- get student's courses -->
                         <?php
+                        // complete query to get only accepted courses
                         $query = "SELECT * FROM course";
                         $result = mysqli_query($con, $query);
                         if (mysqli_num_rows($result) > 0) { ?>
                             <?php while ($course = mysqli_fetch_assoc($result)) {
                             ?>
                                 <!-- card -->
-                                <div class="w-full md:w-1/5 bg-gray-50 rounded-md shadow-sm border border-gray-300 relative" role="button">
+                                <div class="w-full md:w-1/5 bg-gray-50 rounded-md shadow-sm border border-gray-300 relative">
                                     <!-- Image -->
                                     <img class="h-40 object-cover rounded-t-md w-full" src="upload/<?php echo $course['image'] ?>">
                                     <p class="absolute top-1 right-1
