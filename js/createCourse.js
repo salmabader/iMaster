@@ -1,3 +1,4 @@
+// ---------- next and back buttons ----------
 const form1 = document.getElementById("form1")
 const form2 = document.getElementById("form2")
 const form3 = document.getElementById("form3")
@@ -58,10 +59,10 @@ back3.addEventListener('click', function () {
     step4.classList.remove("text-white")
 })
 
+// ---------- form2 buttons: add/remove chapter & lesson ----------
 const chapterSection = document.getElementById("chapterSection")
 let chapterNum = 1
 let lessonNum = 1
-
 
 function addChapter() {
     chapterNum++
@@ -109,8 +110,24 @@ function deleteLesson(e) {
     e.parentElement.style.display = "none"
 }
 
+function deleteChapter(el) {
+    chapterNum--
+    el.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none"
+    renumberChapter()
+}
+function renumberChapter() {
+    const chapter = document.querySelectorAll(".chapterN")
+    let n = 1
+    chapter.forEach(element => {
+        if (window.getComputedStyle(element.parentElement).display != "none") {
+            element.textContent = n
+            n++
+        }
+    });
+}
 
-// to active buttons
+
+// ---------- activate next1 button ----------
 const title = document.getElementById("courseTitle")
 const category = document.getElementById("category")
 const objective = document.getElementById("objectives")
@@ -134,6 +151,12 @@ function activeNext1() {
     next1.disabled = !(title.value && category.selectedIndex != 0 && objective.value && requirement.value && level.selectedIndex != 0)
 }
 
+
+
+
+
+
+// ---------- activate done button ----------
 const description = document.getElementById("description")
 const image = document.getElementById("image")
 const collaborator = document.querySelectorAll('input[type="radio"]')
@@ -176,40 +199,4 @@ function activeDone() {
         isThereCo = true
     }
     done.disabled = !(description.value && image.value && isThereCo)
-}
-
-function deleteChapter(el) {
-    chapterNum--
-    el.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none"
-    renumberChapter()
-}
-function renumberChapter() {
-    const chapter = document.querySelectorAll(".chapterN")
-    let n = 1
-    chapter.forEach(element => {
-        if (window.getComputedStyle(element.parentElement).display != "none") {
-            element.textContent = n
-            n++
-        }
-    });
-}
-
-const form2_inputs = document.querySelectorAll("#form2 input")
-let allFilled = true
-form2_inputs.forEach(element => {
-    element.addEventListener('keyup', function () {
-        activeNext2()
-    })
-});
-
-function activeNext2() {
-    form2_inputs.forEach(element => {
-        if (!element.value) {
-            allFilled = false
-        } else {
-            allFilled = true
-        }
-    })
-    next2.disabled = !allFilled
-
 }
