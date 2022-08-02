@@ -281,7 +281,12 @@ $con = OpenCon();
 											</div>
 											<div class="flex flex-col lg:w-1/2 w-full">
 												<label for="lessonTitle1" class="text-md font-semibold text-gray-800 mb-2">Lesson<span id="lessonNum">#1</span> title</label>
-												<input type="text" name="lessonTitle[]" id="lessonTitle1" class="rounded-md border border-gray-300">
+												<div class="flex items-center w-full">
+													<input type="text" name="lessonTitle[]" id="lessonTitle1" class="rounded-md border border-gray-300 w-full">
+													<button><svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 inline text-red-500" viewBox="0 0 20 20" fill="currentColor">
+															<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+														</svg></button>
+												</div>
 												<div class="flex justify-end mt-1">
 													<button type="button" onclick="addLesson()" class="hover:bg-blue-300 px-2 rounded-md text-xs font-medium flex items-center duration-150 ease-in-out"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
 															<path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
