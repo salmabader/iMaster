@@ -193,8 +193,43 @@ $con = OpenCon();
 					</div>
 				</div>
 				<!-- col 2: content -->
-				<div class="w-full h-[85%] overflow-y-auto overflow-x-hidden scrollbar">
+				<div class="w-full flex justify-center items-center h-[85%] overflow-y-auto overflow-x-hidden scrollbar">
+					<div class="bg-gray-100 mt-10 rounded-lg flex flex-col items-center mx-2 w-[98%] h-full mb-5 relative overflow-hidden">
+						<form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" class="flex flex-col w-3/4 gap-5 absolute top-14 transition-all duration-500">
 
+							<div class="w-full h-full border-2 border-gray-100 mt-3">
+
+								<!-- options -->
+
+								<div class="flex w-1/2 ">
+									<div class="w-full mr-2">
+										<label for="option" class="block capitalize font-semibold my-2">What kind of help do you need ?</label>
+										<select id="option" onclick="Validate()" name="option" class="bg-blue-50 px-6 py-2.5 border-2 border-blue-200 focus:bg-white text-sm rounded-lg block w-full">
+											<option selected value="0">Choose your help option</option>
+											<option value="DeleteCourse">Delete course</option>
+											<option value="others">Others</option>
+										</select>
+									</div>
+								</div>
+								<!-- Delete course option -->
+								<div class="flex flex-col w-1/2 " id="Deletecourses">
+									<label for="bio" class="block capitalize font-semibold my-2">reason</label>
+									<textarea name="bio" id="bio" placeholder="Please write your reason here.." class=" bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 w-full"></textarea>
+								</div>
+								<!-- other option -->
+								<div class="flex flex-col w-1/2 " id="Other">
+									<label for="bio" class="block capitalize font-semibold my-2">problem description</label>
+									<textarea name="bio" id="bio" placeholder="Please write a brief description here.. " class=" bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 w-full"></textarea>
+								</div>
+							</div>
+
+							<!-- button -->
+							<div class="flex flex-col w-1/2 items-end">
+								<button type="submit" name="createAccountBtn" id="signupBtn" class="mt-10 bg-blue-500 text-white px-14 py-3 rounded-full shadow-md font-semibold hover:bg-blue-600 duration-100 ease-in-out disabled:opacity-60 disabled:pointer-events-none" disabled>Send</button>
+
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div> <!-- end of right side-->
@@ -248,6 +283,30 @@ $con = OpenCon();
 			</div>
 		</div>
 	</div>
+	<script>
+		const option = document.getElementById("option")
+		const DeleteCourse = document.getElementById("Deletecourses")
+		const others = document.getElementById("Other")
+		DeleteCourse.style.display = "none"
+		others.style.display = "none"
+
+		function Validate() {
+			if (option.selectedIndex == 1) {
+
+				DeleteCourse.style.display = "block"
+				others.style.display = "none"
+			}
+
+			if (option.selectedIndex == 2) {
+				others.style.display = "block"
+				DeleteCourse.style.display = "none"
+			}
+			if (option.selectedIndex == 0) {
+				DeleteCourse.style.display = "none"
+				others.style.display = "none"
+			}
+		}
+	</script>
 	<script src="js/analytics.js"></script>
 	<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>
