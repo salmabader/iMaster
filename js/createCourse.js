@@ -1,3 +1,6 @@
+let form2_inputs = document.querySelectorAll("#form2 input")
+let allFilled = false
+
 // ---------- next and back buttons ----------
 const form1 = document.getElementById("form1")
 const form2 = document.getElementById("form2")
@@ -73,8 +76,8 @@ function addChapter() {
 <div class="bg-blue-100 p-5 lg:rounded-r-md lg:rounded-bl-none rounded-b-md w-full">
     <div class="flex lg:flex-row flex-col">
     <div class="flex flex-col mr-4 lg:w-1/2 w-full">
-    <label for="chapterTitle1" class="text-md font-semibold text-gray-800 mb-2">Chapter title</label>
-    <input type="text" name="chapterTitle[]" id="chapterTitle${chapterNum}" class="rounded-md border border-gray-300">
+    <label class="text-md font-semibold text-gray-800 mb-2">Chapter title</label>
+    <input type="text" name="chapterTitle[]" onkeyup="checkValue()" class="rounded-md border border-gray-300">
     <div class="flex justify-end items-center mt-1">
         <button type="button" onclick="deleteChapter(this)" class="delete flex items-center text-xs font-medium px-2 hover:bg-red-500 hover:text-white rounded-md duration-200"><svg xmlns="http://www.w3.org/2000/svg" class="h-3 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -83,8 +86,8 @@ function addChapter() {
 </div>
         <div class="flex flex-col lg:w-1/2 w-full">
         <div id="lessonSection" class="flex flex-col">
-            <label for="lessonTitle1" class="text-md font-semibold text-gray-800 mb-2">Lesson titles</label>
-            <input type="text" name="lessonTitle[]" id="lessonTitle1" class="rounded-md border border-gray-300 w-full">
+            <label class="text-md font-semibold text-gray-800 mb-2">Lesson titles</label>
+            <input type="text" name="lessonTitle[]" onkeyup="checkValue()" class="rounded-md border border-gray-300 w-full">
         </div>
             <div class="flex justify-end mt-1">
                 <button type="button" onclick="addLesson(this)" class="hover:bg-blue-300 px-2 rounded-md text-xs font-medium flex items-center duration-150 ease-in-out"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
@@ -95,25 +98,34 @@ function addChapter() {
     </div>
 </div>`
     chapterSection.appendChild(newChapter)
+    form2_inputs = document.querySelectorAll("#form2 input")
+    console.log(form2_inputs.length)
+    checkValue()
 }
 
 function addLesson(e) {
     let newLesson = document.createElement("div")
     newLesson.classList.add("flex", "items-center", "w-full", "mt-2")
-    newLesson.innerHTML = `<input type="text" name="lessonTitle[]" id="lessonTitle1" class="rounded-md border border-gray-300 w-full">
+    newLesson.innerHTML = `<input type="text" name="lessonTitle[]" onkeyup="checkValue()" class="rounded-md border border-gray-300 w-full">
     <button type="button" onclick="deleteLesson(this)"><svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 inline text-red-500" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
         </svg></button>`
     e.parentElement.parentElement.children[0].appendChild(newLesson)
+    form2_inputs = document.querySelectorAll("#form2 input")
+    checkValue()
 }
 function deleteLesson(e) {
-    e.parentElement.style.display = "none"
+    e.parentElement.remove()
+    form2_inputs = document.querySelectorAll("#form2 input")
+    checkValue()
 }
 
 function deleteChapter(el) {
     chapterNum--
-    el.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = "none"
+    el.parentElement.parentElement.parentElement.parentElement.parentElement.remove()
+    form2_inputs = document.querySelectorAll("#form2 input")
     renumberChapter()
+    checkValue()
 }
 function renumberChapter() {
     const chapter = document.querySelectorAll(".chapterN")
@@ -151,11 +163,18 @@ function activeNext1() {
     next1.disabled = !(title.value && category.selectedIndex != 0 && objective.value && requirement.value && level.selectedIndex != 0)
 }
 
-
-
-
-
-
+// ---------- activate next2 button ----------
+function checkValue() {
+    for (let i = 0; i < form2_inputs.length; i++) {
+        if (form2_inputs[i].value) {
+            allFilled = true
+        } else {
+            allFilled = false
+            break
+        }
+    }
+    next2.disabled = !allFilled
+}
 // ---------- activate done button ----------
 const description = document.getElementById("description")
 const image = document.getElementById("image")
