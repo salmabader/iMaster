@@ -229,9 +229,9 @@ if (isset($_POST['saveChangesBtn'])) {
                         // complete query to get only accepted courses
                         $query = "SELECT * FROM course";
                         $result = mysqli_query($con, $query);
-                        if (mysqli_num_rows($result) > 0) { ?>
-                            <?php while ($course = mysqli_fetch_assoc($result)) {
-                            ?>
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($course = mysqli_fetch_assoc($result)) {
+                        ?>
                                 <!-- card -->
                                 <div class="w-full md:w-1/5 bg-gray-50 rounded-md shadow-sm border border-gray-300 relative">
                                     <!-- Image -->

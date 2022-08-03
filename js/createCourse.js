@@ -136,7 +136,7 @@ function renumberChapter() {
     });
 }
 // ---------- after click next2 button ----------
-const list = document.getElementById("accordion-color")
+const list = document.getElementById("items")
 next2.addEventListener('click', function () {
     const allChapters = document.getElementsByName("chapterTitle[]")
     let chaptersTitle = []
@@ -157,19 +157,25 @@ next2.addEventListener('click', function () {
     localStorage.setItem("lessons", JSON.stringify(lessonsTitle))
 
     let chapters = JSON.parse(localStorage.getItem("chapters"))
+    let lessons = JSON.parse(localStorage.getItem("lessons"))
     let rows = ""
     for (let i = 0; i < chapters.length; i++) {
-        rows += `<h2 id="accordion-color-heading-${i + 1}">
-        <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left border border-b-0 border-gray-200 hover:bg-amber-100" data-accordion-target="#accordion-color-body-${(i + 1)}" aria-expanded="false" aria-controls="accordion-color-body-${(i + 1)}">
-        <span>${chapters[i]}</span>
-        <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-    </button>
-        </h2>
-        <div id="accordion-color-body-${i + 1}" class="hidden" aria-labelledby="accordion-color-heading-${i + 1}">
-        <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-    <a href="" class="text-blue-700">1. Title of lesson 1</a>
-    </div>
-        </div>`
+        let les = ""
+        let chapterLesson = lessons[i]
+        rows += `<details class="w-full cursor-pointer mb-3 bg-blue-50 px-3 py-1 border rounded-md border-gray-300">        
+        <summary class="font-medium text-lg text-blue-800">${chapters[i]}</summary>`
+        for (let j = 0; j < chapterLesson.length; j++) {
+            if (j == chapterLesson.length - 1) {
+                les += `<button class="ml-3 w-[97%] flex justify-start items-center my-2 pb-1" type="button"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+              </svg> ${chapterLesson[j]}</button>`
+            } else {
+                les += `<button class="border-b border-gray-300 ml-3 w-[97%] flex justify-start items-center my-2 pb-1" type="button"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+              </svg> ${chapterLesson[j]}</button>`
+            }
+        }
+        rows += les + `</details>`
     }
     list.innerHTML = rows
 })

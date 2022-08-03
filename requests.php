@@ -224,6 +224,204 @@ if (isset($_POST['saveChangesBtn'])) {
                         <!-- Title -->
                         <p class="text-xl font-semibold capitalize w-full tracking-wide text-gray-700">New instructors and courses</p>
                     </div>
+                    <!-- tabs -->
+                    <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+                            <li class="mr-2" role="presentation">
+                                <button class="inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group" id="instructor-tab" data-tabs-target="#instructor" type="button" role="tab" aria-controls="instructor" aria-selected="true">
+                                    <svg aria-hidden="true" class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
+                                    </svg>Instructor
+                                </button>
+                            </li>
+                            <li class="mr-2" role="presentation">
+                                <button type="button" class="inline-flex p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600 active dark:text-blue-500 dark:border-blue-500 group" id="course-tab" data-tabs-target="#course" type="button" role="tab" aria-controls="course" aria-selected="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="mr-2 w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+                                    </svg>Course
+                                </button>
+                            </li>
+                        </ul>
+                    </div> <!-- end of tabs -->
+
+                    <!-- tabs content -->
+                    <div id="myTabContent" class="relative">
+                        <!-- instructor content -->
+                        <div class="p-4 bg-gray-50 rounded-lg" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
+                            <div class="overflow-x-auto shadow-md sm:rounded-lg border border-gray-200">
+                                <div class="flex justify-between items-center pb-4">
+                                    <div>
+                                        <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="ml-3 mt-3 inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                                            </svg>
+                                            Filter on fields
+                                            <svg class="ml-2 w-3 h-3" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                        </button>
+
+                                        <!-- Dropdown menu -->
+                                        <div id="dropdownRadio" class="hidden z-10 w-48 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 46.4px, 0px);" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom">
+                                            <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
+                                                <?php
+                                                $query = "SELECT DISTINCT category FROM course";
+                                                $result = mysqli_query($con, $query);
+                                                $i = 1;
+                                                while ($cate = mysqli_fetch_assoc($result)) {
+                                                ?>
+                                                    <li>
+                                                        <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                                                            <input id="filter-radio-example-<?php echo $i ?>" type="radio" value="<?php echo ucfirst($cate['category']) ?>" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                                            <label for="filter-radio-example-<?php echo $i ?>" class="ml-2 w-full text-sm font-medium text-gray-900 rounded"><?php echo ucfirst($cate['category']) ?></label>
+                                                        </div>
+                                                    </li>
+                                                <?php $i += 1;
+                                                } ?>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <label for="table-search" class="sr-only">Search</label>
+                                    <div class="relative mr-3 mt-3">
+                                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
+                                        <input type="text" id="table-search" class="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
+                                    </div>
+                                </div>
+                                <!-- get instructor requests -->
+                                <?php
+                                $query = "SELECT * FROM requests,instructor WHERE type = 'application' AND status ='waiting' AND instructor_username = username";
+                                $result = mysqli_query($con, $query);
+                                if (mysqli_num_rows($result) > 0) { ?>
+                                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                        <tbody>
+                                            <?php
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                            ?>
+                                                <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                    <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>
+                                                    </th>
+                                                    <td class="py-4 px-6">
+                                                        <?php echo ucfirst($row['field']) ?>
+                                                    </td>
+                                                    <td class="py-4 px-6">
+                                                        <?php echo $row['experience'] . ' years experience' ?>
+                                                    </td>
+                                                    <td class="py-4 px-6 flex justify-end gap-4">
+                                                        <button class="flex items-center text-blue-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                            </svg><span>Details</span></button>
+                                                        <p>|</p>
+                                                        <button class="flex items-center text-green-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                            </svg><span>Accept</span></button>
+                                                        <p>|</p>
+                                                        <button class="flex items-center text-red-600">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                                            </svg><span>Reject</span></button>
+
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                <?php } ?>
+                            </div>
+                        </div> <!-- end of instructor content -->
+
+                        <!-- course content -->
+                        <div class="hidden p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="course" role="tabpanel" aria-labelledby="course-tab">
+                            <div class="overflow-x-auto shadow-md sm:rounded-lg border border-gray-200">
+                                <div class="flex justify-between items-center pb-4">
+                                    <div>
+                                        <button id="dropdownRadioButton2" data-dropdown-toggle="dropdownRadio2" class="ml-3 mt-3 inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                                            </svg>
+                                            Filter on fields
+                                            <svg class="ml-2 w-3 h-3" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                        </button>
+                                        <!-- Dropdown menu -->
+                                        <div id="dropdownRadio2" class="hidden z-10 w-48 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 46.4px, 0px);" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom">
+                                            <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton2">
+                                                <?php
+                                                $query = "SELECT DISTINCT category FROM course";
+                                                $result = mysqli_query($con, $query);
+                                                while ($cate = mysqli_fetch_assoc($result)) {
+                                                ?>
+                                                    <li>
+                                                        <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                                                            <input id="filter-radio-example-<?php echo $i ?>" type="radio" value="<?php echo ucfirst($cate['category']) ?>" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                                            <label for="filter-radio-example-<?php echo $i ?>" class="ml-2 w-full text-sm font-medium text-gray-900 rounded"><?php echo ucfirst($cate['category']) ?></label>
+                                                        </div>
+                                                    </li>
+                                                <?php $i += 1;
+                                                } ?>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <label for="table-search" class="sr-only">Search</label>
+                                    <div class="relative mr-3 mt-3">
+                                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
+                                        <input type="text" id="table-search" class="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
+                                    </div>
+                                </div>
+                                <!-- get instructor requests -->
+                                <?php
+                                $query = "SELECT * FROM requests,instructor WHERE type = 'application' AND status ='waiting' AND instructor_username = username";
+                                $result = mysqli_query($con, $query);
+                                if (mysqli_num_rows($result) > 0) { ?>
+                                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                        <tbody>
+                                            <?php
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                            ?>
+                                                <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                    <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>
+                                                    </th>
+                                                    <td class="py-4 px-6">
+                                                        <?php echo ucfirst($row['field']) ?>
+                                                    </td>
+                                                    <td class="py-4 px-6">
+                                                        <?php echo $row['experience'] . ' years experience' ?>
+                                                    </td>
+                                                    <td class="py-4 px-6 flex justify-end gap-4">
+                                                        <button class="flex items-center text-blue-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                            </svg><span>Details</span></button>
+                                                        <p>|</p>
+                                                        <button class="flex items-center text-green-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                            </svg><span>Accept</span></button>
+                                                        <p>|</p>
+                                                        <button class="flex items-center text-red-600">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                                            </svg><span>Reject</span></button>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                <?php } ?>
+                            </div>
+                        </div> <!-- end of course content -->
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -274,92 +472,6 @@ if (isset($_POST['saveChangesBtn'])) {
             </div>
         </div>
     </div>
-    <?php
-    // get course in categories:
-    $query = "SELECT DISTINCT category FROM course";
-    $result = mysqli_query($con, $query);
-    $categories = "";
-    $numbers = "";
-    $instructors = "";
-    while ($cate = mysqli_fetch_assoc($result)) {
-        $categories .= '"' . ucfirst($cate['category']) . '",';
-        $query = "SELECT * FROM course WHERE category = '" . $cate['category'] . "'";
-        $result2 = mysqli_query($con, $query);
-        $numbers .=  mysqli_num_rows($result2) . ",";
-        $query = "SELECT * FROM instructor WHERE field = '" . $cate['category'] . "' AND NOT isAccepted = 0";
-        $result2 = mysqli_query($con, $query);
-        $instructors .=  mysqli_num_rows($result2) . ",";
-    }
-    // get number of courses for each category:
-
-    ?>
-    <script>
-        const ctx = document.getElementById('coursesChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [<?= $categories ?>],
-                datasets: [{
-                    label: '# of courses: ',
-                    data: [<?= $numbers ?>],
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ]
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
-            }
-        });
-        const ctx2 = document.getElementById('instructorsChart').getContext('2d');
-        const myChart2 = new Chart(ctx2, {
-            type: 'bar',
-            data: {
-                labels: [<?= $categories ?>],
-                datasets: [{
-                    label: '# of courses: ',
-                    data: [<?= $instructors ?>],
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ]
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
-            }
-        });
-    </script>
-
     <script src="js/analytics.js"></script>
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>
