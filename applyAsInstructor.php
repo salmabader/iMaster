@@ -72,6 +72,8 @@ if (isset($_POST['createAccountBtn'])) {
                 $hashedPass = password_hash($password, PASSWORD_DEFAULT);
                 mysqli_stmt_bind_param($statement, "ssssssssss", $username, $fName, $lName, $email, $hashedPass, $field, $courseLink, $degree, $year, $bio);
                 mysqli_stmt_execute($statement);
+                $insertQuery = "INSERT INTO requests (type,status,instructor_username) VALUES ('application','waiting','$username')";
+                mysqli_query($con, $insertQuery);
             }
         }
     }

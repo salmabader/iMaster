@@ -271,13 +271,13 @@ $con = OpenCon();
 									<div class="bg-blue-100 p-5 lg:rounded-r-md lg:rounded-bl-none rounded-b-md w-full">
 										<div class="flex lg:flex-row flex-col">
 											<div class="flex flex-col mr-4 lg:w-1/2 w-full">
-												<label for="chapterTitle1" class="text-md font-semibold text-gray-800 mb-2">Chapter title</label>
-												<input type="text" name="chapterTitle[]" id="chapterTitle1" class="rounded-md border border-gray-300">
+												<label class="text-md font-semibold text-gray-800 mb-2">Chapter title</label>
+												<input type="text" name="chapterTitle[]" onkeyup="checkValue()" class="rounded-md border border-gray-300">
 											</div>
 											<div class="flex flex-col lg:w-1/2 w-full">
-												<div id="lessonSection" class="mt-2">
-													<label for="lessonTitle1" class="text-md font-semibold text-gray-800 mb-2">Lesson titles</label>
-													<input type="text" name="lessonTitle[]" id="lessonTitle1" class="rounded-md border border-gray-300 w-full">
+												<div id="lessonSection" class="flex flex-col">
+													<label class="text-md font-semibold text-gray-800 mb-2">Lesson titles</label>
+													<input type="text" name="lessonTitle[]" onkeyup="checkValue()" class="rounded-md border border-gray-300 w-full">
 												</div>
 												<div class="flex justify-end mt-1">
 													<button type="button" onclick="addLesson(this)" class="hover:bg-blue-300 px-2 rounded-md text-xs font-medium flex items-center duration-150 ease-in-out"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
@@ -303,7 +303,7 @@ $con = OpenCon();
 									</svg>
 									<span>Back</span>
 								</button>
-								<button type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="next2">
+								<button disabled type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300 disabled:pointer-events-none disabled:bg-gray-400" id="next2">
 									<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
 									<span>Next</span>
 									<svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
