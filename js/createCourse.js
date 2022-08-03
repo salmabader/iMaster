@@ -1,6 +1,5 @@
 let form2_inputs = document.querySelectorAll("#form2 input")
 let allFilled = false
-
 // ---------- next and back buttons ----------
 const form1 = document.getElementById("form1")
 const form2 = document.getElementById("form2")
@@ -87,7 +86,7 @@ function addChapter() {
         <div class="flex flex-col lg:w-1/2 w-full">
         <div id="lessonSection" class="flex flex-col">
             <label class="text-md font-semibold text-gray-800 mb-2">Lesson titles</label>
-            <input type="text" name="lessonTitle[]" onkeyup="checkValue()" class="rounded-md border border-gray-300 w-full">
+            <input type="text" name="lessonTitle[]" onkeyup="checkValue()" class="lessonTitle rounded-md border border-gray-300 w-full">
         </div>
             <div class="flex justify-end mt-1">
                 <button type="button" onclick="addLesson(this)" class="hover:bg-blue-300 px-2 rounded-md text-xs font-medium flex items-center duration-150 ease-in-out"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
@@ -105,7 +104,7 @@ function addChapter() {
 function addLesson(e) {
     let newLesson = document.createElement("div")
     newLesson.classList.add("flex", "items-center", "w-full", "mt-2")
-    newLesson.innerHTML = `<input type="text" name="lessonTitle[]" onkeyup="checkValue()" class="rounded-md border border-gray-300 w-full">
+    newLesson.innerHTML = `<input type="text" name="lessonTitle[]" onkeyup="checkValue()" class="lessonTitle rounded-md border border-gray-300 w-full">
     <button type="button" onclick="deleteLesson(this)"><svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 inline text-red-500" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
         </svg></button>`
@@ -137,6 +136,7 @@ function renumberChapter() {
     });
 }
 // ---------- after click next2 button ----------
+const list = document.getElementById("accordion-color")
 next2.addEventListener('click', function () {
     const allChapters = document.getElementsByName("chapterTitle[]")
     let chaptersTitle = []
@@ -145,17 +145,33 @@ next2.addEventListener('click', function () {
     });
     let lessonsTitle = []
     const allChapterCards = document.getElementById("chapterSection").children
-    console.log(allChapterCards)
     for (let i = 0; i < allChapterCards.length; i++) {
-        let chapterLesson = allChapterCards[i].getElementsByTagNameNS("lessonTitle[]")
+        let chapterLesson = allChapterCards[i].getElementsByClassName("lessonTitle")
         let lessons = []
         for (let j = 0; j < chapterLesson.length; j++) {
             lessons.push(chapterLesson[j].value)
         }
         lessonsTitle.push(lessons)
     }
-    console.log(chaptersTitle)
-    console.log(lessonsTitle)
+    localStorage.setItem("chapters", JSON.stringify(chaptersTitle))
+    localStorage.setItem("lessons", JSON.stringify(lessonsTitle))
+
+    let chapters = JSON.parse(localStorage.getItem("chapters"))
+    let rows = ""
+    for (let i = 0; i < chapters.length; i++) {
+        rows += `<h2 id="accordion-color-heading-${i + 1}">
+        <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left border border-b-0 border-gray-200 hover:bg-amber-100" data-accordion-target="#accordion-color-body-${(i + 1)}" aria-expanded="false" aria-controls="accordion-color-body-${(i + 1)}">
+        <span>${chapters[i]}</span>
+        <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+    </button>
+        </h2>
+        <div id="accordion-color-body-${i + 1}" class="hidden" aria-labelledby="accordion-color-heading-${i + 1}">
+        <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+    <a href="" class="text-blue-700">1. Title of lesson 1</a>
+    </div>
+        </div>`
+    }
+    list.innerHTML = rows
 })
 
 // ---------- activate next1 button ----------
