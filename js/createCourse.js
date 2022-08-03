@@ -99,7 +99,6 @@ function addChapter() {
 </div>`
     chapterSection.appendChild(newChapter)
     form2_inputs = document.querySelectorAll("#form2 input")
-    console.log(form2_inputs.length)
     checkValue()
 }
 
@@ -137,7 +136,27 @@ function renumberChapter() {
         }
     });
 }
-
+// ---------- after click next2 button ----------
+next2.addEventListener('click', function () {
+    const allChapters = document.getElementsByName("chapterTitle[]")
+    let chaptersTitle = []
+    allChapters.forEach(element => {
+        chaptersTitle.push(element.value)
+    });
+    let lessonsTitle = []
+    const allChapterCards = document.getElementById("chapterSection").children
+    console.log(allChapterCards)
+    for (let i = 0; i < allChapterCards.length; i++) {
+        let chapterLesson = allChapterCards[i].getElementsByTagNameNS("lessonTitle[]")
+        let lessons = []
+        for (let j = 0; j < chapterLesson.length; j++) {
+            lessons.push(chapterLesson[j].value)
+        }
+        lessonsTitle.push(lessons)
+    }
+    console.log(chaptersTitle)
+    console.log(lessonsTitle)
+})
 
 // ---------- activate next1 button ----------
 const title = document.getElementById("courseTitle")
