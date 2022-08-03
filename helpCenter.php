@@ -1,7 +1,56 @@
 <?php
 session_start();
-require 'database/db_connection.php';
+if (isset($_SESSION['type'])) {
+	$privilage = $_SESSION['type'];
+	if (isset($_SESSION['username']) && $privilage == "student") {
+		header('Location: studentDashboard.php');
+		exit();
+	} elseif (isset($_SESSION['username']) && $privilage == "admin") {
+		header('Location: analytics.php');
+		// header('Location: helpCenter.php');
+		exit();
+	}
+}
+require('database/db_connection.php');
 $con = OpenCon();
+if (isset($_POST['createAccountBtn'])) {
+
+	$description = filter_input(INPUT_POST, 'description');
+	$Reason = filter_input(INPUT_POST, 'Reason');
+	$title = filter_input(INPUT_POST, 'title');
+	$option = filter_input(INPUT_POST, 'option');
+	$status = "waiting..";
+
+	$instUsername = $_SESSION['username'];
+	//  for option 1:
+	if (isset($option) && $option == "DeleteCourse" && isset($title) && isset($Reason)) {
+		$insertQuery = "INSERT INTO requests (type,status,instructor_username,reason,title) VALUES (?,?,?,?,?)";
+		$statement = mysqli_stmt_init($con);
+		if (!mysqli_stmt_prepare($statement, $insertQuery)) {
+			header('Location: index.php?error=InsertionError');
+			exit();
+		} else {
+
+			mysqli_stmt_bind_param($statement, "sssss", $option, $status, $instUsername, $Reason, $title);
+			mysqli_stmt_execute($statement);
+			$feedback = "Your Request has been sent!";
+		}
+	}
+	//  for option 2:
+	if (isset($option) && $option == "others" && isset($description)) {
+		$insertQuery = "INSERT INTO requests (type,status,instructor_username,reason) VALUES (?,?,?,?)";
+		$statement = mysqli_stmt_init($con);
+		if (!mysqli_stmt_prepare($statement, $insertQuery)) {
+			header('Location: index.php?error=InsertionError');
+			exit();
+		} else {
+
+			mysqli_stmt_bind_param($statement, "ssss", $option, $status, $instUsername, $description);
+			mysqli_stmt_execute($statement);
+			$feedback = "Your Request has been sent!";
+		}
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -213,13 +262,32 @@ $con = OpenCon();
 								</div>
 								<!-- Delete course option -->
 								<div class="flex flex-col w-1/2 " id="Deletecourses">
-									<label for="bio" class="block capitalize font-semibold my-2">reason</label>
-									<textarea name="bio" id="bio" placeholder="Please write your reason here.." class=" bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 w-full"></textarea>
+									<!-- title list -->
+									<div class="w-full mr-2">
+										<label for="title" class="block capitalize font-semibold my-2">course title</label>
+										<select id="title" onclick="Validate()" name="title" class="bg-blue-50 px-6 py-2.5 border-2 border-blue-200 focus:bg-white text-sm rounded-lg block w-full">
+											<option selected value="0">Choose course title</option>
+											<?php
+											$query = "SELECT * FROM course WHERE instructor_usename = '" . $_SESSION['username'] . "'";
+											$result = mysqli_query($con, $query);
+											if (mysqli_num_rows($result) > 0) { ?>
+												<?php while ($course = mysqli_fetch_assoc($result)) {
+												?>
+													<option value="<?php echo ucfirst($course['title']) ?>"><?php echo ucfirst($course['title']) ?></option>
+											<?php }
+											} ?>
+										</select>
+									</div>
+									<!-- title list -->
+
+									<!-- Reason -->
+									<label for="Reason" class="block capitalize font-semibold my-2">reason</label>
+									<textarea name="Reason" id="Reason" placeholder="Please write your reason here.." class=" bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 w-full"></textarea>
 								</div>
 								<!-- other option -->
 								<div class="flex flex-col w-1/2 " id="Other">
-									<label for="bio" class="block capitalize font-semibold my-2">problem description</label>
-									<textarea name="bio" id="bio" placeholder="Please write a brief description here.. " class=" bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 w-full"></textarea>
+									<label for="description" class="block capitalize font-semibold my-2">problem description</label>
+									<textarea name="description" id="description" placeholder="Please write a brief description here.. " class=" bg-blue-50 px-6 py-2 rounded-lg border-2 border-blue-200 focus:bg-white placeholder-gray-400 text-blue-800 w-full"></textarea>
 								</div>
 							</div>
 
@@ -234,7 +302,22 @@ $con = OpenCon();
 			</div>
 		</div> <!-- end of right side-->
 	</main>
-
+	<!-- toast messages  -->
+	<div id="toast" class="opacity-0 flex fixed bottom-5 right-8 items-center p-4 mb-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 border-2 border-green-600" role="alert">
+		<div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-green-600 rounded-lg dark:bg-green-800 dark:text-green-200">
+			<svg aria-hidden="true" class="h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+			</svg>
+			<span class="sr-only">Check icon</span>
+		</div>
+		<div class="ml-3 text-sm font-normal" id="feedback"><?php if (isset($feedback)) echo $feedback ?></div>
+		<button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast" aria-label="Close">
+			<span class="sr-only">Close</span>
+			<svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+			</svg>
+		</button>
+	</div>
 	<!-- profile modal -->
 	<div id="profile-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
 		<div class="relative p-4 w-full max-w-md h-full md:h-auto">
@@ -283,30 +366,8 @@ $con = OpenCon();
 			</div>
 		</div>
 	</div>
-	<script>
-		const option = document.getElementById("option")
-		const DeleteCourse = document.getElementById("Deletecourses")
-		const others = document.getElementById("Other")
-		DeleteCourse.style.display = "none"
-		others.style.display = "none"
 
-		function Validate() {
-			if (option.selectedIndex == 1) {
-
-				DeleteCourse.style.display = "block"
-				others.style.display = "none"
-			}
-
-			if (option.selectedIndex == 2) {
-				others.style.display = "block"
-				DeleteCourse.style.display = "none"
-			}
-			if (option.selectedIndex == 0) {
-				DeleteCourse.style.display = "none"
-				others.style.display = "none"
-			}
-		}
-	</script>
+	<script src="helpCenter.js"></script>
 	<script src="js/analytics.js"></script>
 	<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>
