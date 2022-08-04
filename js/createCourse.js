@@ -87,7 +87,7 @@ function addChapter() {
         <div class="flex flex-col lg:w-1/2 w-full">
         <div id="lessonSection" class="flex flex-col">
             <label class="text-md font-semibold text-gray-800 mb-2">Lesson titles</label>
-            <input type="text" name="lessonTitle_${chapterNum}[]" onkeyup="checkValue()" class="lessonTitle rounded-md border border-gray-300 w-full">
+            <input lesson-input type="text" name="lessonTitle_${chapterNum}[]" onkeyup="checkValue()" class="lessonTitle rounded-md border border-gray-300 w-full">
         </div>
             <div class="flex justify-end mt-1">
                 <button type="button" onclick="addLesson(this)" class="hover:bg-blue-300 px-2 rounded-md text-xs font-medium flex items-center duration-150 ease-in-out"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
@@ -105,7 +105,7 @@ function addChapter() {
 function addLesson(e) {
     let newLesson = document.createElement("div")
     newLesson.classList.add("flex", "items-center", "w-full", "mt-2")
-    newLesson.innerHTML = `<input type="text" name="lessonTitle_${chapterNum}[]" onkeyup="checkValue()" class="lessonTitle rounded-md border border-gray-300 w-full">
+    newLesson.innerHTML = `<input type="text" lesson-input name="lessonTitle_${chapterNum}[]" onkeyup="checkValue()" class="lessonTitle rounded-md border border-gray-300 w-full">
     <button type="button" onclick="deleteLesson(this)"><svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 inline text-red-500" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
         </svg></button>`
@@ -124,6 +124,7 @@ function deleteChapter(el) {
     el.parentElement.parentElement.parentElement.parentElement.parentElement.remove()
     form2_inputs = document.querySelectorAll("#form2 input")
     renumberChapter()
+    renumberLessons()
     checkValue()
 }
 function renumberChapter() {
@@ -135,6 +136,23 @@ function renumberChapter() {
             n++
         }
     });
+}
+function renumberLessons() {
+    const allLessons = document.querySelectorAll("[lesson-input]")
+    let ch = 1
+    let temp = ""
+    for (let i = 0; i < allLessons.length - 1; i++) {
+        let name1 = allLessons[i].getAttribute("name")
+        temp = name1
+        let name2 = allLessons[i + 1].getAttribute("name")
+        if (temp == name2) {
+            allLessons[i].setAttribute("name", "lessonTitle_" + ch + "[]")
+        } else {
+            ch++
+        }
+        if (ch > chapterNum) break
+    }
+    allLessons[allLessons.length - 1].setAttribute("name", "lessonTitle_" + ch + "[]")
 }
 // ---------- after click next2 button ----------
 const list = document.getElementById("items")

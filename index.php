@@ -13,7 +13,7 @@ if (isset($_SESSION['type'])) {
 		header('Location: signin.php');
 		exit();
 	} elseif (isset($_SESSION['username']) && $privilage == "instructor") {
-		header('Location: instructorDashbord.php');
+		header('Location: instructorDashboard.php');
 		exit();
 	} else {
 		header('Location: analytics.php');
