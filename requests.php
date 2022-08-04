@@ -279,15 +279,15 @@ if (isset($_POST['reject'])) {
                                                     </div>
                                                 </li>
                                                 <?php
-                                                $query = "SELECT DISTINCT category FROM course";
+                                                $query = "SELECT DISTINCT field FROM instructor";
                                                 $result = mysqli_query($con, $query);
                                                 $i = 1;
                                                 while ($cate = mysqli_fetch_assoc($result)) {
                                                 ?>
                                                     <li>
                                                         <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                            <input data-categories id="filter-radio-example-<?php echo $i ?>" type="radio" value="<?php echo ucfirst($cate['category']) ?>" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                                                            <label for="filter-radio-example-<?php echo $i ?>" class="ml-2 w-full text-sm font-medium text-gray-900 rounded"><?php echo ucfirst($cate['category']) ?></label>
+                                                            <input data-categories id="filter-radio-example-<?php echo $i ?>" type="radio" value="<?php echo ucfirst($cate['field']) ?>" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                                            <label for="filter-radio-example-<?php echo $i ?>" class="ml-2 w-full text-sm font-medium text-gray-900 rounded"><?php echo ucfirst($cate['field']) ?></label>
                                                         </div>
                                                     </li>
                                                 <?php $i += 1;
@@ -307,7 +307,7 @@ if (isset($_POST['reject'])) {
                                 </div>
                                 <!-- get instructor requests -->
                                 <?php
-                                $query = "SELECT * FROM requests,instructor WHERE type = 'application' AND status ='waiting' AND instructor_username = username";
+                                $query = "SELECT * FROM requests,instructor WHERE type = 'application' AND status ='waiting' AND instructor_username = username ORDER BY requestID DESC ";
                                 $result = mysqli_query($con, $query);
                                 if (mysqli_num_rows($result) > 0) { ?>
                                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
