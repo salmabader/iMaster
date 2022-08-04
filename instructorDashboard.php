@@ -62,7 +62,6 @@ $con = OpenCon();
 
 <body class="h-screen w-screen overflow-hidden">
 	<?php
-	// retreive admin info:
 	$query = "SELECT * FROM " . $_SESSION['type'] . " WHERE username ='" . $_SESSION['username'] . "'";
 	$result = mysqli_query($con, $query);
 	$user = mysqli_fetch_assoc($result);
@@ -198,7 +197,7 @@ $con = OpenCon();
 					<div id="myCoursesSection" class="md:ml-5 mt-5 flex md:flex-wrap gap-3 md:flex-row flex-col">
 						<!-- get student's courses -->
 						<?php
-						$query = "SELECT * FROM course WHERE instructor_usename = '" . $_SESSION['username'] . "'";
+						$query = "SELECT * FROM course,requests WHERE instructor_usename = '" . $_SESSION['username'] . "' AND type = 'course' AND status = 'accept' ";
 						$result = mysqli_query($con, $query);
 						if (mysqli_num_rows($result) > 0) { ?>
 							<p class="text-xl font-bold capitalize w-full tracking-wide text-gray-700">My courses</p>
