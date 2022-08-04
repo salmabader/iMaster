@@ -15,9 +15,6 @@ if (isset($_SESSION['type'])) {
 if (isset($_POST['saveChangesBtn'])) {
     $fName = filter_input(INPUT_POST, 'fname');
     $lName = filter_input(INPUT_POST, 'lname');
-    // need to catch the photo
-    // $photo = filter_input(INPUT_POST, 'photo');
-    // $password = filter_input(INPUT_POST, 'password');
     $query = "UPDATE $privilage SET FName = ?, LName = ? WHERE username ='" . $_SESSION['username'] . "'";
     $statement = mysqli_stmt_init($con);
     mysqli_stmt_prepare($statement, $query);
