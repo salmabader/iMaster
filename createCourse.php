@@ -2,6 +2,23 @@
 session_start();
 require 'database/db_connection.php';
 $con = OpenCon();
+if (isset($_POST['done'])) {
+	$courseTitle = filter_input(INPUT_POST, 'courseTitle');
+	$field = filter_input(INPUT_POST, 'category');
+	$objective = filter_input(INPUT_POST, 'objectives');
+	$requirement = filter_input(INPUT_POST, 'requirement');
+	$level = filter_input(INPUT_POST, 'level');
+
+	$chapterTitles =  $_POST['chapterTitle'];
+	$lessonsTitles =  $_POST['lessonTitle'];
+
+	$contentVideo =  $_POST['contentVideo'];
+	$contentDescription =  $_POST['contentDescription'];
+
+	$courseDescription = filter_input(INPUT_POST, 'description');
+	$courseImg = filter_input(INPUT_POST, 'image');
+	$coUsername = filter_input(INPUT_POST, 'coUsername');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -215,7 +232,7 @@ $con = OpenCon();
 							<div class="relative transition-all duration-1000" id="step3">Step 3<span class="text-xs font-normal sm:inline hidden">: Lesson contents</span></div>
 							<div class="relative transition-all duration-1000 pr-5" id="step4">Step 4<span class="text-xs font-normal sm:inline hidden">: Finilizing</span></div>
 						</div>
-						<form method="POST">
+						<form method="POST" action="createCourse.php">
 							<!-- step1 -->
 							<div id="form1" class="flex flex-col xl:w-[900px] md:w-[700px] sm:w-[500px] w-[400px] gap-3 transition-all duration-500 mt-5">
 								<div class="flex">
@@ -365,7 +382,7 @@ $con = OpenCon();
 												<span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300">
 													@
 												</span>
-												<input type="text" id="coUsername" class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 " placeholder="please enter the collaborator's username">
+												<input type="text" id="coUsername" name="coUsername" class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 " placeholder="please enter the collaborator's username">
 											</div>
 										</div>
 									</div>
@@ -378,7 +395,7 @@ $con = OpenCon();
 											</svg>
 											<span>Back</span>
 										</button>
-										<button disabled type="submit" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300 disabled:pointer-events-none disabled:bg-gray-400" id="done">
+										<button disabled name="done" type="submit" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300 disabled:pointer-events-none disabled:bg-gray-400" id="done">
 											<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
 											<span>Done</span>
 											<svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">
