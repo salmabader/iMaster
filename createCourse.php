@@ -318,7 +318,6 @@ $con = OpenCon();
 							<div id="form3" class="hidden flex flex-col xl:w-[900px] md:w-[700px] w-[400px] gap-3 transition-all duration-500 mt-5">
 								<div class="flex flex-col w-full">
 									<div id="items" class="w-full flex flex-col">
-
 									</div>
 									<!-- buttons -->
 									<div class="flex justify-between">
@@ -329,7 +328,7 @@ $con = OpenCon();
 											</svg>
 											<span>Back</span>
 										</button>
-										<button type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300" id="next3">
+										<button disabled type="button" class="flex items-center relative rounded-full px-5 py-2.5 overflow-hidden group bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-400 text-white transition-all ease-out duration-300 disabled:pointer-events-none disabled:bg-gray-400" id="next3">
 											<span class="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
 											<span>Next</span>
 											<svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-5 inline" viewBox="0 0 20 20" fill="currentColor">

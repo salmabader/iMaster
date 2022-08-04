@@ -1,5 +1,6 @@
 let form2_inputs = document.querySelectorAll("#form2 input")
 let allFilled = false
+let allContent = false
 // ---------- next and back buttons ----------
 const form1 = document.getElementById("form1")
 const form2 = document.getElementById("form2")
@@ -166,18 +167,37 @@ next2.addEventListener('click', function () {
         <summary class="font-medium text-lg text-blue-800">${chapters[i]}</summary>`
         for (let j = 0; j < chapterLesson.length; j++) {
             if (j == chapterLesson.length - 1) {
-                les += `<button class="ml-3 w-[97%] flex justify-start items-center my-2 pb-1" type="button"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-              </svg> ${chapterLesson[j]}</button>`
+                les += `<details class="ml-3 w-[97%] flex justify-start items-center my-2 pb-1"><summary>${chapterLesson[j]}</summary>
+                <div class="ml-3 flex flex-col">
+                <div>
+                <label for="image" class="text-md font-semibold text-gray-800 mb-2">Lesson video</label>
+                <input id="image" name="video" class="block mb-5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file" onchange="activeNext3()">
+                </div>
+                <div>
+                <label for="description" class="text-md font-semibold text-gray-800 mb-2">Description</label>
+                <textarea name="contentDescription[]" id="description" class="w-full rounded-md border border-gray-300 p-3"></textarea>
+                </div>
+                </div>
+                </details>`
             } else {
-                les += `<button class="border-b border-gray-300 ml-3 w-[97%] flex justify-start items-center my-2 pb-1" type="button"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-              </svg> ${chapterLesson[j]}</button>`
+                les += `<details class="border-b border-gray-300 ml-3 w-[97%] flex justify-start items-center my-2 pb-1"><summary>${chapterLesson[j]}</summary>
+                <div class="ml-3 flex flex-col">
+                <div>
+                <label for="image" class="text-md font-semibold text-gray-800 mb-2">Lesson video</label>
+                <input id="image" name="video" class="block mb-5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file" onchange="activeNext3()">
+                </div>
+                <div>
+                <label for="description" class="text-md font-semibold text-gray-800 mb-2">Description</label>
+                <textarea name="contentDescription[]" id="description" class="w-full rounded-md border border-gray-300 p-3"></textarea>
+                </div>
+                </div>
+                </details>`
             }
         }
         rows += les + `</details>`
     }
     list.innerHTML = rows
+    activeNext3()
 })
 
 // ---------- activate next1 button ----------
@@ -215,6 +235,20 @@ function checkValue() {
         }
     }
     next2.disabled = !allFilled
+}
+// ---------- activate next3 button ----------
+function activeNext3() {
+    const step3_inputs = document.querySelectorAll("#form3 input[type=file]")
+    console.log(step3_inputs)
+    for (let i = 0; i < step3_inputs.length; i++) {
+        if (step3_inputs[i].value) {
+            allContent = true
+        } else {
+            allContent = false
+            break
+        }
+    }
+    next3.disabled = !allContent
 }
 // ---------- activate done button ----------
 const description = document.getElementById("description")
