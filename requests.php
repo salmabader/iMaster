@@ -21,6 +21,16 @@ if (isset($_POST['saveChangesBtn'])) {
     mysqli_stmt_bind_param($statement, "ss", $fName, $lName);
     mysqli_stmt_execute($statement);
 }
+if (isset($_POST['accept'])) {
+    $updateQuery = "UPDATE instructor SET isAccepted = 1 WHERE username ='" . $_POST['username'] . "'";
+    mysqli_query($con, $updateQuery);
+    $updateQuery = "UPDATE requests SET status = 'accepted', admin_username = '" . $_SESSION['username'] . "' WHERE type = 'application' AND status = 'waiting' AND instructor_username ='" . $_POST['username'] . "'";
+    mysqli_query($con, $updateQuery);
+}
+if (isset($_POST['reject'])) {
+    $query = "DELETE FROM instructor WHERE username ='" . $_POST['username'] . "'";
+    mysqli_query($con, $query);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -309,20 +319,66 @@ if (isset($_POST['saveChangesBtn'])) {
                                                     <td class="py-4 px-6">
                                                         <?php echo $row['experience'] . ' years experience' ?>
                                                     </td>
-                                                    <td class="py-4 px-6 flex justify-end gap-4">
-                                                        <button class="flex items-center text-blue-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                    <td class="py-4 px-6 flex justify-end gap-4 items-center">
+                                                        <button data-modal-toggle="<?php echo $row['username'] ?>" class="flex items-center text-blue-600 p-1 hover:bg-blue-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
                                                                 <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                                             </svg><span>Details</span></button>
                                                         <p>|</p>
-                                                        <button class="flex items-center text-green-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                                            </svg><span>Accept</span></button>
-                                                        <p>|</p>
-                                                        <button class="flex items-center text-red-600">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                                            </svg><span>Reject</span></button>
-
+                                                        <!-- Main modal -->
+                                                        <div id="<?php echo $row['username'] ?>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                                                            <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                                                                <!-- Modal content -->
+                                                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                                    <!-- Modal header -->
+                                                                    <div class="flex justify-between items-start p-4 pb-1 rounded-t border-b dark:border-gray-600">
+                                                                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                                            New instructor
+                                                                        </h3>
+                                                                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="<?php echo $row['username'] ?>">
+                                                                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                                                            </svg>
+                                                                            <span class="sr-only">Close modal</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <!-- Modal body -->
+                                                                    <div class="p-6 pt-3 space-y-6">
+                                                                        <div class="text-base leading-relaxed text-gray-800 flex flex-col">
+                                                                            <p class="w-full font-bold text-xl border-b border-gray-300 text-blue-800 pb-2"><?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?></p>
+                                                                            <div class="flex justify-between w-full mt-3">
+                                                                                <p><?php echo ucfirst($row['field']) ?></p>
+                                                                                <p><?php echo ucfirst($row['degree']) ?></p>
+                                                                                <p><?php echo ucfirst($row['experience']) . ' years experience' ?></p>
+                                                                            </div>
+                                                                            <div class="w-full mt-5 text-gray-800 font-semibold">- About <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>:</div>
+                                                                            <div class="w-full ml-5"><?php echo ucfirst($row['bio']) ?></div>
+                                                                            <div class="w-full mt-5 text-gray-800 font-semibold">- <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>'s previous courses:</div>
+                                                                            <div class="w-full ml-5">
+                                                                                <?php if ($row['previous_course'] != "") echo '<a class="text-blue-700" href="' . $row['previous_course'] . '" target="_blank">Find it here</a>';
+                                                                                else echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) . ' does not have previuos courses' ?>
+                                                                            </div>
+                                                                            <div class="w-full mt-5 text-gray-800 font-semibold">
+                                                                                - Contact:
+                                                                            </div>
+                                                                            <div class="w-full ml-5">
+                                                                                <a class="text-blue-700" href="mailto:<?php echo $row['email'] ?>">Email</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <form action="requests.php" method="POST" class="flex justify-between items-center gap-4">
+                                                            <input name="username" value="<?php echo $row['username'] ?>" class="hidden">
+                                                            <button name="accept" class="flex items-center text-green-600 p-1 hover:bg-green-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                                </svg><span>Accept</span></button>
+                                                            <p>|</p>
+                                                            <button name="reject" class="flex items-center text-red-600 p-1 hover:bg-red-100 rounded-md">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                                                </svg><span>Reject</span></button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             <?php } ?>
@@ -397,18 +453,18 @@ if (isset($_POST['saveChangesBtn'])) {
                                                         <?php echo $row['experience'] . ' years experience' ?>
                                                     </td>
                                                     <td class="py-4 px-6 flex justify-end gap-4">
-                                                        <button class="flex items-center text-blue-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                        <button class="flex items-center text-blue-600 p-1 hover:bg-blue-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
                                                                 <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                                             </svg><span>Details</span></button>
                                                         <p>|</p>
-                                                        <button class="flex items-center text-green-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                        <button name="accept" class="flex items-center text-green-600 p-1 hover:bg-green-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
                                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                                             </svg><span>Accept</span></button>
                                                         <p>|</p>
-                                                        <button class="flex items-center text-red-600">
+                                                        <button name="reject" class="flex items-center text-gray-700 p-1 hover:bg-gray-200 rounded-md">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                                            </svg><span>Reject</span></button>
+                                                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                                            </svg><span>Comment</span></button>
                                                     </td>
                                                 </tr>
                                             <?php } ?>

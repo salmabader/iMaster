@@ -10,7 +10,6 @@ if (isset($_POST['done'])) {
 	$level = filter_input(INPUT_POST, 'level');
 
 	$chapterTitles =  $_POST['chapterTitle'];
-	$lessonsTitles =  $_POST['lessonTitle'];
 
 	$contentVideo =  $_POST['contentVideo'];
 	$contentDescription =  $_POST['contentDescription'];
@@ -18,6 +17,40 @@ if (isset($_POST['done'])) {
 	$courseDescription = filter_input(INPUT_POST, 'description');
 	$courseImg = filter_input(INPUT_POST, 'image');
 	$coUsername = filter_input(INPUT_POST, 'coUsername');
+
+	$query = "INSERT INTO course (title,category,objectives,requirements,level,collaborator,instructor_usename,image,description) VALUES (?,?,?,?,?,?,?,?,?)";
+	$statement = mysqli_stmt_init($con);
+	if (!mysqli_stmt_prepare($statement, $query)) {
+		header('Location: index.php?error=InsertionError');
+		exit();
+	} else {
+		mysqli_stmt_bind_param($statement, "sssssssss", $courseTitle, $field, $objective, $requirement, $level, $coUsername, $_SESSION['username'], $courseImg, $courseDescription);
+		mysqli_stmt_execute($statement);
+	}
+	$courseID = mysqli_insert_id($con);
+	for ($i = 0; $i < count($chapterTitles); $i++) {
+		// insert chapter 
+		$query = "INSERT INTO chapter (courseID, title) VALUES (?,?)";
+		$statement = mysqli_stmt_init($con);
+		if (!mysqli_stmt_prepare($statement, $query)) {
+			header('Location: index.php?error=InsertionError');
+			exit();
+		} else {
+			mysqli_stmt_bind_param($statement, "ss", $courseID, $chapterTitles[$i]);
+			mysqli_stmt_execute($statement);
+			$chapterID = mysqli_insert_id($con);
+			$name = 'lessonTitle_' . ($i + 1);
+			$lessons = $_POST[$name];
+			for ($j = 0; $j < count($lessons); $j++) {
+				$query = "INSERT INTO content (title, chapter) VALUES (?,?)";
+				$statement = mysqli_stmt_init($con);
+				if (mysqli_stmt_prepare($statement, $query)) {
+					mysqli_stmt_bind_param($statement, "ss", $lessons[$j], $chapterID);
+					mysqli_stmt_execute($statement);
+				}
+			}
+		}
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -295,7 +328,7 @@ if (isset($_POST['done'])) {
 												<div class="flex flex-col lg:w-1/2 w-full">
 													<div id="lessonSection" class="flex flex-col">
 														<label class="text-md font-semibold text-gray-800 mb-2">Lesson titles</label>
-														<input type="text" name="lessonTitle[]" onkeyup="checkValue()" class="lessonTitle rounded-md border border-gray-300 w-full">
+														<input type="text" name="lessonTitle_1[]" onkeyup="checkValue()" class="lessonTitle rounded-md border border-gray-300 w-full">
 													</div>
 													<div class="flex justify-end mt-1">
 														<button type="button" onclick="addLesson(this)" class="hover:bg-blue-300 px-2 rounded-md text-xs font-medium flex items-center duration-150 ease-in-out"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline" viewBox="0 0 20 20" fill="currentColor">
