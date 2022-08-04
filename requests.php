@@ -323,7 +323,12 @@ if (isset($_POST['reject'])) {
                                                         <?php echo ucfirst($row['field']) ?>
                                                     </td>
                                                     <td class="py-4 px-6">
-                                                        <?php echo $row['experience'] . ' years experience' ?>
+                                                        <?php if ($row['experience'] > 1) echo $row['experience'] . ' years experience';
+                                                        else echo '1 year experience'; ?>
+                                                    </td>
+                                                    <td class="py-4 px-6">
+                                                        <?php $date = explode("-", $row['date']);
+                                                        echo 'Submitted on <span>' . $date[2] . '/' . $date[1] . '/' . $date[0] . '</span>' ?>
                                                     </td>
                                                     <td class="py-4 px-6 flex justify-end gap-4 items-center">
                                                         <button data-modal-toggle="<?php echo $row['username'] ?>" class="flex items-center text-blue-600 p-1 hover:bg-blue-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">

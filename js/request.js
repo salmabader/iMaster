@@ -25,7 +25,6 @@ radioBtns.forEach(btn => {
     })
 })
 searchBar.addEventListener('input', function () {
-    console.log('hi')
     names.forEach(name => {
         if (!name.innerHTML.toLowerCase().includes(searchBar.value.toLowerCase())) {
             name.parentElement.style.display = "none"
