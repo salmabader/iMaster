@@ -72,7 +72,9 @@ if (isset($_POST['createAccountBtn'])) {
                 $hashedPass = password_hash($password, PASSWORD_DEFAULT);
                 mysqli_stmt_bind_param($statement, "ssssssssss", $username, $fName, $lName, $email, $hashedPass, $field, $courseLink, $degree, $year, $bio);
                 mysqli_stmt_execute($statement);
-                $insertQuery = "INSERT INTO requests (type,status,instructor_username) VALUES ('application','waiting','$username')";
+                date_default_timezone_set('Asia/Riyadh');
+                $date = date("Y-m-d");
+                $insertQuery = "INSERT INTO requests (type,status,instructor_username,date) VALUES ('application','waiting','$username','$date')";
                 mysqli_query($con, $insertQuery);
             }
         }

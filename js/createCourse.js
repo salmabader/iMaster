@@ -307,8 +307,10 @@ function activeDone() {
         isThereCo = false
     } else if (checked == "yes" && coUsername.value) {
         isThereCo = true
-    } else {
+    } else if (checked == "no") {
         isThereCo = true
+    } else {
+        isThereCo = false
     }
     done.disabled = !(description.value && image.value && isThereCo)
 }
