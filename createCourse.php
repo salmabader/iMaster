@@ -11,23 +11,35 @@ if (isset($_POST['done'])) {
 
 	$chapterTitles =  $_POST['chapterTitle'];
 
-	$contentVideo =  $_POST['contentVideo'];
+	// $contentVideo =  $_POST['contentVideo'];
+	// $img = $_POST['image'];
 	$contentDescription =  $_POST['contentDescription'];
 
 	$courseDescription = filter_input(INPUT_POST, 'description');
-	$courseImg = filter_input(INPUT_POST, 'image');
 	$coUsername = filter_input(INPUT_POST, 'coUsername');
 
-	$query = "INSERT INTO course (title,category,objectives,requirements,level,collaborator,instructor_usename,image,description) VALUES (?,?,?,?,?,?,?,?,?)";
+	$query = "INSERT INTO course (title,category,objectives,requirements,level,collaborator,instructor_usename,description) VALUES (?,?,?,?,?,?,?,?)";
 	$statement = mysqli_stmt_init($con);
 	if (!mysqli_stmt_prepare($statement, $query)) {
 		header('Location: index.php?error=InsertionError');
 		exit();
 	} else {
-		mysqli_stmt_bind_param($statement, "sssssssss", $courseTitle, $field, $objective, $requirement, $level, $coUsername, $_SESSION['username'], $courseImg, $courseDescription);
+		mysqli_stmt_bind_param($statement, "ssssssss", $courseTitle, $field, $objective, $requirement, $level, $coUsername, $_SESSION['username'], $courseDescription);
 		mysqli_stmt_execute($statement);
 	}
 	$courseID = mysqli_insert_id($con);
+
+	$courseImg = $_FILES['image'];
+	$fileName = $courseTitle . '_' . $courseID;
+	$path_parts = pathinfo($courseImg['name']);
+	$ext = $path_parts['extension'];
+	$location = 'upload/' . $fileName . "." . $ext;
+	move_uploaded_file($courseImg['tmp_name'], $location);
+	$img = $fileName . "." . $ext;
+
+	$updateQuery = "UPDATE course SET image = '$img' WHERE courseID = '$courseID'";
+	mysqli_query($con, $updateQuery);
+
 	for ($i = 0; $i < count($chapterTitles); $i++) {
 		// insert chapter 
 		$query = "INSERT INTO chapter (courseID, title) VALUES (?,?)";
@@ -50,6 +62,14 @@ if (isset($_POST['done'])) {
 				}
 			}
 		}
+	}
+	$query = "INSERT INTO requests (type,status,instructor_username,date,course_id) VALUES ('course','waiting',?,?,?)";
+	$statement = mysqli_stmt_init($con);
+	if (mysqli_stmt_prepare($statement, $query)) {
+		date_default_timezone_set('Asia/Riyadh');
+		$date = date("Y-m-d");
+		mysqli_stmt_bind_param($statement, "sss", $_SESSION['username'], $date, $courseID);
+		mysqli_stmt_execute($statement);
 	}
 }
 ?>
@@ -265,7 +285,7 @@ if (isset($_POST['done'])) {
 							<div class="relative transition-all duration-1000" id="step3">Step 3<span class="text-xs font-normal sm:inline hidden">: Lesson contents</span></div>
 							<div class="relative transition-all duration-1000 pr-5" id="step4">Step 4<span class="text-xs font-normal sm:inline hidden">: Finilizing</span></div>
 						</div>
-						<form method="POST" action="createCourse.php">
+						<form method="POST" action="createCourse.php" enctype="multipart/form-data">
 							<!-- step1 -->
 							<div id="form1" class="flex flex-col xl:w-[900px] md:w-[700px] sm:w-[500px] w-[400px] gap-3 transition-all duration-500 mt-5">
 								<div class="flex">
@@ -398,7 +418,7 @@ if (isset($_POST['done'])) {
 									</div>
 									<div class="flex flex-col w-full">
 										<label for="image" class="text-md font-semibold text-gray-800 mb-2">Course image</label>
-										<input id="image" name="image" class="block mb-5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file">
+										<input id="image" type="file" accept="image/*" name="image" class="block mb-5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
 									</div>
 									<div class="flex flex-col w-full">
 										<div class="flex gap-5">

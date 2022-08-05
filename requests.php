@@ -445,7 +445,7 @@ if (isset($_POST['reject'])) {
                                 </div>
                                 <!-- get instructor requests -->
                                 <?php
-                                $query = "SELECT * FROM requests,instructor WHERE type = 'application' AND status ='waiting' AND instructor_username = username";
+                                $query = "SELECT * FROM requests,course,instructor WHERE type = 'course' AND status ='waiting' AND instructor_username = username AND course_id = courseID ORDER BY requestID DESC";
                                 $result = mysqli_query($con, $query);
                                 if (mysqli_num_rows($result) > 0) { ?>
                                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -455,13 +455,17 @@ if (isset($_POST['reject'])) {
                                             ?>
                                                 <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
                                                     <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                        <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>
+                                                        <?php echo ucfirst($row['title']) ?>
                                                     </th>
                                                     <td class="py-4 px-6">
-                                                        <?php echo ucfirst($row['field']) ?>
+                                                        <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>
                                                     </td>
                                                     <td class="py-4 px-6">
-                                                        <?php echo $row['experience'] . ' years experience' ?>
+                                                        <?php echo ucfirst($row['category']) ?>
+                                                    </td>
+                                                    <td class="py-4 px-6">
+                                                        <?php $date = explode("-", $row['date']);
+                                                        echo 'Submitted on <span>' . $date[2] . '/' . $date[1] . '/' . $date[0] . '</span>' ?>
                                                     </td>
                                                     <td class="py-4 px-6 flex justify-end gap-4">
                                                         <button class="flex items-center text-blue-600 p-1 hover:bg-blue-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
