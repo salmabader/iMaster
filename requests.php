@@ -395,6 +395,8 @@ if (isset($_POST['reject'])) {
                                             <?php } ?>
                                         </tbody>
                                     </table>
+                                <?php } else { ?>
+                                    <p class="p-3">No registration request yet</p>
                                 <?php } ?>
                             </div>
                         </div> <!-- end of instructor content -->
@@ -485,6 +487,8 @@ if (isset($_POST['reject'])) {
                                             <?php } ?>
                                         </tbody>
                                     </table>
+                                <?php } else { ?>
+                                    <p class="p-3">No course publication request yet</p>
                                 <?php } ?>
                             </div>
                         </div> <!-- end of course content -->

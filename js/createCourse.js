@@ -276,7 +276,7 @@ const co = document.getElementById("collaborator")
 const coUsername = document.getElementById("coUsername")
 const form4_inputs = [description, coUsername]
 let checked = ""
-let isThereCo = true
+let isThereCo = false
 
 form4_inputs.forEach(element => {
     element.addEventListener('keyup', function () {
