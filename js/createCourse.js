@@ -314,3 +314,16 @@ function activeDone() {
     }
     done.disabled = !(description.value && image.value && isThereCo)
 }
+done.addEventListener('click', function () {
+    localStorage.clear()
+})
+
+// ---------- to show toast msg ----------
+const toast = document.getElementById("course-submitted")
+const msg = document.getElementById("submittingMsg")
+window.addEventListener('load', function () {
+    if (msg.innerHTML.length > 0) {
+        toast.classList.remove("opacity-0")
+        toast.classList.add("opacity-100")
+    }
+})
