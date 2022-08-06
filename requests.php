@@ -719,7 +719,6 @@ if (isset($_POST['reject'])) {
 
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', function(data) {
-            // alert(JSON.stringify(data));
             indecator.classList.remove("hidden")
             indecator.classList.add("block")
             $.ajax({

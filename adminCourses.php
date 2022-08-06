@@ -36,6 +36,7 @@ if (isset($_POST['saveChangesBtn'])) {
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
     <link rel="icon" href="images/icon.svg" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.2/dist/chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Analytics</title>
     <style>
         .scrollbar::-webkit-scrollbar {
@@ -171,8 +172,10 @@ if (isset($_POST['saveChangesBtn'])) {
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                                     </svg>
-                                    <div class="absolute bg-blue-500 h-2 w-2 rounded-full top-1.5 right-1 "></div>
-                                    <div class="absolute bg-blue-500 h-2 w-2 rounded-full top-1.5 animate-ping right-1 "></div>
+                                    <span id="newNotification" class="hidden">
+                                        <div class="absolute bg-blue-500 h-2 w-2 rounded-full top-1.5 right-1 "></div>
+                                        <div class="absolute bg-blue-500 h-2 w-2 rounded-full top-1.5 animate-ping right-1 "></div>
+                                    </span>
                                 </div>
                             </div>
                         </button>
@@ -181,40 +184,52 @@ if (isset($_POST['saveChangesBtn'])) {
                             <div class="block py-2 px-4 font-medium text-center text-gray-700 bg-gray-50">
                                 Notifications
                             </div>
-                            <div class="divide-y divide-gray-100 dark:divide-gray-700">
-                                <a href="#" class="flex items-center py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <div class="flex-shrink-0 text-blue-600 bg-blue-200 rounded-full p-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                        </svg>
-                                    </div>
-                                    <div class="pl-3 w-full">
-                                        <div class="text-gray-500 text-sm mb-1.5 dark:text-gray-400">Muhammad sent an application</div>
-                                        <div class="text-xs text-gray-600">a few minutes ago</div>
-                                    </div>
-                                </a>
-
-                                <a href="#" class="flex items-center py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <div class="flex-shrink-0 text-amber-600 bg-amber-200 rounded-full p-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                        </svg>
-                                    </div>
-                                    <div class="pl-3 w-full">
-                                        <div class="text-gray-500 text-sm mb-1.5 dark:text-gray-400">Math course needs your review</div>
-                                        <div class="text-xs text-gray-600">a few minutes ago</div>
-                                    </div>
-                                </a>
+                            <div class="divide-y divide-gray-100 dark:divide-gray-700 overflow-y-auto max-h-96 scrollbar" id="notify">
+                                <?php
+                                $query = "SELECT * FROM requests,instructor WHERE status = 'waiting' AND instructor_username = username ORDER BY requestID DESC";
+                                $result = mysqli_query($con, $query);
+                                $firstIteration = false;
+                                if (mysqli_num_rows($result) > 0) {
+                                    $firstIteration = true;
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        if ($row['type'] == 'application') { ?>
+                                            <a href="requests.php" class="flex items-center py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                <div class="flex-shrink-0 text-blue-600 bg-blue-200 rounded-full p-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                    </svg>
+                                                </div>
+                                                <div class="pl-3 w-full flex justify-between">
+                                                    <div class="text-gray-500 text-sm mb-1.5 dark:text-gray-400"><?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?> sent an application</div>
+                                                    <?php if ($firstIteration) { ?>
+                                                        <span new-indecator class=" bg-pink-400 text-white text-xs font-semibold px-2 py-1 rounded-md flex items-center">New</span>
+                                                    <?php } ?>
+                                                </div>
+                                            </a>
+                                        <?php } elseif ($row['type'] == 'course') {
+                                            $courseQuery = "SELECT title FROM course WHERE courseID = '" . $row['course_id'] . "'";
+                                            $result2 = mysqli_query($con, $courseQuery);
+                                            $course = mysqli_fetch_assoc($result2);
+                                        ?>
+                                            <a href="requests.php" class="flex items-center py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                <div class="flex-shrink-0 text-amber-600 bg-amber-200 rounded-full p-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                                    </svg>
+                                                </div>
+                                                <div class="pl-3 w-full flex justify-between">
+                                                    <div class="text-gray-500 text-sm mb-1.5 dark:text-gray-400">"<?php echo ucfirst($course['title']) ?>" course needs your review</div>
+                                                    <?php if ($firstIteration) { ?>
+                                                        <span new-indecator class=" bg-pink-400 text-white text-xs font-semibold px-2 py-1 rounded-md flex items-center">New</span>
+                                                    <?php } ?>
+                                                </div>
+                                            </a>
+                                <?php }
+                                        $firstIteration = false;
+                                    }
+                                }
+                                ?>
                             </div>
-                            <a href="#" class="block py-2 text-sm font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
-                                <div class="inline-flex items-center ">
-                                    <svg class="mr-2 w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
-                                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    View all
-                                </div>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -378,94 +393,42 @@ if (isset($_POST['saveChangesBtn'])) {
             </div>
         </div>
     </div>
-    <?php
-    // get course in categories:
-    $query = "SELECT DISTINCT category FROM course";
-    $result = mysqli_query($con, $query);
-    $categories = "";
-    $numbers = "";
-    $instructors = "";
-    while ($cate = mysqli_fetch_assoc($result)) {
-        $categories .= '"' . ucfirst($cate['category']) . '",';
-        $query = "SELECT * FROM course WHERE category = '" . $cate['category'] . "'";
-        $result2 = mysqli_query($con, $query);
-        $numbers .=  mysqli_num_rows($result2) . ",";
-        $query = "SELECT * FROM instructor WHERE field = '" . $cate['category'] . "' AND NOT isAccepted = 0";
-        $result2 = mysqli_query($con, $query);
-        $instructors .=  mysqli_num_rows($result2) . ",";
-    }
-    // get number of courses for each category:
-
-    ?>
-    <script>
-        const ctx = document.getElementById('coursesChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [<?= $categories ?>],
-                datasets: [{
-                    label: '# of courses: ',
-                    data: [<?= $numbers ?>],
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ]
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
-            }
-        });
-        const ctx2 = document.getElementById('instructorsChart').getContext('2d');
-        const myChart2 = new Chart(ctx2, {
-            type: 'bar',
-            data: {
-                labels: [<?= $categories ?>],
-                datasets: [{
-                    label: '# of courses: ',
-                    data: [<?= $instructors ?>],
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ]
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
-            }
-        });
-    </script>
-
     <script src="js/analytics.js"></script>
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+        const indecator = document.getElementById("newNotification")
+        const notificationBtn = document.getElementById("dropdownNotificationBtn")
+
+        var pusher = new Pusher('b2e65e119e246c55827a', {
+            cluster: 'ap2'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            indecator.classList.remove("hidden")
+            indecator.classList.add("block")
+            $.ajax({
+                url: "notification.php",
+                success: function(result) {
+                    $("#notify").html(result);
+                }
+            });
+        });
+        notificationBtn.addEventListener('click', function() {
+            const newIndecator = document.querySelectorAll("[new-indecator]")
+            if (indecator.className == "block") {
+                indecator.classList.remove("block")
+                indecator.classList.add("hidden")
+            } else {
+                newIndecator.forEach(element => {
+                    element.classList.add("hidden")
+                });
+            }
+        })
+    </script>
 </body>
 
 </html>
