@@ -240,7 +240,7 @@ if (isset($_POST['saveChangesBtn'])) {
 						$result = mysqli_query($con, $query);
 						$numOfInstructors = mysqli_num_rows($result);
 
-						$query = "SELECT courseID FROM course";
+						$query = "SELECT courseID FROM course,requests WHERE courseID = course_id AND status ='accepted'";
 						$result = mysqli_query($con, $query);
 						$numOfCourses = mysqli_num_rows($result);
 

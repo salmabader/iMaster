@@ -2,7 +2,22 @@
 session_start();
 require 'database/db_connection.php';
 $con = OpenCon();
+
+require __DIR__ . '/vendor/autoload.php';
+
 if (isset($_POST['done'])) {
+
+	$options = array(
+		'cluster' => 'ap2',
+		'useTLS' => true
+	);
+	$pusher = new Pusher\Pusher(
+		'b2e65e119e246c55827a',
+		'956e3a00348571b20a5c',
+		'1457323',
+		$options
+	);
+
 	$courseTitle = filter_input(INPUT_POST, 'courseTitle');
 	$field = filter_input(INPUT_POST, 'category');
 	$objective = filter_input(INPUT_POST, 'objectives');
@@ -70,6 +85,8 @@ if (isset($_POST['done'])) {
 		$date = date("Y-m-d");
 		mysqli_stmt_bind_param($statement, "sss", $_SESSION['username'], $date, $courseID);
 		mysqli_stmt_execute($statement);
+		$data['message'] = $courseTitle;
+		$pusher->trigger('my-channel', 'my-event', $data);
 		$successMsg = "The course has been sent successfully, the admin will get back to you as soon as possible";
 	}
 }
