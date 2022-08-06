@@ -73,3 +73,13 @@ courseSearchBar.addEventListener('input', function () {
 
     }
 })
+
+// ---------- to show toast msg ----------
+const toast = document.getElementById("action-feedback")
+const msg = document.getElementById("feedbackMsg")
+window.addEventListener('load', function () {
+    if (msg.innerHTML.length > 0) {
+        toast.classList.remove("opacity-0")
+        toast.classList.add("opacity-100")
+    }
+})
