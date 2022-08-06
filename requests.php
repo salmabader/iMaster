@@ -58,6 +58,8 @@ if (isset($_POST['reject'])) {
     You can apply again or contact us if you have any questions.<br><br>
     Thank you,<br>' . $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] . '<br><br>iMaster';
     $mail->send();
+
+    $delete = "DELETE FROM instructor WHERE username ='" . $_POST['username'] . "'";
 }
 ?>
 <!DOCTYPE html>
@@ -506,6 +508,16 @@ if (isset($_POST['reject'])) {
                                             <tbody>
                                                 <?php
                                                 while ($row = mysqli_fetch_assoc($result)) {
+                                                    $chapterQuery = "SELECT * FROM chapter WHERE courseID = '" . $row['courseID'] . "'";
+                                                    $chapterResult = mysqli_query($con, $chapterQuery);
+                                                    $numberOfChapters = mysqli_num_rows($chapterResult);
+                                                    $numberOfLessons = 0;
+                                                    for ($i = 0; $i < $numberOfChapters; $i++) {
+                                                        $ch = mysqli_fetch_assoc($chapterResult);
+                                                        $lessonQuery = "SELECT * FROM content,chapter WHERE courseID = '" . $row['courseID'] . "' AND chapter = '" . $ch['chapterID'] . "' AND chapterID = chapter";
+                                                        $r = mysqli_query($con, $lessonQuery);
+                                                        $numberOfLessons += mysqli_num_rows($r);
+                                                    }
                                                 ?>
                                                     <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
                                                         <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white" course-title>
@@ -522,18 +534,91 @@ if (isset($_POST['reject'])) {
                                                             echo 'Submitted on <span>' . $date[2] . '/' . $date[1] . '/' . $date[0] . '</span>' ?>
                                                         </td>
                                                         <td class="py-4 px-6 flex justify-end gap-4">
-                                                            <button class="flex items-center text-blue-600 p-1 hover:bg-blue-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                            <button data-modal-toggle="<?php echo $row['title'] . '_' . $row['courseID'] ?>" class="flex items-center text-blue-600 p-1 hover:bg-blue-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
                                                                     <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                                                 </svg><span>Details</span></button>
+                                                            <!-- Main modal -->
+                                                            <div id="<?php echo $row['title'] . '_' . $row['courseID'] ?>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                                                                <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                                                                    <!-- Modal content -->
+                                                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                                        <!-- Modal header -->
+                                                                        <div class="flex justify-between items-start p-4 pb-1 rounded-t border-b dark:border-gray-600">
+                                                                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                                                New course
+                                                                            </h3>
+                                                                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="<?php echo $row['title'] . '_' . $row['courseID'] ?>">
+                                                                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                                                                </svg>
+                                                                                <span class="sr-only">Close modal</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <!-- Modal body -->
+                                                                        <div class="p-6 pt-3 space-y-6">
+                                                                            <div class="text-base leading-relaxed text-gray-800 flex flex-col">
+                                                                                <p class="w-full font-bold text-xl border-b border-gray-300 text-blue-800 pb-2"><?php echo ucfirst($row['title']) ?></p>
+                                                                                <div class="flex justify-between w-full mt-3 border-b border-gray-300 pb-2">
+                                                                                    <p><?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?></p>
+                                                                                    <p><?php echo ucfirst($row['category']) ?></p>
+                                                                                    <p>For <?php if ($row['level'] == 0) echo "beginners";
+                                                                                            elseif ($row['level'] == 1) echo "intermediate";
+                                                                                            else echo "advanced"; ?></p>
+                                                                                </div>
+                                                                                <div class="flex justify-between w-full mt-3 border-b border-gray-300 pb-2">
+                                                                                    <p>Number of chapters: <?php echo $numberOfChapters ?></p>
+                                                                                    <p>Number of lessons: <?php echo $numberOfLessons ?></p>
+                                                                                </div>
+                                                                                <div class="w-full mt-5 text-gray-800 font-semibold">- Course description:</div>
+                                                                                <div class="w-full ml-5">
+                                                                                    <?php echo ucfirst($row['description']) ?>
+                                                                                </div>
+                                                                                <div class="w-full mt-5 text-gray-800 font-semibold">- Course objectives:</div>
+                                                                                <div class="w-full ml-5">
+                                                                                    <?php echo ucfirst($row['objectives']) ?>
+                                                                                </div>
+                                                                                <div class="w-full mt-5 text-gray-800 font-semibold">- Course requirement:</div>
+                                                                                <div class="w-full ml-5">
+                                                                                    <?php echo ucfirst($row['requirements']) ?>
+                                                                                </div>
+                                                                                <div class="w-full mt-5 text-gray-800 font-semibold">
+                                                                                    - Course outline:
+                                                                                </div>
+                                                                                <div class="w-full max-h-44 overflow-y-auto scrollbar border border-gray-300 p-2 rounded-md bg-blue-50">
+                                                                                    <?php
+                                                                                    mysqli_data_seek($chapterResult, 0);
+                                                                                    while ($chapter = mysqli_fetch_assoc($chapterResult)) { ?>
+                                                                                        <details>
+                                                                                            <summary class="cursor-pointer font-medium"><?php echo ucfirst($chapter['title']) ?></summary>
+                                                                                            <?php
+                                                                                            $lesson_q = "SELECT title FROM content WHERE chapter = '" . $chapter['chapterID'] . "'";
+                                                                                            $lesson_r = mysqli_query($con, $lesson_q); ?>
+                                                                                            <div class="ml-5">
+                                                                                                <?php
+                                                                                                while ($lesson = mysqli_fetch_assoc($lesson_r)) { ?>
+                                                                                                    <p>- <?php echo ucfirst($lesson['title']) ?></p>
+                                                                                                <?php }
+                                                                                                ?>
+                                                                                            </div>
+                                                                                        </details>
+                                                                                    <?php } ?>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <p>|</p>
-                                                            <button name="accept" class="flex items-center text-green-600 p-1 hover:bg-green-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
-                                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                                                </svg><span>Accept</span></button>
-                                                            <p>|</p>
-                                                            <button name="reject" class="flex items-center text-gray-700 p-1 hover:bg-gray-200 rounded-md">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
-                                                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                                                </svg><span>Comment</span></button>
+                                                            <form action="requests.php" method="POST" class="flex justify-between items-center gap-4">
+                                                                <button name="acceptCourse" class="flex items-center text-green-600 p-1 hover:bg-green-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                                    </svg><span>Accept</span></button>
+                                                                <p>|</p>
+                                                                <button name="comment" class="flex items-center text-gray-700 p-1 hover:bg-gray-200 rounded-md">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                                                    </svg><span>Comment</span></button>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
