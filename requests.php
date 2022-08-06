@@ -274,7 +274,7 @@ if (isset($_POST['reject'])) {
                                             <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
                                                 <li>
                                                     <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                        <input data-categories id="filter-radio-example-0" type="radio" value="All" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                                        <input inst-categories id="filter-radio-example-0" type="radio" value="All" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                                         <label for="filter-radio-example-0" class="ml-2 w-full text-sm font-medium text-gray-900 rounded">All</label>
                                                     </div>
                                                 </li>
@@ -286,7 +286,7 @@ if (isset($_POST['reject'])) {
                                                 ?>
                                                     <li>
                                                         <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                            <input data-categories id="filter-radio-example-<?php echo $i ?>" type="radio" value="<?php echo ucfirst($cate['field']) ?>" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                                            <input inst-categories id="filter-radio-example-<?php echo $i ?>" type="radio" value="<?php echo ucfirst($cate['field']) ?>" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                                             <label for="filter-radio-example-<?php echo $i ?>" class="ml-2 w-full text-sm font-medium text-gray-900 rounded"><?php echo ucfirst($cate['field']) ?></label>
                                                         </div>
                                                     </li>
@@ -302,7 +302,7 @@ if (isset($_POST['reject'])) {
                                                 <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
                                             </svg>
                                         </div>
-                                        <input data-search type="text" id="table-search" class="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
+                                        <input inst-searching type="text" id="table-search" class="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
                                     </div>
                                 </div>
                                 <!-- get instructor requests -->
@@ -316,10 +316,10 @@ if (isset($_POST['reject'])) {
                                             while ($row = mysqli_fetch_assoc($result)) {
                                             ?>
                                                 <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
-                                                    <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white" data-fullname>
+                                                    <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white" inst-fullname>
                                                         <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>
                                                     </th>
-                                                    <td class="py-4 px-6" data-field>
+                                                    <td class="py-4 px-6" inst-field>
                                                         <?php echo ucfirst($row['field']) ?>
                                                     </td>
                                                     <td class="py-4 px-6">
@@ -419,6 +419,12 @@ if (isset($_POST['reject'])) {
                                         <!-- Dropdown menu -->
                                         <div id="dropdownRadio2" class="hidden z-10 w-48 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 46.4px, 0px);" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom">
                                             <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton2">
+                                                <li>
+                                                    <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                                                        <input course-categories id="filter-radio-example" type="radio" value="All" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                                        <label for="filter-radio-example" class="ml-2 w-full text-sm font-medium text-gray-900 rounded">All</label>
+                                                    </div>
+                                                </li>
                                                 <?php
                                                 $query = "SELECT DISTINCT category FROM course";
                                                 $result = mysqli_query($con, $query);
@@ -426,7 +432,7 @@ if (isset($_POST['reject'])) {
                                                 ?>
                                                     <li>
                                                         <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                            <input id="filter-radio-example-<?php echo $i ?>" type="radio" value="<?php echo ucfirst($cate['category']) ?>" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                                            <input course-categories id="filter-radio-example-<?php echo $i ?>" type="radio" value="<?php echo ucfirst($cate['category']) ?>" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                                             <label for="filter-radio-example-<?php echo $i ?>" class="ml-2 w-full text-sm font-medium text-gray-900 rounded"><?php echo ucfirst($cate['category']) ?></label>
                                                         </div>
                                                     </li>
@@ -442,7 +448,7 @@ if (isset($_POST['reject'])) {
                                                 <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
                                             </svg>
                                         </div>
-                                        <input type="text" id="table-search" class="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
+                                        <input course-searching type="text" id="table-search" class="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
                                     </div>
                                 </div>
                                 <!-- get instructor requests -->
@@ -456,13 +462,13 @@ if (isset($_POST['reject'])) {
                                             while ($row = mysqli_fetch_assoc($result)) {
                                             ?>
                                                 <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
-                                                    <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                    <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white" course-title>
                                                         <?php echo ucfirst($row['title']) ?>
                                                     </th>
-                                                    <td class="py-4 px-6">
+                                                    <td class="py-4 px-6" course-inst>
                                                         <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>
                                                     </td>
-                                                    <td class="py-4 px-6">
+                                                    <td class="py-4 px-6" course-field>
                                                         <?php echo ucfirst($row['category']) ?>
                                                     </td>
                                                     <td class="py-4 px-6">
