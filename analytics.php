@@ -236,7 +236,7 @@ if (isset($_POST['saveChangesBtn'])) {
 						$result = mysqli_query($con, $query);
 						$numOfStudents = mysqli_num_rows($result);
 
-						$query = "SELECT username FROM instructor";
+						$query = "SELECT username FROM instructor WHERE isAccepted = 1";
 						$result = mysqli_query($con, $query);
 						$numOfInstructors = mysqli_num_rows($result);
 

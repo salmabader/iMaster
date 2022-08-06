@@ -200,7 +200,7 @@ if (isset($_POST['reject'])) {
                                     $firstIteration = true;
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         if ($row['type'] == 'application') { ?>
-                                            <a href="#" class="flex items-center py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            <a onclick="$('#instructor-tab').click()" class="flex items-center py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">
                                                 <div class="flex-shrink-0 text-blue-600 bg-blue-200 rounded-full p-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -218,7 +218,7 @@ if (isset($_POST['reject'])) {
                                             $result2 = mysqli_query($con, $courseQuery);
                                             $course = mysqli_fetch_assoc($result2);
                                         ?>
-                                            <a class="flex items-center py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            <a onclick="$('#course-tab').click()" class="flex items-center py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">
                                                 <div class="flex-shrink-0 text-amber-600 bg-amber-200 rounded-full p-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -325,91 +325,93 @@ if (isset($_POST['reject'])) {
                                 $query = "SELECT * FROM requests,instructor WHERE type = 'application' AND status ='waiting' AND instructor_username = username ORDER BY requestID DESC ";
                                 $result = mysqli_query($con, $query);
                                 if (mysqli_num_rows($result) > 0) { ?>
-                                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                        <tbody>
-                                            <?php
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                            ?>
-                                                <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
-                                                    <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white" inst-fullname>
-                                                        <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>
-                                                    </th>
-                                                    <td class="py-4 px-6" inst-field>
-                                                        <?php echo ucfirst($row['field']) ?>
-                                                    </td>
-                                                    <td class="py-4 px-6">
-                                                        <?php if ($row['experience'] > 1) echo $row['experience'] . ' years experience';
-                                                        else echo '1 year experience'; ?>
-                                                    </td>
-                                                    <td class="py-4 px-6">
-                                                        <?php $date = explode("-", $row['date']);
-                                                        echo 'Submitted on <span>' . $date[2] . '/' . $date[1] . '/' . $date[0] . '</span>' ?>
-                                                    </td>
-                                                    <td class="py-4 px-6 flex justify-end gap-4 items-center">
-                                                        <button data-modal-toggle="<?php echo $row['username'] ?>" class="flex items-center text-blue-600 p-1 hover:bg-blue-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                                            </svg><span>Details</span></button>
-                                                        <p>|</p>
-                                                        <!-- Main modal -->
-                                                        <div id="<?php echo $row['username'] ?>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                                                            <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
-                                                                <!-- Modal content -->
-                                                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                                    <!-- Modal header -->
-                                                                    <div class="flex justify-between items-start p-4 pb-1 rounded-t border-b dark:border-gray-600">
-                                                                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                                            New instructor
-                                                                        </h3>
-                                                                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="<?php echo $row['username'] ?>">
-                                                                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                                                            </svg>
-                                                                            <span class="sr-only">Close modal</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <!-- Modal body -->
-                                                                    <div class="p-6 pt-3 space-y-6">
-                                                                        <div class="text-base leading-relaxed text-gray-800 flex flex-col">
-                                                                            <p class="w-full font-bold text-xl border-b border-gray-300 text-blue-800 pb-2"><?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?></p>
-                                                                            <div class="flex justify-between w-full mt-3">
-                                                                                <p><?php echo ucfirst($row['field']) ?></p>
-                                                                                <p><?php echo ucfirst($row['degree']) ?></p>
-                                                                                <p><?php echo ucfirst($row['experience']) . ' years experience' ?></p>
-                                                                            </div>
-                                                                            <div class="w-full mt-5 text-gray-800 font-semibold">- About <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>:</div>
-                                                                            <div class="w-full ml-5"><?php echo ucfirst($row['bio']) ?></div>
-                                                                            <div class="w-full mt-5 text-gray-800 font-semibold">- <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>'s previous courses:</div>
-                                                                            <div class="w-full ml-5">
-                                                                                <?php if ($row['previous_course'] != "") echo '<a class="text-blue-700" href="' . $row['previous_course'] . '" target="_blank">Find it here</a>';
-                                                                                else echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) . ' does not have previuos courses' ?>
-                                                                            </div>
-                                                                            <div class="w-full mt-5 text-gray-800 font-semibold">
-                                                                                - Contact:
-                                                                            </div>
-                                                                            <div class="w-full ml-5">
-                                                                                <a class="text-blue-700" href="mailto:<?php echo $row['email'] ?>">Email</a>
+                                    <div class="overflow-y-auto overflow-x-hidden scrollbar max-h-96">
+                                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                            <tbody>
+                                                <?php
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                ?>
+                                                    <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white" inst-fullname>
+                                                            <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>
+                                                        </th>
+                                                        <td class="py-4 px-6" inst-field>
+                                                            <?php echo ucfirst($row['field']) ?>
+                                                        </td>
+                                                        <td class="py-4 px-6">
+                                                            <?php if ($row['experience'] > 1) echo $row['experience'] . ' years experience';
+                                                            else echo '1 year experience'; ?>
+                                                        </td>
+                                                        <td class="py-4 px-6">
+                                                            <?php $date = explode("-", $row['date']);
+                                                            echo 'Submitted on <span>' . $date[2] . '/' . $date[1] . '/' . $date[0] . '</span>' ?>
+                                                        </td>
+                                                        <td class="py-4 px-6 flex justify-end gap-4 items-center">
+                                                            <button data-modal-toggle="<?php echo $row['username'] ?>" class="flex items-center text-blue-600 p-1 hover:bg-blue-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                    <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                                </svg><span>Details</span></button>
+                                                            <p>|</p>
+                                                            <!-- Main modal -->
+                                                            <div id="<?php echo $row['username'] ?>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                                                                <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                                                                    <!-- Modal content -->
+                                                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                                        <!-- Modal header -->
+                                                                        <div class="flex justify-between items-start p-4 pb-1 rounded-t border-b dark:border-gray-600">
+                                                                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                                                New instructor
+                                                                            </h3>
+                                                                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="<?php echo $row['username'] ?>">
+                                                                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                                                                </svg>
+                                                                                <span class="sr-only">Close modal</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <!-- Modal body -->
+                                                                        <div class="p-6 pt-3 space-y-6">
+                                                                            <div class="text-base leading-relaxed text-gray-800 flex flex-col">
+                                                                                <p class="w-full font-bold text-xl border-b border-gray-300 text-blue-800 pb-2"><?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?></p>
+                                                                                <div class="flex justify-between w-full mt-3">
+                                                                                    <p><?php echo ucfirst($row['field']) ?></p>
+                                                                                    <p><?php echo ucfirst($row['degree']) ?></p>
+                                                                                    <p><?php echo ucfirst($row['experience']) . ' years experience' ?></p>
+                                                                                </div>
+                                                                                <div class="w-full mt-5 text-gray-800 font-semibold">- About <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>:</div>
+                                                                                <div class="w-full ml-5"><?php echo ucfirst($row['bio']) ?></div>
+                                                                                <div class="w-full mt-5 text-gray-800 font-semibold">- <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>'s previous courses:</div>
+                                                                                <div class="w-full ml-5">
+                                                                                    <?php if ($row['previous_course'] != "") echo '<a class="text-blue-700" href="' . $row['previous_course'] . '" target="_blank">Find it here</a>';
+                                                                                    else echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) . ' does not have previuos courses' ?>
+                                                                                </div>
+                                                                                <div class="w-full mt-5 text-gray-800 font-semibold">
+                                                                                    - Contact:
+                                                                                </div>
+                                                                                <div class="w-full ml-5">
+                                                                                    <a class="text-blue-700" href="mailto:<?php echo $row['email'] ?>">Email</a>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <form action="requests.php" method="POST" class="flex justify-between items-center gap-4">
-                                                            <input name="username" value="<?php echo $row['username'] ?>" class="hidden">
-                                                            <button name="accept" class="flex items-center text-green-600 p-1 hover:bg-green-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
-                                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                                                </svg><span>Accept</span></button>
-                                                            <p>|</p>
-                                                            <button name="reject" class="flex items-center text-red-600 p-1 hover:bg-red-100 rounded-md">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
-                                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                                                </svg><span>Reject</span></button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
+                                                            <form action="requests.php" method="POST" class="flex justify-between items-center gap-4">
+                                                                <input name="username" value="<?php echo $row['username'] ?>" class="hidden">
+                                                                <button name="accept" class="flex items-center text-green-600 p-1 hover:bg-green-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                                    </svg><span>Accept</span></button>
+                                                                <p>|</p>
+                                                                <button name="reject" class="flex items-center text-red-600 p-1 hover:bg-red-100 rounded-md">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                                                    </svg><span>Reject</span></button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 <?php } else { ?>
                                     <p class="p-3">No registration request yet</p>
                                 <?php } ?>
@@ -471,7 +473,7 @@ if (isset($_POST['reject'])) {
                                 $query = "SELECT * FROM requests,course,instructor WHERE type = 'course' AND status ='waiting' AND instructor_username = username AND course_id = courseID ORDER BY requestID DESC";
                                 $result = mysqli_query($con, $query);
                                 if (mysqli_num_rows($result) > 0) { ?>
-                                    <div class=" overflow-y-auto overflow-x-hidden scrollbar h-96">
+                                    <div class="overflow-y-auto overflow-x-hidden scrollbar max-h-96">
                                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                             <tbody>
                                                 <?php

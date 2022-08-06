@@ -1,5 +1,6 @@
 <?php
 session_start();
+require __DIR__ . '/vendor/autoload.php';
 if (isset($_SESSION['type'])) {
     $privilage = $_SESSION['type'];
     if (isset($_SESSION['username']) && $privilage == "student") {
@@ -16,6 +17,16 @@ if (isset($_SESSION['type'])) {
 require('database/db_connection.php');
 $con = OpenCon();
 if (isset($_POST['createAccountBtn'])) {
+    $options = array(
+        'cluster' => 'ap2',
+        'useTLS' => true
+    );
+    $pusher = new Pusher\Pusher(
+        'b2e65e119e246c55827a',
+        '956e3a00348571b20a5c',
+        '1457323',
+        $options
+    );
     $isValidEmail = true;
     $isValidUsername = true;
     $fName = filter_input(INPUT_POST, 'firstName');
@@ -76,6 +87,8 @@ if (isset($_POST['createAccountBtn'])) {
                 $date = date("Y-m-d");
                 $insertQuery = "INSERT INTO requests (type,status,instructor_username,date) VALUES ('application','waiting','$username','$date')";
                 mysqli_query($con, $insertQuery);
+                $data['message'] = $fName;
+                $pusher->trigger('my-channel', 'my-event', $data);
             }
         }
     }
