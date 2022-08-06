@@ -21,6 +21,7 @@ $mail->Username   = 'iMaster.learn@gmail.com';                     //SMTP userna
 $mail->Password   = 'xwekqahzelijocka';                               //SMTP password
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
 $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+$mail->setFrom('iMaster.learn@gmail.com', 'iMaster');
 
 //Content
 $mail->isHTML(true);     //Set email format to HTML

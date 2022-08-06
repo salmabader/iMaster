@@ -1,6 +1,8 @@
 <?php
 session_start();
 require 'database/db_connection.php';
+require 'mailConfig.php';
+
 $con = OpenCon();
 // if there is a session but user is not admin
 if (isset($_SESSION['type'])) {
@@ -26,10 +28,36 @@ if (isset($_POST['accept'])) {
     mysqli_query($con, $updateQuery);
     $updateQuery = "UPDATE requests SET status = 'accepted', admin_username = '" . $_SESSION['username'] . "' WHERE type = 'application' AND status = 'waiting' AND instructor_username ='" . $_POST['username'] . "'";
     mysqli_query($con, $updateQuery);
+    $query = "SELECT FName,LName,email FROM instructor WHERE username ='" . $_POST['username'] . "'";
+    $result = mysqli_query($con, $query);
+    $instructor = mysqli_fetch_assoc($result);
+    $fullName = $instructor['FName'] . ' ' . $instructor['LName'];
+    $mail->addAddress($instructor['email'], $fullName);     //Add a recipient
+
+    //Content
+    $mail->Subject = 'Your request has been accepted';
+    $mail->Body    = 'Hello ' . ucfirst($instructor['FName']) . ',<br>
+    Your application to join us on iMaster as an instructor has been accepted ✅<br>
+    You can now signin to your account and create courses to reach registered students 🌟.<br><br>
+    We are happy to have you join us,<br>' . $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] . '<br><br>iMaster';
+    $mail->send();
 }
 if (isset($_POST['reject'])) {
-    $query = "DELETE FROM instructor WHERE username ='" . $_POST['username'] . "'";
-    mysqli_query($con, $query);
+    $updateQuery = "UPDATE requests SET status = 'rejected', admin_username = '" . $_SESSION['username'] . "' WHERE type = 'application' AND status = 'waiting' AND instructor_username ='" . $_POST['username'] . "'";
+    mysqli_query($con, $updateQuery);
+    $query = "SELECT FName,LName,email FROM instructor WHERE username ='" . $_POST['username'] . "'";
+    $result = mysqli_query($con, $query);
+    $instructor = mysqli_fetch_assoc($result);
+    $fullName = $instructor['FName'] . ' ' . $instructor['LName'];
+    $mail->addAddress($instructor['email'], $fullName);     //Add a recipient
+
+    //Content
+    $mail->Subject = 'Sorry for not accepting your request';
+    $mail->Body    = 'Hello ' . ucfirst($instructor['FName']) . ',<br>
+    We apologize for not accepting your application to join iMaster as an instructor.<br>
+    You can apply again or contact us if you have any questions.<br><br>
+    Thank you,<br>' . $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] . '<br><br>iMaster';
+    $mail->send();
 }
 ?>
 <!DOCTYPE html>

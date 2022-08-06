@@ -52,8 +52,6 @@ if (isset($_POST['sendCode'])) {
         } else {
             // send the code to email
             $_SESSION['code'] = substr(str_shuffle("0123456789"), 0, 6);
-            //Recipients
-            $mail->setFrom('SalmaBader.CS@gmail.com', 'iMaster');
             // to get full name
             if ($fetchedStu) {
                 $getFullName = "SELECT FName, LName FROM student WHERE email = '$email'";
