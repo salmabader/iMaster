@@ -197,7 +197,7 @@ $con = OpenCon();
 					<div id="myCoursesSection" class="md:ml-5 mt-5 flex md:flex-wrap gap-3 md:flex-row flex-col">
 						<!-- get student's courses -->
 						<?php
-						$query = "SELECT * FROM course,requests WHERE instructor_usename = '" . $_SESSION['username'] . "' AND type = 'course' AND status = 'accept' ";
+						$query = "SELECT * FROM course,requests WHERE instructor_usename = '" . $_SESSION['username'] . "' AND courseID=course_id AND status = 'accepted' ";
 						$result = mysqli_query($con, $query);
 						if (mysqli_num_rows($result) > 0) { ?>
 							<p class="text-xl font-bold capitalize w-full tracking-wide text-gray-700">My courses</p>
