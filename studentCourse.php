@@ -12,6 +12,22 @@ if (isset($_SESSION['type'])) {
 	exit();
 }
 $con = OpenCon();
+
+if (isset($_POST['addBut'])) {
+	echo "hi";
+	$courseID = filter_input(INPUT_POST, 'courseID');
+	$stu_username=$_SESSION['username'];
+	$insertQuery = "INSERT INTO student_course (stu_username,coID) VALUES (?,?)";
+	$statement = mysqli_stmt_init($con);
+	if (!mysqli_stmt_prepare($statement, $insertQuery)) {
+		header('Location: index.php?error=InsertionError');
+		exit();
+	} else {
+
+		mysqli_stmt_bind_param($statement, "ss", $stu_username, $coID);
+		mysqli_stmt_execute($statement);
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -218,9 +234,9 @@ $con = OpenCon();
 								<?php while ($course = mysqli_fetch_assoc($result)) {
 								?>
 									<!-- card -->
-									<div class="flex-none snap-always snap-center w-full md:w-1/5 bg-gray-50 rounded-md shadow-sm border border-gray-300 relative" role="button" data-modal-toggle="#show<?php echo ucfirst($course['courseID']) ?>">
+									<div class="flex-none snap-always snap-center w-full md:w-1/5 bg-gray-50 rounded-md shadow-sm border border-gray-300 relative" role="button">
 										<!-- Image -->
-										<img class="h-40 object-cover rounded-t-md w-full" src="upload/<?php echo $course['image'] ?>">
+										<img class="h-40 object-cover rounded-t-md w-full " data-modal-toggle="#show<?php echo ucfirst($course['courseID']) ?>" src="upload/<?php echo $course['image'] ?>">
 										<p class="absolute top-1 right-1
                                     <?php if ($course['level'] == 0) echo "bg-yellow-100 text-yellow-800";
 									elseif ($course['level'] == 1) echo "bg-green-100 text-green-800";
@@ -247,21 +263,24 @@ $con = OpenCon();
 												</svg><?php echo ucfirst($instructor['FName']) . " " . ucfirst($instructor['LName']) ?></p>
 										</div>
 										<div class="flex justify-end m-3">
-											<!-- row 1: AddButton -->
-											<a href="#" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+											<form action="studentCourse.php" method="POST" class="flex justify-between items-center gap-4">
+												<input name="courseID" value="<?php echo $course['courseID'] ?>" class="hidden">
+												<!-- row 1: AddButton -->
+												<button id="addBut1" name="addBut" onclick="hideAdd()" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
-												<svg class="w-5 h-5" id="addBut" name="addBut" onclick="hideAdd()" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-													</path>
-												</svg>
-											</a>
-											<!-- row 2: FavButton -->
-											<a href="#" id="FavBut" name="FavBut" onclick="hideFAV()" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+													<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+														</path>
+													</svg>
+												</button>
+												<!-- row 2: FavButton -->
+												<button id="FavBut1" name="FavBut" onclick="hideFAV()" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
-												<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-												</svg>
-											</a>
+													<svg class="w-5 h-5 text-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+													</svg>
+												</button>
+											</form>
 										</div>
 
 									</div>
@@ -346,9 +365,9 @@ $con = OpenCon();
 							<?php while ($course = mysqli_fetch_assoc($result)) {
 							?>
 								<!-- card -->
-								<div class=" w-full md:w-1/5 bg-gray-50 rounded-md shadow-sm border border-gray-300 relative" role="button" data-modal-toggle="#show<?php echo ucfirst($course['courseID']) ?>">
+								<div class=" w-full md:w-1/5 bg-gray-50 rounded-md shadow-sm border border-gray-300 relative" role="button">
 									<!-- Image -->
-									<img class="h-40 object-cover rounded-t-md w-full" src="upload/<?php echo $course['image'] ?>">
+									<img class="h-40 object-cover rounded-t-md w-full" src="upload/<?php echo $course['image'] ?>" data-modal-toggle="#show<?php echo ucfirst($course['courseID']) ?>">
 									<p class="absolute top-1 right-1
                                     <?php if ($course['level'] == 0) echo "bg-yellow-100 text-yellow-800";
 									elseif ($course['level'] == 1) echo "bg-green-100 text-green-800";
@@ -375,21 +394,24 @@ $con = OpenCon();
 											</svg><?php echo ucfirst($instructor['FName']) . " " . ucfirst($instructor['LName']) ?></p>
 									</div>
 									<div class="flex justify-end m-3">
-										<!-- row 1: AddButton -->
-										<a href="#" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+										<form action="studentCourse.php" method="POST" class="flex justify-between items-center gap-4">
+											<input name="courseID" value="<?php echo $course['courseID'] ?>" class="hidden">
+											<!-- row 1: AddButton -->
+											<button id="addBut2" name="addBut" onclick="hideAdd()" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
-											<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-												</path>
-											</svg>
-										</a>
-										<!-- row 2: FavButton -->
-										<a href="#" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+												<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+													</path>
+												</svg>
+											</button>
+											<!-- row 2: FavButton -->
+											<button id="FavBut2" name="FavBut" onclick="hideFAV()" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
-											<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-											</svg>
-										</a>
+												<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+												</svg>
+											</button>
+										</form>
 									</div>
 
 								</div>
@@ -506,46 +528,39 @@ $con = OpenCon();
 			</div>
 		</div>
 	</div>
-	<!-- <script>
-		const AddButton = document.getElementById("addBut");
-		const FavButton = document.getElementById("FavBut");
+	<script>
+		const AddButton1 = document.getElementById("addBut1");
+		const AddButton2 = document.getElementById("addBut2");
+		const FavButton = document.getElementById("FavBut1");
+		const FavButton2 = document.getElementById("FavBut2");
+
 
 		// **********for AddButton***********
-		<?php
-		// $stu_username=
-		// $coID=
-		?>
 
-		function hideAdd() {
-			AddButton.style.display = "none"
-			<?php
-			if (isset($_POST['addBut'])) {
+		function hideAdd1() {
+			AddButton1.style.display = true
 
-				
-					$insertQuery = "INSERT INTO student_course (stu_username,coID) VALUES (?,?)";
-					$statement = mysqli_stmt_init($con);
-					if (!mysqli_stmt_prepare($statement, $insertQuery)) {
-						header('Location: index.php?error=InsertionError');
-						exit();
-					} else {
-
-						mysqli_stmt_bind_param($statement, "ss",$stu_username,$coID);
-						mysqli_stmt_execute($statement);
-						
-					}
-				
-				
-			}
-			?>
 
 		}
-		
+		function hideAdd2() {
+			AddButton2.style.display = true
+
+
+		}
+
 		// ***************for FavButton**************
-
-		function hideFAV() {
-
+		function hideFAV1() {
+			FavButton1.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+</svg>`
 		}
-	</script> -->
+
+		function hideFAV2() {
+			FavButton2.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+  <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+</svg>`
+		}
+	</script>
 	<script src="js/analytics.js"></script>
 	<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>

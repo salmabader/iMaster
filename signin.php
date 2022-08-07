@@ -24,6 +24,7 @@ if (isset($_POST['signinBtn'])) {
 	$existanceQuery2 = "SELECT * FROM instructor WHERE username = ?";
 	$statement1 = mysqli_stmt_init($con);
 	$statement2 = mysqli_stmt_init($con);
+	$wrongInfo = false;
 	if (!mysqli_stmt_prepare($statement1, $existanceQuery1) || !mysqli_stmt_prepare($statement2, $existanceQuery2)) {
 		header('Location: index.php?error=SQLError');
 		exit();
@@ -41,17 +42,20 @@ if (isset($_POST['signinBtn'])) {
 		if (isset($inst)) {
 			$isValidInstPass = password_verify($password, $inst['password']);
 			if ($isValidInstPass == 0) {
-				$passError = "Invalid password.";
+				$wrongInfo = true;
 			}
 		}
 		if (isset($stu)) {
 			$isValidstuPass = password_verify($password, $stu['password']);
 			if ($isValidstuPass == 0) {
-				$passError = "Invalid password.";
+				$wrongInfo = true;
 			}
 		}
-		if (!isset($inst) && !isset($stu) || $inst['isAccepted'] == 0) {
-			$usernameError = "Invalid username.";
+		if (!isset($inst) && !isset($stu) || (isset($inst) && $inst['isAccepted'] == 0)) {
+			$wrongInfo = true;
+		}
+		if ($wrongInfo) {
+			$Error = "Username or password is incorrect";
 		}
 		if (isset($stu) && $isValidstuPass) {
 			session_start();
@@ -136,9 +140,7 @@ if (isset($_POST['signinBtn'])) {
 					<label for="usename" class="block capitalize font-semibold">username</label>
 					<input type="text" name="username" maxlength="10" id="signup_usename" placeholder="_salma" class="w-full mt-1  bg-amber-50 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-amber-400 focus:ring-amber-400" value="<?php if (isset($username)) echo htmlspecialchars($username)  ?>">
 					<div class="text-red-500 text-sm mt-2">
-						<p class="flex items-center" id="usernameError"><?php if (isset($usernameError)) echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>' . $usernameError ?></p>
+
 					</div>
 				</div>
 				<!-- password -->
@@ -154,9 +156,9 @@ if (isset($_POST['signinBtn'])) {
 							</div>
 							<input type="password" name="password" id="password" placeholder="••••••••" class="w-full mt-1  bg-amber-50 px-6 py-2 rounded-lg border-2 border-amber-200 focus:bg-white placeholder-gray-400 text-blue-800 focus:border-amber-400 focus:ring-amber-400" data-tooltip-target="tooltip-click" data-tooltip-trigger="click" data-tooltip-placement="right" value="<?php if (isset($password)) echo htmlspecialchars($password) ?>">
 							<div class="text-red-500 text-sm mt-2">
-								<p class="flex items-center" id="usernameError"><?php if (isset($passError)) echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>' . $passError ?></p>
+								<p class="flex items-center" id="usernameError"><?php if (isset($Error)) echo '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+									<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+								</svg>' . $Error ?></p>
 							</div>
 						</div>
 						<div class="text-red-500 text-sm mt-2">

@@ -17,27 +17,27 @@ if (isset($_POST['createAccountBtn'])) {
 
 	$description = filter_input(INPUT_POST, 'description');
 	$Reason = filter_input(INPUT_POST, 'Reason');
-	$title = filter_input(INPUT_POST, 'title');
+	$courseID = filter_input(INPUT_POST, 'title');
 	$option = filter_input(INPUT_POST, 'option');
-	$status = "waiting..";
+	$status = "waiting";
 
 	$instUsername = $_SESSION['username'];
 	//  for option 1:
-	if (isset($option) && $option == "DeleteCourse" && isset($title) && isset($Reason)) {
-		$insertQuery = "INSERT INTO requests (type,status,instructor_username,reason,title) VALUES (?,?,?,?,?)";
+	if ($option == "DeleteCourse") {
+		$insertQuery = "INSERT INTO requests (type,status,instructor_username,reason,course_id) VALUES (?,?,?,?,?)";
 		$statement = mysqli_stmt_init($con);
 		if (!mysqli_stmt_prepare($statement, $insertQuery)) {
 			header('Location: index.php?error=InsertionError');
 			exit();
 		} else {
 
-			mysqli_stmt_bind_param($statement, "sssss", $option, $status, $instUsername, $Reason, $title);
+			mysqli_stmt_bind_param($statement, "sssss", $option, $status, $instUsername, $Reason, $courseID);
 			mysqli_stmt_execute($statement);
 			$feedback = "Your Request has been sent!";
 		}
 	}
 	//  for option 2:
-	if (isset($option) && $option == "others" && isset($description)) {
+	if ($option == "others") {
 		$insertQuery = "INSERT INTO requests (type,status,instructor_username,reason) VALUES (?,?,?,?)";
 		$statement = mysqli_stmt_init($con);
 		if (!mysqli_stmt_prepare($statement, $insertQuery)) {
@@ -273,7 +273,7 @@ if (isset($_POST['createAccountBtn'])) {
 											if (mysqli_num_rows($result) > 0) { ?>
 												<?php while ($course = mysqli_fetch_assoc($result)) {
 												?>
-													<option value="<?php echo ucfirst($course['title']) ?>"><?php echo ucfirst($course['title']) ?></option>
+													<option value="<?php echo ucfirst($course['courseID']) ?>"><?php echo ucfirst($course['title']) ?></option>
 											<?php }
 											} ?>
 										</select>
