@@ -1,6 +1,8 @@
 let form2_inputs = document.querySelectorAll("#form2 input")
 let allFilled = false
 let allContent = false
+let correctUsername = false
+
 // ---------- next and back buttons ----------
 const form1 = document.getElementById("form1")
 const form2 = document.getElementById("form2")
@@ -257,7 +259,6 @@ function checkValue() {
 // ---------- activate next3 button ----------
 function activeNext3() {
     const step3_inputs = document.querySelectorAll("#form3 input[type=file]")
-    console.log(step3_inputs)
     for (let i = 0; i < step3_inputs.length; i++) {
         if (step3_inputs[i].value) {
             allContent = true
@@ -309,14 +310,31 @@ function activeDone() {
         isThereCo = true
     } else if (checked == "no") {
         isThereCo = true
+        correctUsername = true
     } else {
         isThereCo = false
     }
-    done.disabled = !(description.value && image.value && isThereCo)
+    done.disabled = !(description.value && image.value && isThereCo && correctUsername)
 }
 done.addEventListener('click', function () {
     localStorage.clear()
 })
+
+// ---------- to check if the collaborator username exist ----------
+let wrongUsername = document.getElementById("wrongUsername")
+function checkUsername(arr_username) {
+    if (arr_username.includes(coUsername.value.toLowerCase())) {
+        correctUsername = true
+        wrongUsername.classList.add("hidden")
+    } else if (coUsername.value == "") {
+        wrongUsername.classList.add("hidden")
+
+    } else {
+        correctUsername = false
+        wrongUsername.classList.remove("hidden")
+    }
+    activeDone()
+}
 
 // ---------- to show toast msg ----------
 const toast = document.getElementById("course-submitted")

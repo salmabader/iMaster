@@ -5,6 +5,14 @@ $con = OpenCon();
 
 require __DIR__ . '/vendor/autoload.php';
 
+// get all instructor usernames to check it
+$query = "SELECT username FROM instructor,requests WHERE status='accepted' AND type = 'application'";
+$result = mysqli_query($con, $query);
+$usernames = [];
+while ($row = mysqli_fetch_assoc($result)) {
+	$usernames[] = strtolower($row['username']);
+}
+
 if (isset($_POST['done'])) {
 
 	$options = array(
@@ -26,8 +34,7 @@ if (isset($_POST['done'])) {
 
 	$chapterTitles =  $_POST['chapterTitle'];
 
-	// $contentVideo =  $_POST['contentVideo'];
-	// $img = $_POST['image'];
+	$contentVideo =  $_FILES['contentVideo'];
 	$contentDescription =  $_POST['contentDescription'];
 
 	$courseDescription = filter_input(INPUT_POST, 'description');
@@ -74,6 +81,23 @@ if (isset($_POST['done'])) {
 				if (mysqli_stmt_prepare($statement, $query)) {
 					mysqli_stmt_bind_param($statement, "ss", $lessons[$j], $chapterID);
 					mysqli_stmt_execute($statement);
+
+					$lessonID = mysqli_insert_id($con);
+
+					// set the content file name
+					$fileName = $courseTitle . '_' . $lessonID;
+					$path_parts = pathinfo($contentVideo['name'][$j]);
+					$ext = $path_parts['extension'];
+					$location = 'upload/' . $fileName . "." . $ext;
+					move_uploaded_file($contentVideo['tmp_name'][$j], $location);
+					$video = $fileName . "." . $ext;
+
+					$query = "UPDATE content SET video = ?, description = ? WHERE contentID = '$lessonID '";
+					$statement = mysqli_stmt_init($con);
+					if (mysqli_stmt_prepare($statement, $query)) {
+						mysqli_stmt_bind_param($statement, "ss", $video, $contentDescription[$j]);
+						mysqli_stmt_execute($statement);
+					}
 				}
 			}
 		}
@@ -161,6 +185,9 @@ if (isset($_POST['done'])) {
 </head>
 
 <body class="h-screen w-screen overflow-hidden">
+	<script>
+		let instUsernames = <?php echo (json_encode($usernames)); ?>;
+	</script>
 	<?php
 	// retreive admin info:
 	$query = "SELECT * FROM " . $_SESSION['type'] . " WHERE username ='" . $_SESSION['username'] . "'";
@@ -448,12 +475,18 @@ if (isset($_POST['done'])) {
 												<input type="radio" name="radioBtns" value="no" id="no" class="h-4 w-4 border border-gray-400 bg-white checked:bg-blue-400 checked:border-blue-300  focus:outline-none focus:ring-blue-400 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-1 cursor-pointer"><label for="no" class="capitalize"> no</label>
 											</div>
 										</div>
-										<div class="hidden w-full" id="collaborator">
+										<div class="hidden w-full flex flex-col" id="collaborator">
 											<div class="flex">
 												<span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300">
 													@
 												</span>
-												<input type="text" id="coUsername" name="coUsername" class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 " placeholder="please enter the collaborator's username">
+												<input onkeyup="checkUsername(instUsernames)" type="text" id="coUsername" name="coUsername" class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 " placeholder="please enter the collaborator's username">
+											</div>
+											<div id="wrongUsername" class="text-red-500 flex items-center text-sm hidden mt-1">
+												<svg xmlns="http://www.w3.org/2000/svg" class="h-5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+													<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+												</svg>
+												<p>This username does not exist</p>
 											</div>
 										</div>
 									</div>
