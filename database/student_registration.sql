@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 07, 2022 at 01:08 PM
+-- Generation Time: Aug 07, 2022 at 01:26 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -342,6 +342,17 @@ CREATE TABLE `student_course` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `student_favorite`
+--
+
+CREATE TABLE `student_favorite` (
+  `course_id` int(11) NOT NULL,
+  `stu_username` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `student_interests`
 --
 
@@ -419,6 +430,13 @@ ALTER TABLE `student_course`
   ADD KEY `courseID` (`coID`);
 
 --
+-- Indexes for table `student_favorite`
+--
+ALTER TABLE `student_favorite`
+  ADD PRIMARY KEY (`course_id`,`stu_username`),
+  ADD KEY `stu_username` (`stu_username`);
+
+--
 -- Indexes for table `student_interests`
 --
 ALTER TABLE `student_interests`
@@ -490,6 +508,13 @@ ALTER TABLE `requests`
 ALTER TABLE `student_course`
   ADD CONSTRAINT `student_course_ibfk_1` FOREIGN KEY (`coID`) REFERENCES `course` (`courseID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `student_course_ibfk_2` FOREIGN KEY (`stu_username`) REFERENCES `student` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student_favorite`
+--
+ALTER TABLE `student_favorite`
+  ADD CONSTRAINT `student_favorite_ibfk_1` FOREIGN KEY (`stu_username`) REFERENCES `student` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_favorite_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `course` (`courseID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student_interests`

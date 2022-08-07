@@ -14,9 +14,9 @@ if (isset($_SESSION['type'])) {
 $con = OpenCon();
 
 if (isset($_POST['addBut'])) {
-	echo "hi";
+
 	$courseID = filter_input(INPUT_POST, 'courseID');
-	$stu_username=$_SESSION['username'];
+	$stu_username = $_SESSION['username'];
 	$insertQuery = "INSERT INTO student_course (stu_username,coID) VALUES (?,?)";
 	$statement = mysqli_stmt_init($con);
 	if (!mysqli_stmt_prepare($statement, $insertQuery)) {
@@ -24,7 +24,7 @@ if (isset($_POST['addBut'])) {
 		exit();
 	} else {
 
-		mysqli_stmt_bind_param($statement, "ss", $stu_username, $coID);
+		mysqli_stmt_bind_param($statement, "ss", $stu_username, $courseID);
 		mysqli_stmt_execute($statement);
 	}
 }
@@ -265,16 +265,16 @@ if (isset($_POST['addBut'])) {
 										<div class="flex justify-end m-3">
 											<form action="studentCourse.php" method="POST" class="flex justify-between items-center gap-4">
 												<input name="courseID" value="<?php echo $course['courseID'] ?>" class="hidden">
-												<!-- row 1: AddButton -->
-												<button id="addBut1" name="addBut" onclick="hideAdd()" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+												<!-- row 1: FavButton -->
+												<button id="FavBut1" name="FavBut" onclick="hideFAV1()" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
 													<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
 														</path>
 													</svg>
 												</button>
-												<!-- row 2: FavButton -->
-												<button id="FavBut1" name="FavBut" onclick="hideFAV()" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+												<!-- row 2:AddButton -->
+												<button id="addBut1" name="addBut" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
 													<svg class="w-5 h-5 text-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -396,16 +396,16 @@ if (isset($_POST['addBut'])) {
 									<div class="flex justify-end m-3">
 										<form action="studentCourse.php" method="POST" class="flex justify-between items-center gap-4">
 											<input name="courseID" value="<?php echo $course['courseID'] ?>" class="hidden">
-											<!-- row 1: AddButton -->
-											<button id="addBut2" name="addBut" onclick="hideAdd()" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+											<!-- row 1: FavButton -->
+											<button id="FavBut2" name="FavBut" onclick="hideFAV2()" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
 												<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
 													</path>
 												</svg>
 											</button>
-											<!-- row 2: FavButton -->
-											<button id="FavBut2" name="FavBut" onclick="hideFAV()" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+											<!-- row 2: AddButton -->
+											<button id="addBut2" name="addBut"  class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
 												<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -529,24 +529,12 @@ if (isset($_POST['addBut'])) {
 		</div>
 	</div>
 	<script>
-		const AddButton1 = document.getElementById("addBut1");
-		const AddButton2 = document.getElementById("addBut2");
 		const FavButton = document.getElementById("FavBut1");
 		const FavButton2 = document.getElementById("FavBut2");
 
 
-		// **********for AddButton***********
-
-		function hideAdd1() {
-			AddButton1.style.display = true
 
 
-		}
-		function hideAdd2() {
-			AddButton2.style.display = true
-
-
-		}
 
 		// ***************for FavButton**************
 		function hideFAV1() {
