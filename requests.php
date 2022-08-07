@@ -41,7 +41,7 @@ if (isset($_POST['accept'])) {
     You can now signin to your account and create courses to reach registered students 🌟.<br><br>
     We are happy to have you join us,<br>' . $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] . '<br><br>iMaster';
     if ($mail->send()) {
-        $feedback = "The instructor: " . $fullName . "was accepted";
+        $feedback = "The instructor: " . $fullName . " was accepted";
     }
 }
 if (isset($_POST['reject'])) {
@@ -60,9 +60,28 @@ if (isset($_POST['reject'])) {
     You can apply again or contact us if you have any questions.<br><br>
     Thank you,<br>' . $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] . '<br><br>iMaster';
     if ($mail->send()) {
-        $feedback = "The instructor: " . $fullName . "was rejected";
+        $feedback = "The instructor: " . $fullName . " was rejected";
     }
     $delete = "DELETE FROM instructor WHERE username ='" . $_POST['username'] . "'";
+}
+if (isset($_POST['acceptCourse'])) {
+    $updateQuery = "UPDATE requests SET status = 'accepted', admin_username = '" . $_SESSION['username'] . "' WHERE type = 'course' AND status = 'waiting' AND instructor_username ='" . $_POST['username'] . "' AND course_id = '" . $_POST['courseId'] . "'";
+    mysqli_query($con, $updateQuery);
+    $query = "SELECT FName,LName,email FROM instructor WHERE username ='" . $_POST['username'] . "'";
+    $result = mysqli_query($con, $query);
+    $instructor = mysqli_fetch_assoc($result);
+    $fullName = $instructor['FName'] . ' ' . $instructor['LName'];
+    $mail->addAddress($instructor['email'], $fullName);     //Add a recipient
+
+    //Content
+    $mail->Subject = 'Your course has been accepted';
+    $mail->Body    = 'Hello ' . ucfirst($instructor['FName']) . ',<br>
+    Your course: <b>' . $_POST['courseTitle'] . '</b> has been accepted ✅.<br>
+    Students can join the course now.<br><br>
+    Thank you,<br>' . $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] . '<br><br>iMaster';
+    if ($mail->send()) {
+        $feedback = "The course: " . $_POST['courseTitle'] . " was accepted";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -233,7 +252,7 @@ if (isset($_POST['reject'])) {
                                     $firstIteration = true;
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         if ($row['type'] == 'application') { ?>
-                                            <a onclick="$('#instructor-tab').click()" class="flex items-center py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            <a onclick="$('#instructor-tab').click()" class="flex items-center py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
                                                 <div class="flex-shrink-0 text-blue-600 bg-blue-200 rounded-full p-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -251,7 +270,7 @@ if (isset($_POST['reject'])) {
                                             $result2 = mysqli_query($con, $courseQuery);
                                             $course = mysqli_fetch_assoc($result2);
                                         ?>
-                                            <a onclick="$('#course-tab').click()" class="flex items-center py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            <a onclick="$('#course-tab').click()" class="flex items-center py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
                                                 <div class="flex-shrink-0 text-amber-600 bg-amber-200 rounded-full p-2">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -613,6 +632,9 @@ if (isset($_POST['reject'])) {
                                                             </div>
                                                             <p>|</p>
                                                             <form action="requests.php" method="POST" class="flex justify-between items-center gap-4">
+                                                                <input name="username" value="<?php echo $row['username'] ?>" class="hidden">
+                                                                <input name="courseId" value="<?php echo $row['courseID'] ?>" class="hidden">
+                                                                <input name="courseTitle" value="<?php echo $row['title'] ?>" class="hidden">
                                                                 <button name="acceptCourse" class="flex items-center text-green-600 p-1 hover:bg-green-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
                                                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                                                     </svg><span>Accept</span></button>

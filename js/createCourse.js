@@ -310,6 +310,7 @@ function activeDone() {
         isThereCo = true
     } else if (checked == "no") {
         isThereCo = true
+        correctUsername = true
     } else {
         isThereCo = false
     }
