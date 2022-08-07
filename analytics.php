@@ -397,7 +397,7 @@ if (isset($_POST['saveChangesBtn'])) {
 	$instructors = "";
 	while ($cate = mysqli_fetch_assoc($result)) {
 		$categories .= '"' . ucfirst($cate['category']) . '",';
-		$query = "SELECT * FROM course WHERE category = '" . $cate['category'] . "'";
+		$query = "SELECT * FROM course,requests WHERE category = '" . $cate['category'] . "' AND status = 'accepted' AND type = 'course'";
 		$result2 = mysqli_query($con, $query);
 		$numbers .=  mysqli_num_rows($result2) . ",";
 		$query = "SELECT * FROM instructor WHERE field = '" . $cate['category'] . "' AND NOT isAccepted = 0";
