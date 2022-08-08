@@ -370,8 +370,8 @@ if (isset($_POST['sendMsgBtn'])) {
 		window.addEventListener('load', function() {
 			if (urlParams.has('done')) {
 				popupMsg.innerHTML = `Your registration request is received<br>we will contact with you soon`;
+				modal.show()
 			}
-			modal.show()
 		})
 		ok.addEventListener('click', function() {
 			modal.hide()
