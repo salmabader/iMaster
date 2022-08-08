@@ -28,6 +28,34 @@ if (isset($_POST['addBut'])) {
 		mysqli_stmt_execute($statement);
 	}
 }
+if (isset($_POST['FavBut'])) {
+
+	$courseID = filter_input(INPUT_POST, 'courseID');
+	$stu_username = $_SESSION['username'];
+	$query = "SELECT * FROM student_favorite WHERE stu_username = '" . $stu_username . "' AND  course_id='" . $courseID . "'";
+	$result = mysqli_query($con, $query);
+	if (mysqli_num_rows($result) > 0) {
+		$deleteQuery = "DELETE FROM student_favorite WHERE stu_username= '" .  $stu_username . "' AND course_id='" . $courseID . "'";
+		$statement = mysqli_stmt_init($con);
+		if (!mysqli_stmt_prepare($statement, $deleteQuery)) {
+			header('Location: index.php?error=InsertionError');
+			exit();
+		} else {
+
+			mysqli_stmt_execute($statement);
+		}
+	} else {
+		$insertQuery = "INSERT INTO student_favorite (stu_username,course_id) VALUES (?,?)";
+		$statement = mysqli_stmt_init($con);
+		if (!mysqli_stmt_prepare($statement, $insertQuery)) {
+			header('Location: index.php?error=InsertionError');
+			exit();
+		} else {
+			mysqli_stmt_bind_param($statement, "ss", $stu_username, $courseID);
+			mysqli_stmt_execute($statement);
+		}
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -263,15 +291,24 @@ if (isset($_POST['addBut'])) {
 												</svg><?php echo ucfirst($instructor['FName']) . " " . ucfirst($instructor['LName']) ?></p>
 										</div>
 										<div class="flex justify-end m-3">
-											<form action="studentCourse.php" method="POST" class="flex justify-between items-center gap-4">
+											<form action="studentCourse.php" method="POST" class="flex justify-between items-center ">
 												<input name="courseID" value="<?php echo $course['courseID'] ?>" class="hidden">
 												<!-- row 1: FavButton -->
 												<button id="FavBut1" name="FavBut" onclick="hideFAV1()" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+													<?php
 
-													<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-														</path>
-													</svg>
+													$query = "SELECT * FROM student_favorite WHERE stu_username = '" . $_SESSION['username'] . "' AND  course_id='" . $course['courseID'] . "'";
+													$result = mysqli_query($con, $query);
+													if (mysqli_num_rows($result) <= 0) { ?>
+														<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+															<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+															</path>
+														</svg>
+													<?php } else { ?><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+															<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+														</svg><?php }
+																?>
+
 												</button>
 												<!-- row 2:AddButton -->
 												<button id="addBut1" name="addBut" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -394,18 +431,28 @@ if (isset($_POST['addBut'])) {
 											</svg><?php echo ucfirst($instructor['FName']) . " " . ucfirst($instructor['LName']) ?></p>
 									</div>
 									<div class="flex justify-end m-3">
-										<form action="studentCourse.php" method="POST" class="flex justify-between items-center gap-4">
+										<form action="studentCourse.php" method="POST" class="flex justify-between items-center ">
 											<input name="courseID" value="<?php echo $course['courseID'] ?>" class="hidden">
 											<!-- row 1: FavButton -->
 											<button id="FavBut2" name="FavBut" onclick="hideFAV2()" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
-												<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-													</path>
-												</svg>
+												<?php
+
+												$query3 = "SELECT * FROM student_favorite WHERE stu_username = '" . $_SESSION['username'] . "'";
+												$result3 = mysqli_query($con, $query3);
+
+												if (mysqli_num_rows($result3) <= 0) { ?>
+													<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+														</path>
+													</svg>
+												<?php } else { ?><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+														<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+													</svg><?php }
+															?>
 											</button>
 											<!-- row 2: AddButton -->
-											<button id="addBut2" name="addBut"  class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+											<button id="addBut2" name="addBut" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
 												<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -528,27 +575,7 @@ if (isset($_POST['addBut'])) {
 			</div>
 		</div>
 	</div>
-	<script>
-		const FavButton = document.getElementById("FavBut1");
-		const FavButton2 = document.getElementById("FavBut2");
 
-
-
-
-
-		// ***************for FavButton**************
-		function hideFAV1() {
-			FavButton1.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-  <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-</svg>`
-		}
-
-		function hideFAV2() {
-			FavButton2.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-  <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-</svg>`
-		}
-	</script>
 	<script src="js/analytics.js"></script>
 	<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>

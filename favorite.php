@@ -12,6 +12,37 @@ if (isset($_SESSION['type'])) {
 	exit();
 }
 $con = OpenCon();
+if (isset($_POST['addBut'])) {
+
+	$courseID = filter_input(INPUT_POST, 'courseID');
+	$stu_username = $_SESSION['username'];
+	$insertQuery = "INSERT INTO student_course (stu_username,coID) VALUES (?,?)";
+	$statement = mysqli_stmt_init($con);
+	if (!mysqli_stmt_prepare($statement, $insertQuery)) {
+		header('Location: index.php?error=InsertionError');
+		exit();
+	} else {
+
+		mysqli_stmt_bind_param($statement, "ss", $stu_username, $courseID);
+		mysqli_stmt_execute($statement);
+	}
+}
+if (isset($_POST['FavBut'])) {
+
+	$courseID = filter_input(INPUT_POST, 'courseID');
+	$stu_username = $_SESSION['username'];
+
+	$deleteQuery = "DELETE FROM student_favorite WHERE stu_username= '" .  $stu_username . "' AND course_id='" . $courseID . "'";
+	$statement = mysqli_stmt_init($con);
+	if (!mysqli_stmt_prepare($statement, $deleteQuery)) {
+		header('Location: index.php?error=InsertionError');
+		exit();
+	} else {
+
+		mysqli_stmt_execute($statement);
+	}
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -204,24 +235,135 @@ $con = OpenCon();
 				</div>
 				<!-- col 2: content -->
 				<div class="w-full h-[85%] overflow-y-auto overflow-x-hidden scrollbar">
-					<!-- my courses -->
-					<div id="myCoursesSection" class="md:ml-5 mt-5">
-						<p class="text-xl font-bold capitalize w-full tracking-wide text-gray-700">My courses</p>
-						<!-- get student's courses -->
+					<!-- Fav_courses -->
+					<div id="myCoursesSection" class="md:ml-5 mt-5 flex md:flex-wrap gap-3 md:flex-row flex-col">
+						<p class="text-xl font-bold capitalize w-full tracking-wide text-gray-700 mb-3">my favorite</p>
+
+						<!-- get Fav courses -->
 						<?php
-						$query = "SELECT * FROM student_course, course WHERE stu_username = '" . $_SESSION['username'] . "' AND coID = courseID";
+						$query = "SELECT * FROM student_favorite, course WHERE courseID NOT IN ( SELECT coID FROM student_course WHERE stu_username ='" . $_SESSION['username'] . "' ) AND stu_username = '" . $_SESSION['username'] . "' AND  course_id= courseID";
+
 						$result = mysqli_query($con, $query);
-						$course = mysqli_fetch_assoc($result);
-						?>
+						if (mysqli_num_rows($result) > 0) { ?>
+
+							<?php while ($course = mysqli_fetch_assoc($result)) {
+							?>
+								<!-- card -->
+								<div class=" w-full md:w-1/5 bg-gray-50 rounded-md shadow-sm border border-gray-300 relative" role="button">
+									<!-- Image -->
+									<img class="h-40 object-cover rounded-t-md w-full" src="upload/<?php echo $course['image'] ?>" data-modal-toggle="#show<?php echo ucfirst($course['courseID']) ?>">
+									<p class="absolute top-1 right-1
+                                    <?php if ($course['level'] == 0) echo "bg-yellow-100 text-yellow-800";
+									elseif ($course['level'] == 1) echo "bg-green-100 text-green-800";
+									else echo "bg-red-100 text-red-800";
+									?> 
+                                    text-[10px] font-medium px-2.5 py-0.5 rounded">
+										<?php if ($course['level'] == 0) echo "Beginners";
+										elseif ($course['level'] == 1) echo "Intermediate";
+										else echo "Advanced"; ?>
+									</p>
+									<div class="p-2">
+										<!-- title -->
+										<p class="text-[10px] font-semibold pt-0 text-blue-700"><?php echo ucfirst($course['category']) ?></p>
+										<h2 class="font-bold text-lg mb-1 border-b border-gray-200 truncate"><?php echo ucfirst($course['title']) ?></h2>
+										<!-- instructor -->
+										<?php
+										// $sql = "SELECT * FROM course, instructor WHERE instructor_usename = username;";
+										$query = "SELECT * FROM instructor, course WHERE username = '" . $course['instructor_usename'] . "'";
+										$result2 = mysqli_query($con, $query);
+										$instructor = mysqli_fetch_assoc($result2);
+										?>
+										<p class="text-sm text-gray-600 flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-3 inline mr-1" viewBox="0 0 20 20" fill="currentColor">
+												<path fill-rule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clip-rule="evenodd" />
+											</svg><?php echo ucfirst($instructor['FName']) . " " . ucfirst($instructor['LName']) ?></p>
+									</div>
+									<div class="flex justify-end m-3">
+										<form action="studentCourse.php" method="POST" class="flex justify-between items-center">
+											<input name="courseID" value="<?php echo $course['courseID'] ?>" class="hidden">
+											<!-- row 1: FavButton -->
+											<button id="FavBut" name="FavBut" onclick="hideFAV()" class="inline-flex items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+
+												<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+													<path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+												</svg>
+											</button>
+											<!-- row 2: AddButton -->
+											<button id="addBut" name="addBut" class="inline-flex ml-2  items-center py-1 px-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+
+												<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+												</svg>
+											</button>
+										</form>
+									</div>
+
+								</div>
+								<!-- end of card -->
+								<!-- card model -->
+
+								<!-- Main modal -->
+								<div id="#show<?php echo ucfirst($course['courseID']) ?>" aria-hidden="true" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+									<div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+										<!-- Modal content -->
+										<div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+											<!-- Modal header -->
+											<div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+												<h3 class="text-xl font-semibold  text-blue-700 dark:text-white">
+													<?php echo ucfirst($course['title']) ?>
+												</h3>
+												<button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="#show<?php echo ucfirst($course['courseID']) ?>">
+													<svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+														<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+													</svg>
+													<span class="sr-only">Close modal</span>
+												</button>
+											</div>
+											<!-- Modal body -->
+											<div class="p-6 space-y-6 flex flex-col">
+												<div class="h-[20%] flex justify-between text-base font-bold leading-relaxed text-gray-500 dark:text-gray-400">
+													<div><?php echo ucfirst($instructor['FName']) . " " . ucfirst($instructor['LName']);
+															if ($course['collaborator'] != NULL) echo ", " . $course['collaborator'] ?></div>
+													<div><?php echo ucfirst($course['category']) ?></div>
+													<div class=" <?php if ($course['level'] == 0) echo " text-yellow-800";
+																	elseif ($course['level'] == 1) echo " text-green-800";
+																	else echo " text-red-800";
+																	?> 
+                                                            "><?php if ($course['level'] == 0) echo "Beginners";
+																elseif ($course['level'] == 1) echo "Intermediate";
+																else echo "Advanced"; ?></div>
+												</div>
+												<div class="text-base font-bold leading-relaxed text-gray-500 dark:text-gray-400">
+													Description:
+												</div>
+												<div class="text-base leading-relaxed  text-gray-500 dark:text-gray-400">
+													<?php echo ucfirst($course['description']) ?>
+												</div>
+												<div class="text-base font-bold leading-relaxed text-gray-500 dark:text-gray-400">
+													Objectives:
+												</div>
+												<div class="text-base leading-relaxed  text-gray-500 dark:text-gray-400">
+													<?php echo ucfirst($course['objectives']) ?>
+												</div>
+												<div class="text-base font-bold leading-relaxed text-gray-500 dark:text-gray-400">
+													Requirements:
+												</div>
+												<div class="text-base leading-relaxed  text-gray-500 dark:text-gray-400">
+													<?php echo ucfirst($course['requirements']) ?>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+
+								<!-- end of card model -->
+
+						<?php }
+						} ?>
 
 					</div>
-					<!-- recomended for you -->
-					<div id="myCoursesSection" class="md:ml-5 mt-5">
-						<p class="text-xl font-bold capitalize w-full tracking-wide text-gray-700">Recommended for you</p>
-					</div>
 				</div>
-			</div>
-		</div> <!-- end of right side-->
+			</div> <!-- end of right side-->
 	</main>
 
 	<!-- profile modal -->
@@ -268,6 +410,17 @@ $con = OpenCon();
 			</div>
 		</div>
 	</div>
+	<script>
+		const FavButton = document.getElementById("FavBut");
+
+		// ***************for FavButton**************
+		function hideFAV() {
+			FavButton.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+														</path>
+													</svg>`
+		}
+	</script>
 	<script src="js/analytics.js"></script>
 	<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>
