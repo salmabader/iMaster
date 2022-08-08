@@ -25,7 +25,7 @@ if (isset($_POST['createAccountBtn'])) {
     $email = filter_input(INPUT_POST, 'email');
     $interests = $_POST['interests'];
     $existanceQuery1 = "SELECT * FROM student WHERE username = ? OR email = ?";
-    $existanceQuery2 = "SELECT * FROM instructors WHERE username = ? OR email = ?";
+    $existanceQuery2 = "SELECT * FROM instructor WHERE username = ? OR email = ?";
     $statement1 = mysqli_stmt_init($con);
     $statement2 = mysqli_stmt_init($con);
     if (!mysqli_stmt_prepare($statement1, $existanceQuery1) || !mysqli_stmt_prepare($statement2, $existanceQuery2)) {

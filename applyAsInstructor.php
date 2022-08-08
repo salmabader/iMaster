@@ -74,7 +74,7 @@ if (isset($_POST['createAccountBtn'])) {
             }
         }
         if ($isValidUsername && $isValidEmail) {
-            $insertQuery = "INSERT INTO instructor (username,FName,LName,email,password,field,previous_course,degree,experience,bio) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            $insertQuery = "INSERT INTO instructor (username,FName,LName,email,password,field,previous_course,degree,experience,bio,isAccepted) VALUES (?,?,?,?,?,?,?,?,?,?,0)";
             $statement = mysqli_stmt_init($con);
             if (!mysqli_stmt_prepare($statement, $insertQuery)) {
                 header('Location: index.php?error=InsertionError');
