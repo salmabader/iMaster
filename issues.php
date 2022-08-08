@@ -45,6 +45,23 @@ if (isset($_POST['acceptDelete'])) {
     $delete = "DELETE FROM course WHERE courseID ='" . $_POST['courseId'] . "'";
     mysqli_query($con, $delete);
 }
+if (isset($_POST['sendBtn'])) {
+    $updateQuery = "UPDATE requests SET status = 'commented', admin_username = '" . $_SESSION['username'] . "' WHERE type = 'others' AND status = 'waiting' AND instructor_username ='" . $_POST['username'] . "'";
+    mysqli_query($con, $updateQuery);
+
+    $query = "SELECT FName,LName,email FROM instructor WHERE username ='" . $_POST['username'] . "'";
+    $result = mysqli_query($con, $query);
+    $instructor = mysqli_fetch_assoc($result);
+    $fullName = $instructor['FName'] . ' ' . $instructor['LName'];
+    $mail->addAddress($instructor['email'], $fullName);     //Add a recipient
+
+    //Content
+    $mail->Subject = 'Reply from iMaster';
+    $mail->Body    = $_POST['reply'] . '<br><br>' . $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] . '<br>iMaster';
+    if ($mail->send()) {
+        $feedback = "Your reply is sent";
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -277,113 +294,152 @@ if (isset($_POST['acceptDelete'])) {
                                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                             <tbody>
                                                 <?php
-                                                while ($row = mysqli_fetch_assoc($result)) {
-                                                    if ($row['type'] == "DeleteCourse" || $row['type'] == "others") {
-                                                        if ($row['type'] == "DeleteCourse") {
-                                                            $courseQuery = "SELECT * FROM course WHERE courseID = '" . $row['course_id'] . "'";
-                                                            $result2 = mysqli_query($con, $courseQuery);
-                                                            $course = mysqli_fetch_assoc($result2);
-                                                        }
+                                                $q = "SELECT * FROM requests WHERE status='waiting' AND (type ='DeleteCourse' OR type = 'others')";
+                                                $r = mysqli_query($con, $q);
+                                                if (mysqli_num_rows($r) > 0) {
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+                                                        if ($row['type'] == "DeleteCourse" || $row['type'] == "others") {
+                                                            if ($row['type'] == "DeleteCourse") {
+                                                                $courseQuery = "SELECT * FROM course WHERE courseID = '" . $row['course_id'] . "'";
+                                                                $result2 = mysqli_query($con, $courseQuery);
+                                                                $course = mysqli_fetch_assoc($result2);
+                                                            }
                                                 ?>
-                                                        <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
-                                                            <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                                <?php
-                                                                if ($row['type'] == "DeleteCourse") {
-                                                                    echo "Delete course";
-                                                                } elseif ($row['type'] == "others") {
-                                                                    echo "Problem";
-                                                                } ?>
-                                                            </td>
-                                                            <?php if ($row['type'] == "DeleteCourse") { ?>
-                                                                <td class="py-4 px-6" inst-field>
-                                                                    <?php echo ucfirst($course['category']) ?>
+                                                            <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                                <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                    <?php
+                                                                    if ($row['type'] == "DeleteCourse") {
+                                                                        echo "Delete course";
+                                                                    } elseif ($row['type'] == "others") {
+                                                                        echo "Problem";
+                                                                    } ?>
                                                                 </td>
-                                                            <?php } ?>
-                                                            <td class="py-4 px-6">
-                                                                <?php $date = explode("-", $row['date']);
-                                                                echo 'Submitted on <span>' . $date[2] . '/' . $date[1] . '/' . $date[0] . '</span>' ?>
-                                                            </td>
-                                                            <td class="py-4 px-6 flex justify-end gap-4 items-center">
-                                                                <button data-modal-toggle="<?php echo $row['type'] . '_' . $row['requestID'] ?>" class="flex items-center text-blue-600 p-1 hover:bg-blue-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
-                                                                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                                                    </svg><span>Details</span></button>
-                                                                <p>|</p>
-                                                                <!-- Main modal -->
-                                                                <div id="<?php echo $row['type'] . '_' . $row['requestID'] ?>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                                                                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
-                                                                        <!-- Modal content -->
-                                                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                                            <!-- Modal header -->
-                                                                            <div class="flex justify-between items-start p-4 pb-1 rounded-t border-b dark:border-gray-600">
-                                                                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                                                                    <?php
-                                                                                    if ($row['type'] == "DeleteCourse") {
-                                                                                        echo "Delete course request";
-                                                                                    } elseif ($row['type'] == "others") {
-                                                                                        echo "Problem details";
-                                                                                    } ?>
-                                                                                </h3>
-                                                                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="<?php echo $row['type'] . '_' . $row['requestID'] ?>">
-                                                                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                                                                    </svg>
-                                                                                    <span class="sr-only">Close modal</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <!-- Modal body -->
-                                                                            <div class="p-6 pt-3 space-y-6">
-                                                                                <div class="text-base leading-relaxed text-gray-800 flex flex-col">
-                                                                                    <?php
-                                                                                    if ($row['type'] == "DeleteCourse") { ?>
-                                                                                        <p class="w-full font-bold text-xl border-b border-gray-300 text-blue-800 pb-2"><?php echo ucfirst($course['title']) ?></p>
-                                                                                        <div class="flex justify-between w-full mt-3">
-                                                                                            <p><?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?></p>
-                                                                                            <p><?php echo ucfirst($course['category']) ?></p>
-                                                                                        </div>
-                                                                                        <div class="w-full mt-5 text-gray-800 font-semibold">- Details:</div>
-                                                                                        <div class="w-full ml-5"><?php echo ucfirst($row['reason']) ?></div>
-                                                                                        <div class="w-full mt-5 text-gray-800 font-semibold">
-                                                                                            - Contact:
-                                                                                        </div>
-                                                                                        <div class="w-full ml-5">
-                                                                                            <a class="text-blue-700" href="mailto:<?php echo $row['email'] ?>">Email</a>
-                                                                                        </div>
-                                                                                    <?php } else { ?>
-                                                                                        <p class="w-full font-bold text-xl border-b border-gray-300 text-blue-800 pb-2">From <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?></p>
-                                                                                        <div class="w-full mt-5 text-gray-800 font-semibold">- Details:</div>
-                                                                                        <div class="w-full ml-5"><?php echo ucfirst($row['reason']) ?></div>
-                                                                                        <div class="w-full mt-5 text-gray-800 font-semibold">
-                                                                                            - Contact:
-                                                                                        </div>
-                                                                                        <div class="w-full ml-5">
-                                                                                            <a class="text-blue-700" href="mailto:<?php echo $row['email'] ?>">Email</a>
-                                                                                        </div>
-                                                                                    <?php } ?>
+                                                                <?php if ($row['type'] == "DeleteCourse") { ?>
+                                                                    <td class="py-4 px-6" inst-field>
+                                                                        <?php echo ucfirst($course['category']) ?>
+                                                                    </td>
+                                                                <?php } ?>
+                                                                <td class="py-4 px-6">
+                                                                    <?php $date = explode("-", $row['date']);
+                                                                    echo 'Submitted on <span>' . $date[2] . '/' . $date[1] . '/' . $date[0] . '</span>' ?>
+                                                                </td>
+                                                                <td class="py-4 px-6 flex justify-end gap-4 items-center">
+                                                                    <button data-modal-toggle="<?php echo $row['type'] . '_' . $row['requestID'] ?>" class="flex items-center text-blue-600 p-1 hover:bg-blue-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                                        </svg><span>Details</span></button>
+                                                                    <p>|</p>
+                                                                    <!-- Main modal -->
+                                                                    <div id="<?php echo $row['type'] . '_' . $row['requestID'] ?>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                                                                        <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                                                                            <!-- Modal content -->
+                                                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                                                <!-- Modal header -->
+                                                                                <div class="flex justify-between items-start p-4 pb-1 rounded-t border-b dark:border-gray-600">
+                                                                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                                                        <?php
+                                                                                        if ($row['type'] == "DeleteCourse") {
+                                                                                            echo "Delete course request";
+                                                                                        } elseif ($row['type'] == "others") {
+                                                                                            echo "Problem details";
+                                                                                        } ?>
+                                                                                    </h3>
+                                                                                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="<?php echo $row['type'] . '_' . $row['requestID'] ?>">
+                                                                                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                                                                        </svg>
+                                                                                        <span class="sr-only">Close modal</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <!-- Modal body -->
+                                                                                <div class="p-6 pt-3 space-y-6">
+                                                                                    <div class="text-base leading-relaxed text-gray-800 flex flex-col">
+                                                                                        <?php
+                                                                                        if ($row['type'] == "DeleteCourse") { ?>
+                                                                                            <p class="w-full font-bold text-xl border-b border-gray-300 text-blue-800 pb-2"><?php echo ucfirst($course['title']) ?></p>
+                                                                                            <div class="flex justify-between w-full mt-3">
+                                                                                                <p><?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?></p>
+                                                                                                <p><?php echo ucfirst($course['category']) ?></p>
+                                                                                            </div>
+                                                                                            <div class="w-full mt-5 text-gray-800 font-semibold">- Details:</div>
+                                                                                            <div class="w-full ml-5"><?php echo ucfirst($row['reason']) ?></div>
+                                                                                            <div class="w-full mt-5 text-gray-800 font-semibold">
+                                                                                                - Contact:
+                                                                                            </div>
+                                                                                            <div class="w-full ml-5">
+                                                                                                <a class="text-blue-700" href="mailto:<?php echo $row['email'] ?>">Email</a>
+                                                                                            </div>
+                                                                                        <?php } else { ?>
+                                                                                            <p class="w-full font-bold text-xl border-b border-gray-300 text-blue-800 pb-2">From <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?></p>
+                                                                                            <div class="w-full mt-5 text-gray-800 font-semibold">- Details:</div>
+                                                                                            <div class="w-full ml-5"><?php echo ucfirst($row['reason']) ?></div>
+                                                                                            <div class="w-full mt-5 text-gray-800 font-semibold">
+                                                                                                - Contact:
+                                                                                            </div>
+                                                                                            <div class="w-full ml-5">
+                                                                                                <a class="text-blue-700" href="mailto:<?php echo $row['email'] ?>">Email</a>
+                                                                                            </div>
+                                                                                        <?php } ?>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <?php if ($row['type'] == "DeleteCourse") { ?>
-                                                                    <form action="issues.php" method="POST" class="flex justify-between items-center gap-4">
-                                                                        <input name="courseId" value="<?php echo $row['course_id'] ?>" class="hidden">
-                                                                        <input name="instructorUsername" value="<?php echo $row['username'] ?>" class="hidden">
-                                                                        <button name="acceptDelete" class="flex items-center text-green-600 p-1 hover:bg-green-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
-                                                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                                                            </svg><span>Accept</span></button>
-                                                                    </form>
-                                                                <?php } else { ?>
-                                                                    <a href="mailto:<?php echo $row['email'] ?>" class="flex items-center text-yellow-700 p-1 hover:bg-amber-200 rounded-md">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-[17px] mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                                                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                                                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                                                                        </svg>
-                                                                        <span>Reply</span></a>
-                                                                <?php } ?>
-                                                            </td>
-                                                        </tr>
-                                                <?php }
-                                                } ?>
+                                                                    <?php if ($row['type'] == "DeleteCourse") { ?>
+                                                                        <form action="issues.php" method="POST" class="flex justify-between items-center gap-4">
+                                                                            <input name="courseId" value="<?php echo $row['course_id'] ?>" class="hidden">
+                                                                            <input name="instructorUsername" value="<?php echo $row['username'] ?>" class="hidden">
+                                                                            <button name="acceptDelete" class="flex items-center text-green-600 p-1 hover:bg-green-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                                                </svg><span>Accept</span></button>
+                                                                        </form>
+                                                                    <?php } else { ?>
+                                                                        <button data-modal-toggle="<?php echo $row['requestID'] . '_' . $row['instructor_username'] ?>" class="flex items-center text-yellow-700 p-1 hover:bg-amber-200 rounded-md">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-[17px] mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                                                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                                                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                                                            </svg>
+                                                                            <span>Reply</span></button>
+                                                                        <!-- Main modal -->
+                                                                        <div id="<?php echo $row['requestID'] . '_' . $row['instructor_username'] ?>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                                                                            <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                                                                                <!-- Modal content -->
+                                                                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                                                    <!-- Modal header -->
+                                                                                    <div class="flex justify-between items-start p-4 pb-1 rounded-t border-b dark:border-gray-600">
+                                                                                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                                                            Send a reply
+                                                                                        </h3>
+                                                                                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="<?php echo $row['requestID'] . '_' . $row['instructor_username'] ?>">
+                                                                                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                                                                            </svg>
+                                                                                            <span class="sr-only">Close modal</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <!-- Modal body -->
+                                                                                    <div class="p-6 pt-3 space-y-6">
+                                                                                        <div class="text-base leading-relaxed text-gray-800 flex flex-col">
+                                                                                            <form action="issues.php" method="POST" class="flex flex-col">
+                                                                                                <input name="username" value="<?php echo $row['username'] ?>" class="hidden">
+                                                                                                <label for="adminComment">Your reply</label>
+                                                                                                <textarea type="text" id="adminComment" name="reply" class="rounded-md border border-gray-400 mt-1"></textarea>
+                                                                                                <div class="w-full flex justify-center">
+                                                                                                    <button name="sendBtn" class="rounded-full bg-blue-700 text-white px-4 py-2 mt-4 w-1/2 ">Send</button>
+                                                                                                </div>
+                                                                                            </form>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php } ?>
+                                                                </td>
+                                                            </tr>
+                                                    <?php }
+                                                    }
+                                                } else { ?>
+                                                    <p class="p-3">There is no any issues</p>
+                                                <?php } ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -496,6 +552,16 @@ if (isset($_POST['acceptDelete'])) {
                 newIndecator.forEach(element => {
                     element.classList.add("hidden")
                 });
+            }
+        })
+
+        // ---------- to show toast msg ----------
+        const toast = document.getElementById("action-feedback")
+        const msg = document.getElementById("feedbackMsg")
+        window.addEventListener('load', function() {
+            if (msg.innerHTML.length > 0) {
+                toast.classList.remove("opacity-0")
+                toast.classList.add("opacity-100")
             }
         })
     </script>

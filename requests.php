@@ -84,6 +84,23 @@ if (isset($_POST['acceptCourse'])) {
         $feedback = "The course: " . $_POST['courseTitle'] . " was accepted";
     }
 }
+if (isset($_POST['sendBtn'])) {
+    $updateQuery = "UPDATE requests SET status = 'commented', admin_username = '" . $_SESSION['username'] . "' WHERE type = 'course' AND status = 'waiting' AND instructor_username ='" . $_POST['username'] . "' AND course_id = '" . $_POST['courseId'] . "'";
+    mysqli_query($con, $updateQuery);
+
+    $query = "SELECT FName,LName,email FROM instructor WHERE username ='" . $_POST['username'] . "'";
+    $result = mysqli_query($con, $query);
+    $instructor = mysqli_fetch_assoc($result);
+    $fullName = $instructor['FName'] . ' ' . $instructor['LName'];
+    $mail->addAddress($instructor['email'], $fullName);     //Add a recipient
+
+    //Content
+    $mail->Subject = 'Comment on your course';
+    $mail->Body    = $_POST['comment'] . '<br><br>' . $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] . '<br><br>iMaster';
+    if ($mail->send()) {
+        $feedback = "Your comment is sent";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -523,7 +540,7 @@ if (isset($_POST['acceptCourse'])) {
                                 </div>
                                 <!-- get course requests -->
                                 <?php
-                                $query = "SELECT * FROM requests,course,instructor WHERE type = 'course' AND status ='waiting' AND instructor_username = username AND course_id = courseID ORDER BY requestID DESC";
+                                $query = "SELECT * FROM requests,course,instructor WHERE type = 'course' AND (status ='waiting' OR status = 'commented' ) AND instructor_username = username AND course_id = courseID ORDER BY requestID DESC";
                                 $result = mysqli_query($con, $query);
                                 if (mysqli_num_rows($result) > 0) { ?>
                                     <div class="overflow-y-auto overflow-x-hidden scrollbar max-h-96">
@@ -556,7 +573,12 @@ if (isset($_POST['acceptCourse'])) {
                                                             <?php $date = explode("-", $row['date']);
                                                             echo 'Submitted on <span>' . $date[2] . '/' . $date[1] . '/' . $date[0] . '</span>' ?>
                                                         </td>
-                                                        <td class="py-4 px-6 flex justify-end gap-4">
+                                                        <?php if ($row['status'] == 'commented') { ?>
+                                                            <td class="py-4 px-6 text-sm font-semibold text-amber-700">
+                                                                Commented
+                                                            </td>
+                                                        <?php } ?>
+                                                        <td class=" py-4 px-6 flex justify-end gap-4">
                                                             <button data-modal-toggle="<?php echo $row['title'] . '_' . $row['courseID'] ?>" class="flex items-center text-blue-600 p-1 hover:bg-blue-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
                                                                     <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                                                 </svg><span>Details</span></button>
@@ -639,12 +661,52 @@ if (isset($_POST['acceptCourse'])) {
                                                                 <button name="acceptCourse" class="flex items-center text-green-600 p-1 hover:bg-green-100 rounded-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
                                                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                                                     </svg><span>Accept</span></button>
-                                                                <p>|</p>
-                                                                <button name="comment" class="flex items-center text-gray-700 p-1 hover:bg-gray-200 rounded-md">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
-                                                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                                                    </svg><span>Comment</span></button>
                                                             </form>
+                                                            <p>|</p>
+                                                            <button data-modal-toggle="<?php echo $row['courseID'] . '_' . $row['title']  ?>" class="flex items-center text-gray-700 p-1 hover:bg-gray-200 rounded-md">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 inline mr-[2px]" viewBox="0 0 20 20" fill="currentColor">
+                                                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                                                </svg><span>
+                                                                    <?php
+                                                                    if ($row['status'] == 'commented') echo "More comment";
+                                                                    else echo "Comment"
+                                                                    ?>
+                                                                </span></button>
+                                                            <!-- Main modal -->
+                                                            <div id="<?php echo $row['courseID'] . '_' . $row['title']  ?>" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+                                                                <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                                                                    <!-- Modal content -->
+                                                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                                        <!-- Modal header -->
+                                                                        <div class="flex justify-between items-start p-4 pb-1 rounded-t border-b dark:border-gray-600">
+                                                                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                                                                Send a comment
+                                                                            </h3>
+                                                                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="<?php echo $row['courseID'] . '_' . $row['title']  ?>">
+                                                                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                                                                </svg>
+                                                                                <span class="sr-only">Close modal</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <!-- Modal body -->
+                                                                        <div class="p-6 pt-3 space-y-6">
+                                                                            <div class="text-base leading-relaxed text-gray-800 flex flex-col">
+                                                                                <form action="requests.php" method="POST" class="flex flex-col">
+                                                                                    <input name="username" value="<?php echo $row['username'] ?>" class="hidden">
+                                                                                    <input name="courseId" value="<?php echo $row['courseID'] ?>" class="hidden">
+                                                                                    <input name="courseTitle" value="<?php echo $row['title'] ?>" class="hidden">
+                                                                                    <label for="adminComment">Your comment</label>
+                                                                                    <textarea type="text" id="adminComment" name="comment" class="rounded-md border border-gray-400 mt-1"></textarea>
+                                                                                    <div class="w-full flex justify-center">
+                                                                                        <button name="sendBtn" class="rounded-full bg-blue-700 text-white px-4 py-2 mt-4 w-1/2 ">Send</button>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
