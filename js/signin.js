@@ -31,14 +31,18 @@ const checkEnableButton = () => {
         inputFeilds[0].value && inputFeilds[1].value
     )
 }
-
 // -------------- to show message if the pssword reset -------------
 const urlParams = new URLSearchParams(window.location.search)
 const popup = document.getElementById("popup-modal")
+const popupMsg = document.getElementById("successMsg")
 const ok = document.getElementById("okBtn")
 const modal = new Modal(popup);
 window.addEventListener('load', function () {
     if (urlParams.has('success')) {
+        popupMsg.innerHTML = `Your password has been successfully reset<br>you can sign in now`;
+        modal.show()
+    } else if (urlParams.has('created')) {
+        popupMsg.innerHTML = `Your account has been successfully registered<br>you can now sign in`;
         modal.show()
     }
 })

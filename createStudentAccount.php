@@ -72,7 +72,7 @@ if (isset($_POST['createAccountBtn'])) {
                     $insertInterests = "INSERT INTO student_interests (interests,student_username) VALUES('$item','$username')";
                     mysqli_query($con, $insertInterests);
                 }
-                header('Location: signin.php');
+                header('Location: signin.php?created=done-successfully');
             }
         }
     }

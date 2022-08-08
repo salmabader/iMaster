@@ -89,6 +89,7 @@ if (isset($_POST['createAccountBtn'])) {
                 mysqli_query($con, $insertQuery);
                 $data['message'] = $fName;
                 $pusher->trigger('my-channel', 'my-event', $data);
+                header('Location: index.php?done=registered-successfully');
             }
         }
     }
