@@ -314,7 +314,7 @@ if (isset($_POST['createAccountBtn'])) {
 		</div>
 	</div>
 
-	<script src="helpCenter.js"></script>
+	<script src="js/helpCenter.js"></script>
 	<script src="js/analytics.js"></script>
 	<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
 </body>
