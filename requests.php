@@ -63,6 +63,7 @@ if (isset($_POST['reject'])) {
         $feedback = "The instructor: " . $fullName . " was rejected";
     }
     $delete = "DELETE FROM instructor WHERE username ='" . $_POST['username'] . "'";
+    mysqli_query($con, $delete);
 }
 if (isset($_POST['acceptCourse'])) {
     $updateQuery = "UPDATE requests SET status = 'accepted', admin_username = '" . $_SESSION['username'] . "' WHERE type = 'course' AND status = 'waiting' AND instructor_username ='" . $_POST['username'] . "' AND course_id = '" . $_POST['courseId'] . "'";

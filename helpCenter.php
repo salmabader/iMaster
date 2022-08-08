@@ -24,28 +24,30 @@ if (isset($_POST['createAccountBtn'])) {
 	$instUsername = $_SESSION['username'];
 	//  for option 1:
 	if ($option == "DeleteCourse") {
-		$insertQuery = "INSERT INTO requests (type,status,instructor_username,reason,course_id) VALUES (?,?,?,?,?)";
+		$insertQuery = "INSERT INTO requests (type,status,instructor_username,reason,course_id,date) VALUES (?,?,?,?,?,?)";
 		$statement = mysqli_stmt_init($con);
 		if (!mysqli_stmt_prepare($statement, $insertQuery)) {
 			header('Location: index.php?error=InsertionError');
 			exit();
 		} else {
-
-			mysqli_stmt_bind_param($statement, "sssss", $option, $status, $instUsername, $Reason, $courseID);
+			date_default_timezone_set('Asia/Riyadh');
+			$date = date("Y-m-d");
+			mysqli_stmt_bind_param($statement, "ssssss", $option, $status, $instUsername, $Reason, $courseID, $date);
 			mysqli_stmt_execute($statement);
 			$feedback = "Your Request has been sent!";
 		}
 	}
 	//  for option 2:
 	if ($option == "others") {
-		$insertQuery = "INSERT INTO requests (type,status,instructor_username,reason) VALUES (?,?,?,?)";
+		$insertQuery = "INSERT INTO requests (type,status,instructor_username,reason,date) VALUES (?,?,?,?,?)";
 		$statement = mysqli_stmt_init($con);
 		if (!mysqli_stmt_prepare($statement, $insertQuery)) {
 			header('Location: index.php?error=InsertionError');
 			exit();
 		} else {
-
-			mysqli_stmt_bind_param($statement, "ssss", $option, $status, $instUsername, $description);
+			date_default_timezone_set('Asia/Riyadh');
+			$date = date("Y-m-d");
+			mysqli_stmt_bind_param($statement, "sssss", $option, $status, $instUsername, $description, $date);
 			mysqli_stmt_execute($statement);
 			$feedback = "Your Request has been sent!";
 		}
