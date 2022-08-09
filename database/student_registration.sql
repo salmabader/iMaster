@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2022 at 09:49 AM
+-- Generation Time: Aug 08, 2022 at 01:11 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -84,7 +84,7 @@ CREATE TABLE `course` (
   `collaborator` varchar(10) DEFAULT NULL,
   `instructor_usename` varchar(10) NOT NULL,
   `admin_username` varchar(10) DEFAULT NULL,
-  `image` text NOT NULL,
+  `image` text DEFAULT NULL,
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

@@ -299,6 +299,30 @@ if (isset($_POST['sendMsgBtn'])) {
 	<footer class="bg-blue-900 pt-20 pb-10 text-gray-100 w-full flex flex-col ">
 		<p class="text-sm text-gray-300 text-center">Copyright © 2022 iMaster</p>
 	</footer>
+
+	<div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
+		<div class="relative p-4 w-full max-w-md h-full md:h-auto">
+			<div class="relative bg-white rounded-lg shadow-lg dark:bg-gray-700 ">
+				<div class="p-6 text-center flex flex-col items-center">
+					<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="h-24" fill="none">
+						<style>
+							@keyframes check {
+								to {
+									stroke-dashoffset: 0;
+								}
+							}
+						</style>
+						<circle cx="12" cy="12" r="8" stroke="#4C4C4C" stroke-width="1" />
+						<path stroke="#087D04" stroke-linecap="round" stroke-width="1.5" d="M9.215 12.052l1.822 1.805 3.748-3.714" style="animation:check 2s infinite cubic-bezier(.99,-.1,.01,1.02)" stroke-dashoffset="100" stroke-dasharray="100" />
+					</svg>
+					<h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400" id="successMsg">Your password has been successfully reset<br>you can sign in now</h3>
+					<button id="okBtn" data-modal-toggle="popup-modal" type="button" class="text-white bg-green-600 hover:bg-green-800 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-8 py-2 text-center mr-2">
+						Ok
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script>
 		//Get the button:
 		let myButton = document.getElementById("goUp");
@@ -336,6 +360,22 @@ if (isset($_POST['sendMsgBtn'])) {
 		AOS.init({
 			duration: 1000,
 			once: true,
+		})
+		// -------------- to show message if the pssword reset -------------
+		const urlParams = new URLSearchParams(window.location.search)
+		const popup = document.getElementById("popup-modal")
+		const popupMsg = document.getElementById("successMsg")
+		const ok = document.getElementById("okBtn")
+		const modal = new Modal(popup);
+		window.addEventListener('load', function() {
+			if (urlParams.has('done')) {
+				popupMsg.innerHTML = `Your registration request is received<br>we will contact with you soon`;
+				modal.show()
+			}
+		})
+		ok.addEventListener('click', function() {
+			modal.hide()
+			window.location.replace("index.php");
 		})
 	</script>
 </body>

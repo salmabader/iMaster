@@ -4,7 +4,7 @@ require('database/db_connection.php');
 if (isset($_SESSION['type'])) {
     $privilage = $_SESSION['type'];
     if (isset($_SESSION['username']) && $privilage == "student") {
-        header('Location: student_home.html');
+        header('Location: studentDashboard.php');
         exit();
     } elseif (isset($_SESSION['username']) && $privilage == "instructor") {
         header('Location: instructorHome.php');

@@ -209,7 +209,7 @@ if (isset($_POST['signinBtn'])) {
 						<circle cx="12" cy="12" r="8" stroke="#4C4C4C" stroke-width="1" />
 						<path stroke="#087D04" stroke-linecap="round" stroke-width="1.5" d="M9.215 12.052l1.822 1.805 3.748-3.714" style="animation:check 2s infinite cubic-bezier(.99,-.1,.01,1.02)" stroke-dashoffset="100" stroke-dasharray="100" />
 					</svg>
-					<h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Your password has been successfully reset<br>you can sign in now</h3>
+					<h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400" id="successMsg">Your password has been successfully reset<br>you can sign in now</h3>
 					<button id="okBtn" data-modal-toggle="popup-modal" type="button" class="text-white bg-green-600 hover:bg-green-800 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-8 py-2 text-center mr-2">
 						Ok
 					</button>
