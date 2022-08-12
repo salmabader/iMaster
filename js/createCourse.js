@@ -203,12 +203,12 @@ next2.addEventListener('click', function () {
                 les += `<details class="border-b border-gray-300 ml-3 w-[97%] flex justify-start items-center my-2 pb-1"><summary>${chapterLesson[j]}</summary>
                 <div class="ml-3 flex flex-col">
                 <div>
-                <label for="image" class="text-md font-semibold text-gray-800 mb-2">Lesson video</label>
-                <input id="image" name="video" class="block mb-5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file" onchange="activeNext3()">
+                <label class="text-md font-semibold text-gray-800 mb-2">Lesson video</label>
+                <input name="contentVideo[]" class="block mb-5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file" onchange="activeNext3()">
                 </div>
                 <div>
-                <label for="description" class="text-md font-semibold text-gray-800 mb-2">Description</label>
-                <textarea name="contentDescription[]" id="description" class="w-full rounded-md border border-gray-300 p-3"></textarea>
+                <label class="text-md font-semibold text-gray-800 mb-2">Description</label>
+                <textarea name="contentDescription[]" class="w-full rounded-md border border-gray-300 p-3"></textarea>
                 </div>
                 </div>
                 </details>`

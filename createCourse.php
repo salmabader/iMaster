@@ -85,7 +85,7 @@ if (isset($_POST['done'])) {
 					$lessonID = mysqli_insert_id($con);
 
 					// set the content file name
-					$fileName = $courseTitle . '_' . $lessonID;
+					$fileName = $lessons[$j] . '_' . $lessonID;
 					$path_parts = pathinfo($contentVideo['name'][$j]);
 					$ext = $path_parts['extension'];
 					$location = 'upload/' . $fileName . "." . $ext;

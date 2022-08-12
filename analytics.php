@@ -390,16 +390,17 @@ if (isset($_POST['saveChangesBtn'])) {
 	</div>
 	<?php
 	// get course in categories:
-	$query = "SELECT DISTINCT category FROM course";
+	$query = "SELECT DISTINCT category FROM course,requests WHERE courseID = course_id AND status = 'accepted' AND type = 'course'";
 	$result = mysqli_query($con, $query);
 	$categories = "";
 	$numbers = "";
 	$instructors = "";
 	while ($cate = mysqli_fetch_assoc($result)) {
 		$categories .= '"' . ucfirst($cate['category']) . '",';
-		$query = "SELECT * FROM course,requests WHERE category = '" . $cate['category'] . "' AND status = 'accepted' AND type = 'course'";
+		$query = "SELECT * FROM course,requests WHERE courseID = course_id AND  category = '" . $cate['category'] . "' AND status = 'accepted' AND type = 'course'";
 		$result2 = mysqli_query($con, $query);
 		$numbers .=  mysqli_num_rows($result2) . ",";
+
 		$query = "SELECT * FROM instructor WHERE field = '" . $cate['category'] . "' AND NOT isAccepted = 0";
 		$result2 = mysqli_query($con, $query);
 		$instructors .=  mysqli_num_rows($result2) . ",";
@@ -446,7 +447,7 @@ if (isset($_POST['saveChangesBtn'])) {
 			data: {
 				labels: [<?= $categories ?>],
 				datasets: [{
-					label: '# of courses: ',
+					label: '# of instructor: ',
 					data: [<?= $instructors ?>],
 					backgroundColor: [
 						'rgba(75, 192, 192, 1)',
