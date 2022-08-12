@@ -259,7 +259,7 @@ if (isset($_POST['saveChangesBtn'])) {
 						$result = mysqli_query($con, $query);
 						$numOfCourses = mysqli_num_rows($result);
 
-						$query = "SELECT requestID FROM requests WHERE status = 'waiting'";
+						$query = "SELECT requestID FROM requests WHERE status = 'waiting' AND type ='course' OR type='application'";
 						$result = mysqli_query($con, $query);
 						$numOfRequests = mysqli_num_rows($result);
 						?>

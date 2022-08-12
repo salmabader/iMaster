@@ -318,6 +318,10 @@ if (isset($_POST['sendBtn'])) {
                                                                     <td class="py-4 px-6" inst-field>
                                                                         <?php echo ucfirst($course['category']) ?>
                                                                     </td>
+                                                                <?php } else { ?>
+                                                                    <td class="py-4 px-6">From:
+                                                                        <?php echo ucfirst($row['FName']) . ' ' . ucfirst($row['LName']) ?>
+                                                                    </td>
                                                                 <?php } ?>
                                                                 <td class="py-4 px-6">
                                                                     <?php $date = explode("-", $row['date']);

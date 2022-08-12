@@ -242,7 +242,7 @@ if (isset($_POST['saveChangesBtn'])) {
                     <div id="myCoursesSection" class="md:ml-5 mt-5 flex md:flex-wrap gap-3 md:flex-row flex-col">
                         <?php
                         // complete query to get only accepted courses
-                        $query = "SELECT * FROM course";
+                        $query = "SELECT * FROM course, requests WHERE courseID=course_id AND status = 'accepted' AND type='course' ";
                         $result = mysqli_query($con, $query);
                         if (mysqli_num_rows($result) > 0) {
                             while ($course = mysqli_fetch_assoc($result)) {
