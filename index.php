@@ -4,8 +4,8 @@ require 'vendor/autoload.php';
 
 use Mailgun\Mailgun;
 // First, instantiate the SDK with your API credentials
-$mg = Mailgun::create('47359c682dda11becda36cd2a3ad308b-835621cf-cdeb07ce'); // For US servers
-define("MY_DOMAIN", 'sandbox1dba6c378c6e4ca18fa63c3136263035.mailgun.org');
+$mg = Mailgun::create('API'); // For US servers
+define("MY_DOMAIN", 'test');
 session_start();
 if (isset($_SESSION['type'])) {
 	$privilage = $_SESSION['type'];
