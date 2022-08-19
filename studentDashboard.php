@@ -178,7 +178,7 @@ $con = OpenCon();
                     </div>
                     <?php
                     // get # course in categories:
-                    $query1 = "SELECT DISTINCT category FROM course";
+                    $query1 = "SELECT DISTINCT category FROM course, student_course WHERE courseID = coID";
                     $result1 = mysqli_query($con, $query1);
                     $categories = "";
                     $numbers = "";
@@ -186,12 +186,9 @@ $con = OpenCon();
 
                     while ($cate = mysqli_fetch_assoc($result1)) {
                         $categories .= '"' . ucfirst($cate['category']) . '",';
-                        $query = "SELECT * FROM course WHERE category = '" . $cate['category'] . "'";
-                        $result3 = mysqli_query($con, $query);
-                        $numbers .=  mysqli_num_rows($result3) . ",";
-                        $query = "SELECT * FROM student_course, course WHERE stu_username = '" . $_SESSION['username'] . "' AND coID = courseID";
+                        $query = "SELECT * FROM student_course, course WHERE stu_username = '" . $_SESSION['username'] . "' AND coID = courseID AND category = '" . $cate['category'] . "'";
                         $result = mysqli_query($con, $query);
-                        $students .=  mysqli_num_rows($result3) . ",";
+                        $students .=  mysqli_num_rows($result) . ",";
                     }
 
                     ?>
